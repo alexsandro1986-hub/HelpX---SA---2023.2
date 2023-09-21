@@ -26,9 +26,11 @@ function MyStack() {
 
 export default function App() {
  return(
-  <NavigationContainer>
-    <MyStack/>
-  </NavigationContainer>
+  <View>
+
+  <Text> Testeee </Text>
+
+  </View>
  )
   }
 
