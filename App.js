@@ -1,4 +1,6 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
+
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input, Text } from 'react-native-elements';
@@ -9,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import login from './screens/login';
 import principal from './screens/principal';
 import cadastro from './screens/cadastro';
+import home from './screens/Home';
 
 
 const Stack = createStackNavigator();
@@ -17,6 +20,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
+      <Stack.Screen name='home' component={home} />
       <Stack.Screen name='login' component={login} />
       <Stack.Screen name='principal' component={principal} />
       <Stack.Screen name='cadastro' component={cadastro} />
@@ -26,14 +30,14 @@ function MyStack() {
 
 export default function App() {
  return(
-  <View>
-
-  <Text> Testeee </Text>
-
-  </View>
+ 
+    <NavigationContainer>
+      <MyStack/>
+    </NavigationContainer>
  )
   }
 
+  
 
 
 
