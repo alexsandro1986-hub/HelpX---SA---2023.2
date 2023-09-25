@@ -25,9 +25,7 @@ export default function Login({ navigation }) {
       <View>
         <View>
 
-          <Image style={styles.img}
-            source={require('../img/infinito.png')}
-          />
+          
         </View>
         <View style={styles.viemtexto}>
           <Text style={styles.texto}>
