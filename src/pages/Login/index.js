@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { TouchableOpacity } from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Login({ navigation }) {
@@ -20,98 +22,143 @@ export default function Login({ navigation }) {
   }
 
   return (
+    <LinearGradient
+      colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
+      //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
+      style={styles.container}
+    >
 
-    <View style={styles.container}>
-      <View>
+      <View style={styles.container}>
         <View>
 
-          <Image style={styles.img}
-            source={require('../img/infinito.png')}
-          />
+          <View style={styles.containerTitulo}>
+            <Text style={styles.textoTitulo}>
+              Login
+            </Text>
+          </View>
         </View>
-        <View style={styles.viemtexto}>
-          <Text style={styles.texto}>
-            HELPX
-          </Text>
+
+        <View style={styles.containerInput}>
+          <View>
+
+            <Text style={styles.inputLabel}>Email </Text>
+            <Input
+              style={styles.inpt}
+              // placeholder='Digite seu email...'
+              keyboardType='email-address'
+              // leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+              onChangeText={value => setEmail(value)}
+            />
+          </View>
+          <View>
+            <Text style={styles.inputLabel}> Senha</Text>
+            <Input
+              style={styles.inpt}
+              // placeholder='Digite sua senha...'
+              secureTextEntry={true}
+              // leftIcon={{ type: 'font-awesome', name: 'lock' }}
+              onChangeText={value => setSenha(value)}
+            />
+          </View>
         </View>
+
+
+
+        <TouchableOpacity
+          style={styles.botao}
+        //onPress={} DEFINIR FUNÇÃO AAAAAAAAAAAAA
+        >
+          <Text style={styles.textoBotao}> Confirmar </Text>
+
+        </TouchableOpacity>
+
+
       </View>
-
-
-      <Input
-        placeholder='Digite seu email...'
-        keyboardType='email-address'
-        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-        onChangeText={value => setEmail(value)}
-      />
-
-      <Input
-        placeholder='Digite sua senha...'
-        secureTextEntry={true}
-        leftIcon={{ type: 'font-awesome', name: 'lock' }}
-        onChangeText={value => setSenha(value)}
-      />
-
-      <Button
-        icon={
-          <Icon
-            name="check"
-            size={15}
-            color="white"
-            buttonStyle={styles.botao}
-          />
-        }
-        title="Entrar"
-        onPress={entrar}
-
-
-      />
-
-      <Button
-        icon={
-          <Icon
-            name="user"
-            size={15}
-            color="white"
-            buttonStyle={styles.botao}
-          />
-        }
-        title="Cadastrar"
-        onPress={Cadastrar}
-
-
-      />
-
-
-    </View>
+    </LinearGradient >
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#C7FFCC",
+    // backgroundColor: "#C7FFCC",
     alignItems: "center",
     flexDirection: 'column',
 
     gap: 11,
   },
+  containerInput: {
+    width: 199,
+    height: 188,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: "white",
+    backgroundColor: 'white',
+    opacity: 0.71
+
+  },
+  inpt: {
+
+  },
+  inputLabel: {
+    width: "100%",
+    height: 16,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 13,
+    lineHeight: 16,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    color: 'black',
+    paddingLeft: 10,
+    paddingTop: 18,
+    opacity: 1
+  },
   botao: {
-    width: '100%',
-    marginTop: 10
+    width: 134,
+    height: 30,
+    // left: 42px;
+    // top: 299px;
+
+    backgroundColor: '#78D1D2',
+    borderWidth: 1,
+    borderColor: '#589BAA',
+    // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    borderRadius: 10
+
+  },
+  textoBotao: {
+    paddingTop: 5,
+    textAlign: 'center',
+    alignItems: 'center',
+    color: '#FFFFFF',
+    fontSize: 13,
+    lineHeight: 16,
+    fontWeight: 700,
+    fontStyle: 'normal',
+
   },
   img: {
     width: 200,
     height: 100,
-    marginTop:25,
+    marginTop: 25,
   },
-  viemtexto: {
+  containerTitulo: {
     width: 200,
     height: 100,
     justifyContent: 'center',
     alignItems: 'center'
 
   },
-  texto: {
-    fontSize:50
+  textoTitulo: {
+
+    fontStyle: 'normal',
+    fontWeight: 700,
+    fontSize: 24,
+    lineHeight: 29,
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#FFFFFF',
   }
 });
+
