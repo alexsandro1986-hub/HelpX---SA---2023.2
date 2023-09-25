@@ -17,20 +17,20 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='login' component={login} />
       <Stack.Screen name='principal' component={principal} />
+      <Stack.Screen name='login' component={login} />
+      
       <Stack.Screen name='cadastro' component={cadastro} />
+      
     </Stack.Navigator>
   )
 }
 
 export default function App() {
  return(
-  <View>
-
-  <Text> Testeee </Text>
-
-  </View>
+  <NavigationContainer>
+    <MyStack/>
+  </NavigationContainer>
  )
   }
 
