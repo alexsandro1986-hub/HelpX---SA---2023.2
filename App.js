@@ -8,8 +8,8 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import login from './src/pages/Login';
-import home from './src/pages/Home'
+import Login from './src/pages/Login';
+import Home from './src/pages/Home'
 import cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
 
@@ -20,9 +20,9 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='Helpx' component={Inicio} />
-      <Stack.Screen name='home' component={home} />
-      <Stack.Screen name='login' component={login} />
+      <Stack.Screen name='Login' component={Login} />
+      <Stack.Screen name='inicio' component={Inicio} />
+      <Stack.Screen name='home' component={Home} />
       <Stack.Screen name='cadastro' component={cadastro} />
     </Stack.Navigator>
   )

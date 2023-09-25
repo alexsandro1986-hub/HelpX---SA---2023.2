@@ -32,10 +32,6 @@ export default function Inicio({ navigation }) {
 
         <View>
           <View style={styles.tituloLogo}>
-
-            <Image style={styles.img}
-              source={require('../img/infinito.png')}
-            />
           </View>
           <View style={styles.viemtexto}>
             <Text style={styles.textoTitulo}>
