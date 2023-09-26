@@ -10,9 +10,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './src/pages/Login';
 import Home from './src/pages/Home'
-import cadastro from './src/pages/Cadastro';
+import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
-
+import Tratamentos from './src/pages/Tratamentos';
 
 const Stack = createStackNavigator();
 
@@ -20,10 +20,11 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='Login' component={Login} />
-      <Stack.Screen name='inicio' component={Inicio} />
-      <Stack.Screen name='home' component={Home} />
-      <Stack.Screen name='cadastro' component={cadastro} />
+      <Stack.Screen name='Tratamentos' component={Tratamentos} options={{ headerShown: false }}/>
+      <Stack.Screen name='Inicio' component={Inicio} options={{ headerShown: false }}/>
+      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
     </Stack.Navigator>
   )
 }

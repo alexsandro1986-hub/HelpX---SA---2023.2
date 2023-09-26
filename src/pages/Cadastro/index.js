@@ -4,23 +4,27 @@ import { StyleSheet, View } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native-web';
+import { ScrollView } from 'react-native';
+import Feather from "@expo/vector-icons/Feather";
+import { TouchableOpacity } from 'react-native';
 
 
 export default function Cadastro({ navigation }) {
 
 
-  const entrar = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'principal' }]
-    })
-  }
-
-
   return (
 
     <View style={styles.container}>
+         <TouchableOpacity 
+         onPress={() =>
+          navigation.goBack()
+        }>
+        <Feather
+            name="arrow-left"
+            size={30}
+            color="white"
+          />
+        </TouchableOpacity> 
       <Text style={styles.texto_primeira_cx}>CADASTRO</Text>
       <View style={styles.primeira_Caixa}>
         <ScrollView>
@@ -141,7 +145,7 @@ export default function Cadastro({ navigation }) {
           />
         }
         title="Entrar"
-        onPress={entrar}
+        // onPress={entrar}
 
 
       />
