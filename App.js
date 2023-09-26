@@ -20,10 +20,12 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='Login' component={Login} />
+      <Stack.Group>
+      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name='inicio' component={Inicio} />
       <Stack.Screen name='home' component={Home} />
-      <Stack.Screen name='cadastro' component={cadastro} />
+      <Stack.Screen name='cadastro' component={cadastro} options={{ headerShown: false }}/>
+      </Stack.Group>
     </Stack.Navigator>
   )
 }
