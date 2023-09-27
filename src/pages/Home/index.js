@@ -4,44 +4,17 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFF' }}>
-
-      <View><Text>Alguma coisa aqui</Text></View>
-
-      <View style={styles.geral}>
-        <View style={styles.primeiro_Quadrado}>1</View>
-        <View style={styles.segundo_Quadrado}>2</View>
-        <View style={styles.terceiro_Quadrado}>3</View>
-        <View style={styles.quarto_Quadrado}>4</View>
-
-
-      </View>
-
-    </View>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-
+import { TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Tab = createBottomTabNavigator();
 
-export default function principal() {
+export default function Home() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Profile"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: '#9cf0b9',
       }}
     >
       <Tab.Screen
@@ -50,8 +23,9 @@ export default function principal() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="home" color={color} size={30} />
           ),
+          headerShown: false,
         }}
       />
      
@@ -61,8 +35,9 @@ export default function principal() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="account" color={color} size={30} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
@@ -76,45 +51,146 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent:'space-between',
-
     gap:10,
-
   },
-  primeiro_Quadrado: {
-    flex: 1,
-    backgroundColor: '#e91e63',
-    width: 275,
-    height: 275,
-    borderWidth: 5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  segundo_Quadrado: {
-    flex: 1,
-    backgroundColor: '#e91e63',
-    width: 275,
-    height: 275,
-    borderWidth: 5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  terceiro_Quadrado: {
-    flex: 1,
-    backgroundColor: '#e91e63',
-    width: 275,
-    height: 275,
-    borderWidth: 5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  quarto_Quadrado: {
-    flex: 1,
-    backgroundColor: '#e91e63',
-    width: 275,
-    height: 275,
-    borderWidth: 5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
 });
+
+
+
+function Feed() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#FFF' }}>
+
+      <View style={feed.cima}>
+ 
+        <TouchableOpacity style={{width:'40%', height:'40%', backgroundColor:'#97D8AE', borderRadius:10, justifyContent:'center', alignItems:'center', gap: 15, shadowColor: "#000",shadowOffset: {width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8,}}>
+            
+            <MaterialCommunityIcons name="pill" color={'white'} size={50} />
+
+            <Text style={{fontSize: 18, fontWeight:'800', color:'#3C8F5A'}}>
+              Tratamento
+            </Text>
+            
+        </TouchableOpacity>
+
+        <View style={feed.options}>
+
+        </View>
+
+        <View style={feed.options}>
+
+        </View>
+
+        <View style={feed.options}>
+
+        </View>
+
+      </View>
+
+      
+
+    </View>
+  );
+}
+
+const feed = StyleSheet.create({
+
+  cima:{
+    height:'50%', 
+    width:'100%', 
+    justifyContent:'center',
+    alignContent:'center',
+    flexWrap:'wrap',
+    gap:20,
+    backgroundColor:'transparent', 
+    borderBottomWidth:2, 
+    borderColor:'#97D8AE',
+},
+
+  options:{
+    width:'40%',
+    height:'40%',
+    backgroundColor:'#cdcdcd',
+    borderRadius:10, 
+    justifyContent:'center',
+    alignItems:'center',
+
+  }
+  })
+
+
+
+function Profile() {
+  return (
+    <LinearGradient
+      colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
+       style={profile.container} >
+
+      <View style={profile.cima}>
+        <View style={{width:'100%', height: '2%'}}>
+        </View>
+        
+        <Text style={{fontSize:25, color:'white', fontWeight:'bold'}}>Meu Perfil</Text>
+
+        <View style={{borderWidth: 2, borderColor:'black', borderRadius:10 , width: 80, height: 80, justifyContent:'center', alignItems:'center'}}>
+        
+          <MaterialCommunityIcons name="account" color={'black'} size={80} />
+
+        </View>
+
+      </View>
+
+      <View style={profile.viewNameUser}>
+
+        <Text style={{fontSize: 24, fontWeight:'bold', color:'white'}}>
+          Nome Usuario
+        </Text>
+
+      </View>
+
+      <View style={profile.infoView}>
+
+      </View>
+
+
+
+
+   
+    </LinearGradient>
+  );
+}
+
+const profile = StyleSheet.create({
+
+  container:{
+    flex: 1, 
+    justifyContent: 'flex-start', 
+    alignItems: 'center',
+    gap:15,  
+  },
+
+  cima:{
+    width:'100%',
+    height:'25%',
+    justifyContent: 'flex-start', 
+    alignItems: 'center',  
+    gap: 30,
+  },
+
+  viewNameUser:{
+    width:'100%',
+    height:'5%',
+    justifyContent:'center',
+    alignItems:'center',
+  },
+
+  infoView:{
+    width: '70%',
+    height:'50%',
+    backgroundColor:'purple',
+    
+
+  },
+
+
+})

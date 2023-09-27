@@ -21,6 +21,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
+
       <Stack.Group>
       <Stack.Screen name='Tratamento' component={Tratamento} options={{ headerShown: false }}/>
       <Stack.Screen name='Home' component={Home} />
@@ -28,6 +29,7 @@ function MyStack() {
       <Stack.Screen name='Inicio' component={Inicio} />
       <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
       </Stack.Group>
+
     </Stack.Navigator>
   )
 }
