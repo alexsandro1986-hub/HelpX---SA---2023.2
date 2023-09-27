@@ -7,7 +7,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import Feather from "@expo/vector-icons/Feather";
 
-const Tab = createBottomTabNavigator();
+
+
 
 export default function Tratamentos() {
 
@@ -31,13 +32,17 @@ export default function Tratamentos() {
                         style={styles.icons}
                     />
                 </View>
-                <View >
+                <View style={styles.containerDoencas}>
+                    <Text style={styles.textoDoenca}> Gripe</Text>
+                    <Text style={styles.textoDoenca} > 26/09</Text>
+                </View>
+                <View style={styles.containerDoencas}>
                     <Text style={styles.textoDoenca}> Gripe</Text>
                     <Text style={styles.textoDoenca} > 26/09</Text>
                 </View>
             </View>
 
-            {/* <BottomTab /> */}
+            <MyTabs/>
         </View>
 
 
@@ -105,9 +110,14 @@ const styles = StyleSheet.create({
     },
     containerTitulo: {
         width: '100%',
-        height: '20%',
+        height: '8%',
         backgroundColor: '#97D8AE',
+        borderColor:  '#97D8AE',
+        borderWidth: 2,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
         // box-shadow: 0px 1px 8px rgba(85, 74, 74, 0.44);
+        justifyContent: 'center'
     },
     textoTitulo: {
         fontStyle: 'normal',
@@ -116,7 +126,8 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         alignItems: 'center',
         textAlign: 'center',
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+      
 
     },
     containerCorpo: {
@@ -138,10 +149,12 @@ const styles = StyleSheet.create({
     },
     containerDoencas: {
         width: '100%',
-        height: 500,
+        height: 70,
         borderWidth: 1,
         borderColor: '#97D8AE',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        
 
     },
     textoDoenca: {
@@ -150,9 +163,12 @@ const styles = StyleSheet.create({
         lineHeight: 17,
         alignItems: 'center',
         textAlign: 'center',
-        // color: '#7D7070',
-        color: 'red',
-    }
+        color: '#7D7070',
+        // color: 'red',
+        paddingTop: 25,
+        
+    },
+
 
 
 });
