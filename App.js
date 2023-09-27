@@ -22,8 +22,24 @@ function MyStack() {
   return(
     <Stack.Navigator>
       <Stack.Group>
-      <Stack.Screen name='Tratamento' component={Tratamento} options={{ headerShown: false }}/>
       <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='Tratamento' component={Tratamento} 
+         options={{
+          title: 'Tratamento',
+          headerStyle: {
+            backgroundColor: '#97D8AE',
+            borderColor: '#97D8AE',
+            borderWidth: 2,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+          fontWeight: 'bold',
+          },
+          headerTitleAlign: "center",
+        }}/>
       <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name='Inicio' component={Inicio} />
       <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
