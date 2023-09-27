@@ -33,7 +33,7 @@ export default function Tratamentos() {
                 </View>
                 <View >
                     <Text style={styles.textoDoenca}> Gripe</Text>
-                    <Text style={styles.textoDoenca} > 26/09aaaaaaaaaaaaaaaaa</Text>
+                    <Text style={styles.textoDoenca} > 26/09</Text>
                 </View>
             </View>
 
