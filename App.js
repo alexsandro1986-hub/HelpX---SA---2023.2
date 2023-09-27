@@ -23,11 +23,12 @@ function MyStack() {
     <Stack.Navigator>
 
       <Stack.Group>
+      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
       <Stack.Screen name='Tratamento' component={Tratamento} options={{ headerShown: false }}/>
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name='Inicio' component={Inicio} />
-      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
+      
       </Stack.Group>
 
     </Stack.Navigator>
