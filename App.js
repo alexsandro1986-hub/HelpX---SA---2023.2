@@ -12,7 +12,7 @@ import Login from './src/pages/Login';
 import Home from './src/pages/Home'
 import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
-import Tratamento from './src/pages/Tratamento';
+import {Tratamento, CadastroTratamento} from './src/pages/Tratamento';
 
 
 const Stack = createStackNavigator();
@@ -21,16 +21,30 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-
       <Stack.Group>
-      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
-      <Stack.Screen name='Tratamento' component={Tratamento} options={{ headerShown: false }}/>
-      <Stack.Screen name='Home' component={Home} />
-      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name='Inicio' component={Inicio} />
-      
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='Tratamento' component={Tratamento} 
+         options={{
+          title: 'Tratamento',
+          headerStyle: {
+            backgroundColor: '#97D8AE',
+            borderColor: '#97D8AE',
+            borderWidth: 2,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+          fontWeight: '700',
+          },
+          headerTitleAlign: "center",
+        }}/>
+      <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }}/>
+      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
+      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
       </Stack.Group>
-
     </Stack.Navigator>
   )
 }
