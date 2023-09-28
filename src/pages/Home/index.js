@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 export default function Home() {
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#9cf0b9',
       }}
@@ -150,7 +150,40 @@ function Profile() {
 
       <View style={profile.infoView}>
 
+        <View style={profile.infoUser}> 
+
+          <Text style={profile.textInfo}>Idade</Text>
+          <Text style={profile.textInfoUser}>21</Text>
+
+        </View>
+
+        <View style={profile.infoUser}>
+
+          <Text style={profile.textInfo}>alergia</Text>
+          <Text style={profile.textInfoUser}> Dipirona, fermento</Text>
+
+        </View>
+
+        <View style={profile.infoUser}> 
+
+          <Text style={profile.textInfo}>Cont. emergencia</Text>     
+          <Text style={profile.textInfoUser}>48 996760904</Text>
+
+        </View>
+
       </View>
+
+      <View style={profile.viewQR}>
+
+        <TouchableOpacity style={profile.btnQrCode}>
+
+        <MaterialCommunityIcons name="qrcode" color={'white'} size={40} />
+
+        </TouchableOpacity>
+
+      </View>
+
+
 
 
 
@@ -186,11 +219,63 @@ const profile = StyleSheet.create({
 
   infoView:{
     width: '70%',
-    height:'50%',
-    backgroundColor:'purple',
-    
-
+    height:'40%',
+    backgroundColor:'white',
+    borderRadius:10,
+    shadowColor: "#000",
+    shadowOffset: {width: 0, height: 0}, 
+    shadowOpacity: 0.40, 
+    shadowRadius: 20, 
+    elevation: 3
   },
+
+  infoUser:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    gap: 10,
+    padding:10
+  },
+
+  textInfo:{
+    fontSize:25, 
+    fontWeight:'bold',
+    color:'grey'
+  },
+
+  textInfoUser:{
+    fontSize:20, 
+    fontWeight:'bold',
+    color:'grey'
+  },
+
+  viewQR:{
+    width:'70%',
+    height:'10%',
+    padding: 10,
+    justifyContent:'center',
+    alignItems:'flex-end'
+  },
+
+  btnQrCode:{
+    width:70, 
+    height:70, 
+    backgroundColor:'#990000', 
+    justifyContent:'center',
+     alignItems:'center', 
+     borderWidth:2,
+     borderColor:'white',
+     borderRadius:100,
+     shadowColor: "#000",
+     shadowOffset: {width: 0, height: 3}, 
+     shadowOpacity: 0.70, 
+     shadowRadius: 10, 
+     elevation: 10
+  },
+
+
+
+
 
 
 })
