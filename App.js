@@ -6,9 +6,11 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import login from './screens/login';
-import principal from './screens/principal';
-import cadastro from './screens/cadastro';
+import Login from './src/pages/Login';
+import Home from './src/pages/Home'
+import Cadastro from './src/pages/Cadastro';
+import Inicio from './src/pages/Inicio';
+import Tratamento from './src/pages/Tratamento';
 
 
 const Stack = createStackNavigator();
@@ -17,11 +19,15 @@ const Stack = createStackNavigator();
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='principal' component={principal} />
-      <Stack.Screen name='login' component={login} />
-      
-      <Stack.Screen name='cadastro' component={cadastro} />
-      
+
+      <Stack.Group>
+      <Stack.Screen name='Tratamento' component={Tratamento} options={{ headerShown: false }}/>
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
+      <Stack.Screen name='Inicio' component={Inicio} />
+      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }}/>
+      </Stack.Group>
+
     </Stack.Navigator>
   )
 }
