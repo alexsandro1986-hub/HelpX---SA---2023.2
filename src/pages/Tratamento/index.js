@@ -1,94 +1,76 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import Feather from "@expo/vector-icons/Feather";
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from '@mdi/react';
+import { mdiEmoticonSickOutline } from '@mdi/js';
+import { useNavigation } from "@react-navigation/native";
+import { useState } from 'react';
 
 
 
-
-export default function Tratamentos() {
-
+export function Tratamento() {
+    const navigation = useNavigation()
     return (
         <View style={styles.container}>
-            <View style={styles.containerTitulo}>
+            {/* <View style={styles.containerTitulo}>
                 <Text style={styles.textoTitulo}> Tratamentos</Text>
-            </View>
+            </View> */}
             <View style={styles.containerCorpo}>
                 <View style={styles.containerIcons}>
-                    <Feather
-                        name="droplet"
-                        size={30}
-                        color="white"
-                        style={styles.icons}
+
+                    <Icon path={mdiEmoticonSickOutline}
+                        size={1.5}
+
                     />
+
                     <Feather
                         name="calendar"
                         size={30}
-                        color="white"
+                        color="black"
                         style={styles.icons}
                     />
+
+
                 </View>
+
                 <View style={styles.containerDoencas}>
                     <Text style={styles.textoDoenca}> Gripe</Text>
                     <Text style={styles.textoDoenca} > 26/09</Text>
                 </View>
+
                 <View style={styles.containerDoencas}>
                     <Text style={styles.textoDoenca}> Gripe</Text>
                     <Text style={styles.textoDoenca} > 26/09</Text>
                 </View>
+
             </View>
 
-            <MyTabs/>
-        </View>
+            <View style={styles.footerBotao}>
+                <TouchableOpacity onPress={() => navigation.navigate('CadastroTratamento')}>
+
+                    <LinearGradient
+                        // Button Linear Gradient
+                        colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
+                        style={styles.botaoPlus}>
+                        <Feather
+                            name="plus"
+                            size={40}
+                            color="white"
+
+                        />
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
+        </View >
 
 
     );
 
 }
-
-// function BottomTab() {
-//     return (
-
-//         <Tab.Navigator
-//             initialRouteName="Feed"
-//             screenOptions={{
-//                 tabBarActiveTintColor: '#e91e63',
-//             }}
-//         >
-//             <Tab.Screen
-//                 name="Feed"
-//                 component={Feed}
-//                 options={{
-//                     tabBarLabel: 'Home',
-//                     tabBarIcon: ({ color, size }) => (
-//                         <MaterialCommunityIcons name="home" color={color} size={size} />
-//                     ),
-//                     headerShown: false,
-//                 }}
-//             />
-
-//             <Tab.Screen
-//                 name="Profile"
-//                 component={Profile}
-//                 options={{
-//                     tabBarLabel: 'Profile',
-//                     tabBarIcon: ({ color, size }) => (
-//                         <MaterialCommunityIcons name="account" color={color} size={size} />
-//                     ),
-//                     headerShown: false,
-//                 }}
-//             />
-//         </Tab.Navigator>
-
-
-
-
-//     );
-// }
 
 
 const styles = StyleSheet.create({
@@ -112,7 +94,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '8%',
         backgroundColor: '#97D8AE',
-        borderColor:  '#97D8AE',
+        borderColor: '#97D8AE',
         borderWidth: 2,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
@@ -127,7 +109,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         color: '#FFFFFF',
-      
+
 
     },
     containerCorpo: {
@@ -154,26 +136,178 @@ const styles = StyleSheet.create({
         borderColor: '#97D8AE',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        
+
 
     },
     textoDoenca: {
         fontWeight: 700,
-        fontSize: 14,
+        fontSize: 20,
         lineHeight: 17,
         alignItems: 'center',
         textAlign: 'center',
         color: '#7D7070',
-        // color: 'red',
         paddingTop: 25,
-        
+
     },
+    footerBotao: {
+        width: '100%',
+        height: '5%',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingRight: '10%'
+    },
+    botaoPlus: {
+        borderRadius: 30,
+        // backgroundColor: '#97D8AE'
+    },
+    input: {
+        borderWidth: 2,
+        borderColor: 'white',
+        borderRadius: 16,
+        color: 'black',
+        width: 200,
+        padding: 6,
+        textAlign: 'center'
+    },
+    inputRemedios: {
+        width: '100%',
+        height: '60%',
+        borderWidth: 1,
+        borderColor: '#97D8AE',
+        flexDirection: 'column',
+
+    }
 
 
 
 });
 
+let flag = true
+let oi = ''
+let opa
 
+export function CadastroTratamento(props) {
+    let rem  = props.oi
+   console.log(rem)
+    const navigation = useNavigation()
+
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.containerTitulo}>
+                <Text style={styles.textoTitulo}> Adicionar</Text>
+                <TouchableOpacity
+                    style={styles.containerTitulo}
+                    onPress={() =>
+                        navigation.goBack()
+                    }>
+                    <Feather
+                        name="arrow-left"
+                        size={30}
+                        color="white"
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.containerCorpo}>
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={1}
+                        blurOnSubmit
+                        style={styles.input}
+                        placeholder="Enfermidade"
+                        onFocus={() => {
+                            console.log('Focused on input');
+
+                        }
+                        }
+                    />
+                </View>
+
+                <View style={styles.inputRemedios}>
+                    <NovoRemedio />
+                  
+                    {flag && rem == 'a' && <NovoRemedio />}
+
+                </View>
+
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={2}
+                        blurOnSubmit
+                        style={styles.input}
+                        placeholder="Data"
+                        onFocus={() => {
+                            console.log('Focused on input');
+
+                        }
+                        }
+                    />
+                </View>
+
+            </View>
+
+            <View style={styles.footerBotao}>
+                <TouchableOpacity>
+
+                    <LinearGradient
+                        // Button Linear Gradient
+                        colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
+                        style={styles.botaoPlus}>
+                        <Feather
+                            name="check-circle"
+                            size={40}
+                            color="white"
+
+                        />
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
+        </View >
+
+
+
+
+
+    )
+}
+
+function NovoRemedio() {
+    const [inputRemedio, setInputRemedio] = useState('')
+
+        console.log('aaaa', flag, inputRemedio)
+
+        console.log('bbbbb')
+        return (
+            <View style={styles.containerDoencas}>
+                <TextInput
+                    multiline
+                    numberOfLines={2}
+                 
+                    style={styles.input}
+                    value={inputRemedio}
+
+                    onChangeText={(texto) =>{
+                        setInputRemedio(texto)
+                        opa = inputRemedio
+                        console.log('oi', opa)
+                       {<CadastroTratamento oi="a" />}
+                    }
+                    }
+                    placeholder="Remédio(s)"
+                    onFocus={() => {
+                        console.log('Focused on input');
+                        flag = true
+
+
+                    }
+                    }
+                />
+            </View>
+        )
+
+    }
 
 
 
