@@ -1,20 +1,19 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from '@mdi/react';
 import { mdiEmoticonSickOutline } from '@mdi/js';
+import { useNavigation } from "@react-navigation/native";
+import { useState } from 'react';
 
 
 
-
-export default function Tratamentos() {
-
+export function Tratamento() {
+    const navigation = useNavigation()
     return (
         <View style={styles.container}>
             {/* <View style={styles.containerTitulo}>
@@ -51,7 +50,7 @@ export default function Tratamentos() {
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity  onPress={() => navigation.navigate(CadastroTratamento)}>
+                <TouchableOpacity onPress={() => navigation.navigate('CadastroTratamento')}>
 
                     <LinearGradient
                         // Button Linear Gradient
@@ -170,28 +169,50 @@ const styles = StyleSheet.create({
         padding: 6,
         textAlign: 'center'
     },
+    inputRemedios: {
+        width: '100%',
+        height: '60%',
+        borderWidth: 1,
+        borderColor: '#97D8AE',
+        flexDirection: 'column',
+
+    }
 
 
 
 });
 
-function CadastroTratamento() {
+let flag = true
+let oi = ''
+let opa
 
-
-
-
+export function CadastroTratamento(props) {
+    let rem  = props.oi
+   console.log(rem)
+    const navigation = useNavigation()
 
 
     return (
         <View style={styles.container}>
             <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Tratamentos</Text>
+                <Text style={styles.textoTitulo}> Adicionar</Text>
+                <TouchableOpacity
+                    style={styles.containerTitulo}
+                    onPress={() =>
+                        navigation.goBack()
+                    }>
+                    <Feather
+                        name="arrow-left"
+                        size={30}
+                        color="white"
+                    />
+                </TouchableOpacity>
             </View>
             <View style={styles.containerCorpo}>
-                <View>
+                <View style={styles.containerDoencas}>
                     <TextInput
                         multiline
-                        numberOfLines={2}
+                        numberOfLines={1}
                         blurOnSubmit
                         style={styles.input}
                         placeholder="Enfermidade"
@@ -203,23 +224,15 @@ function CadastroTratamento() {
                     />
                 </View>
 
-                <View style={styles.containerDoencas}>
-                <TextInput
-                        multiline
-                        numberOfLines={2}
-                        blurOnSubmit
-                        style={styles.input}
-                        placeholder="Remédio(s)"
-                        onFocus={() => {
-                            console.log('Focused on input');
+                <View style={styles.inputRemedios}>
+                    <NovoRemedio />
+                  
+                    {flag && rem == 'a' && <NovoRemedio />}
 
-                        }
-                        }
-                    />
                 </View>
 
                 <View style={styles.containerDoencas}>
-                <TextInput
+                    <TextInput
                         multiline
                         numberOfLines={2}
                         blurOnSubmit
@@ -259,6 +272,42 @@ function CadastroTratamento() {
 
     )
 }
+
+function NovoRemedio() {
+    const [inputRemedio, setInputRemedio] = useState('')
+
+        console.log('aaaa', flag, inputRemedio)
+
+        console.log('bbbbb')
+        return (
+            <View style={styles.containerDoencas}>
+                <TextInput
+                    multiline
+                    numberOfLines={2}
+                 
+                    style={styles.input}
+                    value={inputRemedio}
+
+                    onChangeText={(texto) =>{
+                        setInputRemedio(texto)
+                        opa = inputRemedio
+                        console.log('oi', opa)
+                       {<CadastroTratamento oi="a" />}
+                    }
+                    }
+                    placeholder="Remédio(s)"
+                    onFocus={() => {
+                        console.log('Focused on input');
+                        flag = true
+
+
+                    }
+                    }
+                />
+            </View>
+        )
+
+    }
 
 
 
