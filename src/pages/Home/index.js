@@ -93,7 +93,6 @@ function Feed() {
   );
 }
 
-
 const feed = StyleSheet.create({
 
   cima:{
@@ -122,15 +121,6 @@ const feed = StyleSheet.create({
 
 
 function Profile() {
-  const avancar = () => {
-    alert('oi')
-  }
-
-  const voltar = () => {
-    alert('calma gisele')
-  }
-
-
   return (
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
