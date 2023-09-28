@@ -1,147 +1,186 @@
 import React, { useState } from 'react';
-import { View, Button, Text, StyleSheet,Image, TextInput } from 'react-native';
+import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 
-const CadastroPage = () => {
-  const [passar, setPassar] = useState(1);
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
 
-  const Passar = () => {
-    setPassar(passar + 1);
-  };
-  
 
-  const cadastro = () => {
-    switch (passar) {
-      case 1:
-        return (
-          <TextInput
-            style={styles.input}
-            placeholder="Nome"
-            onChangeText={(text) => setNome(text)}
-            value={nome}
-          />
-        );
-      case 2:
-        return (
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-          />
-        );
-      case 3:
-        return (
-          <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            onChangeText={(text) => setSenha(text)}
-            value={senha}
-          />
-        );
-      case 4:
-        return (
-          <TextInput
-            style={styles.input}
-            placeholder="Confirmar Senha"
-            onChangeText={(text) => setConfirmarSenha(text)}
-            value={confirmarSenha}
-          />
-        );
-      default:
-        return null;
-    }
-  };
+const Stack = createStackNavigator();
 
-  const Header = () => (
+
+const Header = () => (
     
-    <View style={styles.header}>
-      <View style={styles.containerLogo} >
-          <Image
-            source={require('/img/logopronto.png')}
-            style={{ width: 100, height: 100 }}
-            resizeMode="contain"
-          />
-      </View>
-
-
-      
+  <View style={styles.header}>
+    <View style={styles.containerLogo} >
+        <Image
+          source={require('/img/logopronto.png')}
+          style={{ width: 300, height: 300 }}
+          resizeMode="contain"
+        />
     </View>
-      
-  );
 
-  const Body = () => (
-    <View style={styles.body}>
-      {cadastro()}
-      {passar < 4 && <Button style={styles.botaoUm} st title="Avançar" onPress={Passar} />}
 
-      {passar === 4 && (
-        <Button  style={styles.botaoDois}  title="Finalizar Cadastro" onPress={() => alert('Cadastro concluído')} />
-      )}
- 
-      
-        
-     
-    </View>
-  );
+    
+  </View>
+    
+);
 
-  const Footer = () => (
-  <Text>Desenvolvido por:</Text>
-  );
 
+export default function Cadastro() {
   return (
-    <View style={styles.container}>
-      <Header />
-      <Body />
-      <Footer />
-    </View>
-  );
-};
+
+    <><Header />
+    
+    <Stack.Navigator>
+
+      <Stack.Group>
+
+        <Stack.Screen name='Email' component={Email('Senha')} options={{ headerShown: false }} />
+        <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} options={{ headerShown: false }} />
+        <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('')} options={{ headerShown: false }} />
+
+
+      </Stack.Group>
+
+    </Stack.Navigator></>
+  )
+}
+
+
+
+function Email(a) {
+  return function ({ navigation }) {
+
+    return (
+      <View  style={styles.body}>
+        <View style={styles.teste}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+        // onChangeText={(text) => setNome(text)}
+        // value={nome}
+        />
+        </View>
+         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+        <Text>OK</Text>
+               
+        
+         </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+function Senha(a) {
+  return function ({ navigation }) {
+    return (
+            
+      <View  style={styles.body}>         
+        <View style={styles.teste}>
+        <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              // onChangeText={(text) => setNome(text)}
+              // value={nome}
+        />
+        </View>
+        <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+       <Text>OK</Text>
+              
+       
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+function ConfirmarSenha(a) {
+  return function ({ navigation }) {
+    return (
+      <View  style={styles.body}>
+        <View style={styles.teste}>
+        <TextInput
+          style={styles.input}
+          placeholder="ConfirmarSenha"
+        // onChangeText={(text) => setNome(text)}
+        // value={nome}
+        />
+        </View>
+         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+            <Text>OK</Text>
+               
+        
+         </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+
+
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 10,
     backgroundColor: '#97d8ae',
   },
-  header: {
-    backgroundColor: '#4CAF50',
-    padding: 10,
-    alignItems: 'center',
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 24,
-  },
-  body: {
-    flex: 1,
+
+  teste:{
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  footer: {
-    backgroundColor: '#4CAF50',
-    padding: 10,
-    alignItems: 'center',
+    alignContent: 'center',
+    
   },
   input: {
     fontSize: 15,
-    width: 220,
+    width: 250,
     height: 50,
     borderColor: 'black',
     borderWidth: 1,
     paddingLeft: 10,
     marginBottom: 10,
     borderRadius: 20,
+   
+
   },
+ 
+  botao:{
+    backgroundColor: 'blue',
+    width: 150,
+    height: 30,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+   
+  },
+  header:{
+    backgroundColor: 'black',
+    height: '20%',
+    
+  },
+  body:{
+    width: '100%',
+    paddingTop: 160,
+    justifyContent: 'center',
+    alignContent: 'center',
+    
+  },
+
   containerLogo:{
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+
+
   },
+  
 
 });
 
-export default CadastroPage;
+
+
+ 
+ 
