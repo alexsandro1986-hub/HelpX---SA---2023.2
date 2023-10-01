@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import Tratamento from '/src/pages/Tratamento';
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -68,7 +67,7 @@ function Feed() {
       <View style={feed.cima}>
  
         <TouchableOpacity
-         onPress={() => navigation.navigate('Tratamento')}
+         onPress={() => navigation.navigate('StackTratamento')}
         style={{width:'40%', height:'40%', backgroundColor:'#97D8AE', borderRadius:10, justifyContent:'center', alignItems:'center', gap: 15, shadowColor: "#000",shadowOffset: {width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8,}}>
             
             <MaterialCommunityIcons name="pill" color={'white'} size={50} />
