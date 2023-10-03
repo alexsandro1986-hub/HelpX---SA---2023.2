@@ -197,13 +197,19 @@ export function CadastroTratamento() {
 
             <View style={styles.footerBotao}>
                 <TouchableOpacity onPress={() =>
-                    objTratamento({
-                        Enfermidade: inputDoenca,
-                        Remedio: inputRemedio,
-                        Data: inputData,
-                        id: arrayTratamento.length
-                    })
-                    // navigation.goBack()
+                        (navigation.goBack())
+                        (objTratamento({
+                            Enfermidade: inputDoenca,
+                            Remedio: function (){
+                                const listaRemedio = inputRemedio
+                                if (listaRemedio.includes(',') == true){
+                                    
+                                } 
+                                return 
+                            },
+                            Data: inputData,
+                            id: arrayTratamento.length
+                        }))
                 }
 
 
