@@ -14,38 +14,36 @@ import { RemedioContext, RemedioContextProvider } from './remedioContext';
 const Stack = createStackNavigator();
 
 export function StackTratamento() {
-    return(
-     <RemedioContextProvider>
-        <Stack.Navigator initialRouteName='Tratamento'>
-            <Stack.Screen name='Tratamento' component={Tratamento}
-                options={{
-                    title: 'Tratamento',
-                    headerStyle: {
-                        backgroundColor: '#97D8AE',
-                        borderColor: '#97D8AE',
-                        borderWidth: 2,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
+    return (
+        <RemedioContextProvider>
+            <Stack.Navigator initialRouteName='Tratamento'>
+                <Stack.Screen name='Tratamento' component={Tratamento}
+                    options={{
+                        title: 'Tratamento',
+                        headerStyle: {
+                            backgroundColor: '#97D8AE',
+                            borderColor: '#97D8AE',
+                            borderWidth: 2,
+                            borderBottomLeftRadius: 20,
+                            borderBottomRightRadius: 20,
 
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: '700',
-                    },
-                    headerTitleAlign: "center",
-                }} />
-            <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }} />
-        </Stack.Navigator>
-     </RemedioContextProvider>
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: '700',
+                        },
+                        headerTitleAlign: "center",
+                    }} />
+                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </RemedioContextProvider>
     )
 }
 
 export function Tratamento() {
     const navigation = useNavigation()
-    const { inputRemedio, setInputRemedio,
-         inputDoenca, setInputDoenca,
-         inputData, setInputData } = useContext(RemedioContext)
-        
+    const { arrayTratamento } = useContext(RemedioContext)
+
 
     return (
         <View style={styles.container}>
@@ -69,16 +67,14 @@ export function Tratamento() {
 
 
                 </View>
+                {arrayTratamento.map((doenca, index) => (
+                    <View style={styles.containerDoencas} key={index}>
+                        <Text style={styles.textoDoenca}> {doenca.Enfermidade}</Text>
+                        <Text style={styles.textoDoenca} > {doenca.Remedio}</Text>
+                        <Text style={styles.textoDoenca} > {doenca.Data}</Text>
+                    </View>
+                ))}
 
-                <View style={styles.containerDoencas}>
-                    <Text style={styles.textoDoenca}> Gripe</Text>
-                    <Text style={styles.textoDoenca} > 26/09</Text>
-                </View>
-
-                <View style={styles.containerDoencas}>
-                    <Text style={styles.textoDoenca}> {inputDoenca}</Text>
-                    <Text style={styles.textoDoenca} > {inputData}</Text>
-                </View>
 
             </View>
 
@@ -114,9 +110,11 @@ let opa
 
 export function CadastroTratamento() {
     const navigation = useNavigation()
-    const {inputRemedio, setInputRemedio,
+    const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
-        inputData, setInputData } = useContext(RemedioContext)
+        inputData, setInputData,
+        arrayTratamento, setArrayTratamento,
+        objTratamento } = useContext(RemedioContext)
 
 
     return (
@@ -145,18 +143,35 @@ export function CadastroTratamento() {
                         onChangeText={setInputDoenca}
                         style={styles.input}
                         placeholder="Enfermidade"
+                    // onFocus={() => {
+                    //     console.log('Focused on input');
+
+                    // }
+                    // }
+                    />
+                </View>
+
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={2}
+
+                        style={styles.input}
+                        value={inputRemedio}
+
+                        onChangeText={(texto) => {
+                            setInputRemedio(texto)
+                        }
+                        }
+                        placeholder="Remédio(s)"
                         onFocus={() => {
                             console.log('Focused on input');
+                            flag = true
 
                         }
                         }
                     />
-                </View>
 
-                <View style={styles.inputRemedios}>
-                    <NovoRemedio />
-                    {/* <Text>{inputRemedio} </Text> */}
-                    {/* {flag && {inputRemedio} != '' &&  <NovoRemedio />} */}
 
 
                 </View>
@@ -170,18 +185,29 @@ export function CadastroTratamento() {
                         value={inputData}
                         onChangeText={setInputData}
                         placeholder="Data"
-                        onFocus={() => {
-                            console.log('Focused on input');
+                    // onFocus={() => {
+                    //     console.log('Focused on input');
 
-                        }
-                        }
+                    // }
+                    // }
                     />
                 </View>
 
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() =>
+                    objTratamento({
+                        Enfermidade: inputDoenca,
+                        Remedio: inputRemedio,
+                        Data: inputData,
+                        id: arrayTratamento.length
+                    })
+                    // navigation.goBack()
+                }
+
+
+                >
 
                     <LinearGradient
                         // Button Linear Gradient
@@ -204,7 +230,6 @@ export function CadastroTratamento() {
 export function NovoRemedio() {
     const { inputRemedio, setInputRemedio } = useContext(RemedioContext)
 
-    // console.log('aaaa', flag, inputRemedio)
     console.log('bbbbb')
     return (
         <View style={styles.containerDoencas}>
@@ -215,7 +240,7 @@ export function NovoRemedio() {
                 style={styles.input}
                 value={inputRemedio}
 
-                onChangeText={(texto) =>{
+                onChangeText={(texto) => {
                     setInputRemedio(texto)
                 }
                 }
@@ -307,7 +332,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#7D7070',
         paddingTop: 25,
-
+        width: '50%'
     },
     footerBotao: {
         width: '100%',

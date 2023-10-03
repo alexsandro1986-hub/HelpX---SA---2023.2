@@ -4,14 +4,25 @@ import React from 'react';
 export const RemedioContext = React.createContext()
 
 export const RemedioContextProvider = ({children}) => {
-    const [inputRemedio, setInputRemedio] = React.useState('')
-    const [inputDoenca, setInputDoenca] = useState('ola')
-    const [inputData, setInputData] = React.useState('333333')
+    const [inputRemedio, setInputRemedio] = useState('')
+    const [inputDoenca, setInputDoenca] = useState('')
+    const [inputData, setInputData] = useState('')
+    const [arrayTratamento, setArrayTratamento] = useState([])
+   
+    const objTratamento = (post) =>
+    setArrayTratamento([...arrayTratamento, post]);
+ 
+    
 
 
     return (
         <RemedioContext.Provider
-            value={{inputRemedio, setInputRemedio, inputDoenca, setInputDoenca, inputData, setInputData}}>
+            value={{inputRemedio, setInputRemedio,
+                 inputDoenca, setInputDoenca, 
+                 inputData, setInputData,
+                  arrayTratamento, setArrayTratamento,
+                  objTratamento
+                  }}>
             {children}
         </RemedioContext.Provider>
 
