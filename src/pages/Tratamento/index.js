@@ -1,19 +1,50 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from '@mdi/react';
 import { mdiEmoticonSickOutline } from '@mdi/js';
-import { useNavigation } from "@react-navigation/native";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { RemedioContext, RemedioContextProvider } from './remedioContext';
 
 
+const Stack = createStackNavigator();
+
+export function StackTratamento() {
+    return (
+        <RemedioContextProvider>
+            <Stack.Navigator initialRouteName='Tratamento'>
+                <Stack.Screen name='Tratamento' component={Tratamento}
+                    options={{
+                        title: 'Tratamento',
+                        headerStyle: {
+                            backgroundColor: '#97D8AE',
+                            borderColor: '#97D8AE',
+                            borderWidth: 2,
+                            borderBottomLeftRadius: 20,
+                            borderBottomRightRadius: 20,
+
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: '700',
+                        },
+                        headerTitleAlign: "center",
+                    }} />
+                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </RemedioContextProvider>
+    )
+}
 
 export function Tratamento() {
     const navigation = useNavigation()
+    const { arrayTratamento } = useContext(RemedioContext)
+
+
     return (
         <View style={styles.container}>
             {/* <View style={styles.containerTitulo}>
@@ -36,16 +67,14 @@ export function Tratamento() {
 
 
                 </View>
+                {arrayTratamento.map((doenca, index) => (
+                    <View style={styles.containerDoencas} key={index}>
+                        <Text style={styles.textoDoenca}> {doenca.Enfermidade}</Text>
+                        <Text style={styles.textoDoenca} > {doenca.Remedio}</Text>
+                        <Text style={styles.textoDoenca} > {doenca.Data}</Text>
+                    </View>
+                ))}
 
-                <View style={styles.containerDoencas}>
-                    <Text style={styles.textoDoenca}> Gripe</Text>
-                    <Text style={styles.textoDoenca} > 26/09</Text>
-                </View>
-
-                <View style={styles.containerDoencas}>
-                    <Text style={styles.textoDoenca}> Gripe</Text>
-                    <Text style={styles.textoDoenca} > 26/09</Text>
-                </View>
 
             </View>
 
@@ -69,6 +98,168 @@ export function Tratamento() {
 
 
     );
+
+}
+
+// =================== Cadastro =======================
+
+
+let flag = false
+let rem = ''
+let opa
+
+export function CadastroTratamento() {
+    const navigation = useNavigation()
+    const { inputRemedio, setInputRemedio,
+        inputDoenca, setInputDoenca,
+        inputData, setInputData,
+        arrayTratamento, setArrayTratamento,
+        objTratamento } = useContext(RemedioContext)
+
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.containerTitulo}>
+                <Text style={styles.textoTitulo}> Adicionar</Text>
+                <TouchableOpacity
+                    style={styles.containerTitulo}
+                    onPress={() =>
+                        navigation.goBack()
+                    }>
+                    <Feather
+                        name="arrow-left"
+                        size={30}
+                        color="white"
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.containerCorpo}>
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={1}
+                        blurOnSubmit
+                        value={inputDoenca}
+                        onChangeText={setInputDoenca}
+                        style={styles.input}
+                        placeholder="Enfermidade"
+                    // onFocus={() => {
+                    //     console.log('Focused on input');
+
+                    // }
+                    // }
+                    />
+                </View>
+
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={2}
+
+                        style={styles.input}
+                        value={inputRemedio}
+
+                        onChangeText={(texto) => {
+                            setInputRemedio(texto)
+                        }
+                        }
+                        placeholder="Remédio(s)"
+                        onFocus={() => {
+                            console.log('Focused on input');
+                            flag = true
+
+                        }
+                        }
+                    />
+
+
+
+                </View>
+
+                <View style={styles.containerDoencas}>
+                    <TextInput
+                        multiline
+                        numberOfLines={2}
+                        blurOnSubmit
+                        style={styles.input}
+                        value={inputData}
+                        onChangeText={setInputData}
+                        placeholder="Data"
+                    // onFocus={() => {
+                    //     console.log('Focused on input');
+
+                    // }
+                    // }
+                    />
+                </View>
+
+            </View>
+
+            <View style={styles.footerBotao}>
+                <TouchableOpacity onPress={() =>
+                        (navigation.goBack())
+                        (objTratamento({
+                            Enfermidade: inputDoenca,
+                            Remedio: function (){
+                                const listaRemedio = inputRemedio
+                                if (listaRemedio.includes(',') == true){
+                                    
+                                } 
+                                return 
+                            },
+                            Data: inputData,
+                            id: arrayTratamento.length
+                        }))
+                }
+
+
+                >
+
+                    <LinearGradient
+                        // Button Linear Gradient
+                        colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
+                        style={styles.botaoPlus}>
+                        <Feather
+                            name="check-circle"
+                            size={40}
+                            color="white"
+
+                        />
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
+        </View >
+
+    )
+}
+
+export function NovoRemedio() {
+    const { inputRemedio, setInputRemedio } = useContext(RemedioContext)
+
+    console.log('bbbbb')
+    return (
+        <View style={styles.containerDoencas}>
+            <TextInput
+                multiline
+                numberOfLines={2}
+
+                style={styles.input}
+                value={inputRemedio}
+
+                onChangeText={(texto) => {
+                    setInputRemedio(texto)
+                }
+                }
+                placeholder="Remédio(s)"
+                onFocus={() => {
+                    console.log('Focused on input');
+                    flag = true
+
+                }
+                }
+            />
+        </View>
+    )
 
 }
 
@@ -147,7 +338,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#7D7070',
         paddingTop: 25,
-
+        width: '50%'
     },
     footerBotao: {
         width: '100%',
@@ -181,135 +372,5 @@ const styles = StyleSheet.create({
 
 
 });
-
-let flag = true
-let oi = ''
-let opa
-
-export function CadastroTratamento(props) {
-    let rem  = props.oi
-   console.log(rem)
-    const navigation = useNavigation()
-
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Adicionar</Text>
-                <TouchableOpacity
-                    style={styles.containerTitulo}
-                    onPress={() =>
-                        navigation.goBack()
-                    }>
-                    <Feather
-                        name="arrow-left"
-                        size={30}
-                        color="white"
-                    />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.containerCorpo}>
-                <View style={styles.containerDoencas}>
-                    <TextInput
-                        multiline
-                        numberOfLines={1}
-                        blurOnSubmit
-                        style={styles.input}
-                        placeholder="Enfermidade"
-                        onFocus={() => {
-                            console.log('Focused on input');
-
-                        }
-                        }
-                    />
-                </View>
-
-                <View style={styles.inputRemedios}>
-                    <NovoRemedio />
-                  
-                    {flag && rem == 'a' && <NovoRemedio />}
-
-                </View>
-
-                <View style={styles.containerDoencas}>
-                    <TextInput
-                        multiline
-                        numberOfLines={2}
-                        blurOnSubmit
-                        style={styles.input}
-                        placeholder="Data"
-                        onFocus={() => {
-                            console.log('Focused on input');
-
-                        }
-                        }
-                    />
-                </View>
-
-            </View>
-
-            <View style={styles.footerBotao}>
-                <TouchableOpacity>
-
-                    <LinearGradient
-                        // Button Linear Gradient
-                        colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
-                        style={styles.botaoPlus}>
-                        <Feather
-                            name="check-circle"
-                            size={40}
-                            color="white"
-
-                        />
-                    </LinearGradient>
-                </TouchableOpacity>
-            </View>
-        </View >
-
-
-
-
-
-    )
-}
-
-function NovoRemedio() {
-    const [inputRemedio, setInputRemedio] = useState('')
-
-        console.log('aaaa', flag, inputRemedio)
-
-        console.log('bbbbb')
-        return (
-            <View style={styles.containerDoencas}>
-                <TextInput
-                    multiline
-                    numberOfLines={2}
-                 
-                    style={styles.input}
-                    value={inputRemedio}
-
-                    onChangeText={(texto) =>{
-                        setInputRemedio(texto)
-                        opa = inputRemedio
-                        console.log('oi', opa)
-                       {<CadastroTratamento oi="a" />}
-                    }
-                    }
-                    placeholder="Remédio(s)"
-                    onFocus={() => {
-                        console.log('Focused on input');
-                        flag = true
-
-
-                    }
-                    }
-                />
-            </View>
-        )
-
-    }
-
-
-
 
 
