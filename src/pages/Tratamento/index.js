@@ -34,11 +34,29 @@ export function StackTratamento() {
                         },
                         headerTintColor: '#fff',
                         headerTitleStyle: {
-                            fontWeight: '700',
+                            fontWeight: '500',
+                            fontSize: 30,
                         },
                         headerTitleAlign: "center",
                     }} />
-                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }} />
+                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{
+                        title: 'Adicionar',
+                        headerStyle: {
+                            backgroundColor: '#97D8AE',
+                            borderColor: '#97D8AE',
+                            borderWidth: 2,
+                            borderBottomLeftRadius: 20,
+                            borderBottomRightRadius: 20,
+                            
+
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: '500',
+                            fontSize: 30,
+                        },
+                        headerTitleAlign: "center",
+                    }} />
             </Stack.Navigator>
         </RemedioContextProvider>
     )
@@ -50,13 +68,15 @@ function AccordionItem(props) {
     function toggleItem() {
         setExpanded(!expanded);
     }
-
+    function oi() {
+        alert('oiiiii')
+    }
 
 
 
     return (
         <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
-            <TouchableOpacity onPress={toggleItem}>
+            <TouchableOpacity onPress={toggleItem} onLongPress={oi}>
                 <View style={styles.containerDoencas} >
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
@@ -67,7 +87,7 @@ function AccordionItem(props) {
                 </View>
             </TouchableOpacity>
             {
-                expanded && <Text style={styles.textoDoenca}>Remédios: {props.remedio}</Text>
+                expanded && <Text style={[styles.textoDoenca, {fontWeight:300}]}>Remédios: {props.remedio}</Text>
             }
 
         </View>
@@ -102,12 +122,14 @@ export function Tratamento() {
 
 
                 </View>
+                <ScrollView>
                 {arrayTratamento.map((doenca, index) => (
                     <View key={index} >
                         <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} />
 
                     </View>
                 ))}
+                </ScrollView>
 
 
             </View>
@@ -150,7 +172,7 @@ export function CadastroTratamento() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerTitulo}>
+            {/* <View style={styles.containerTitulo}>
                 <Text style={styles.textoTitulo}> Adicionar</Text>
                 <TouchableOpacity
                     style={styles.containerTitulo}
@@ -163,7 +185,7 @@ export function CadastroTratamento() {
                         color="white"
                     />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={styles.containerCorpo}>
                 <View style={styles.containerDoencas}>
                     <TextInput
@@ -313,7 +335,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-between',
+        paddingLeft: '20%',
+        paddingRight: '20%'
 
     },
     icons: {
