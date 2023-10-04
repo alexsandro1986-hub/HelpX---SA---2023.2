@@ -44,27 +44,31 @@ export function StackTratamento() {
     )
 }
 
-function AccordionItem(props){
-    const [ expanded, setExpanded ] = useState(false);
-  
+function AccordionItem(props) {
+    const [expanded, setExpanded] = useState(true);
+
     function toggleItem() {
-      setExpanded(!expanded);
+        setExpanded(!expanded);
     }
-  
-    const body = <View >{ props.children }</View>;
-  
+
+
+
+
     return (
-      <View style={styles.containerDoencas}>
-        <TouchableOpacity  onPress={ toggleItem }>
-          <Text style={styles.textoDoenca}>{ props.enfermidade }</Text>
-          <Text style={styles.textoDoenca}>{ props.data}</Text>
-          {/* <Icon name={ expanded ? 'chevron-up' : 'chevron-down' }
-                size={20} color="#bbb" /> */}
-        </TouchableOpacity>
-        { expanded && body }
-      </View>
+        <View style={{borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20}}>
+            <TouchableOpacity style={styles.containerDoencas} onPress={toggleItem}>
+                <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
+                <Text style={styles.textoDoenca}>{props.data}</Text>
+                <Feather name={ expanded ? 'chevron-up' : 'chevron-down' }
+                size={40} color="#bbb" /> 
+            </TouchableOpacity>
+            {
+            expanded &&  <Text style={styles.textoDoenca}>Remédios: {props.remedio}</Text>
+            }
+   
+        </View>
     );
-  }
+}
 
 export function Tratamento() {
     const navigation = useNavigation()
@@ -95,9 +99,9 @@ export function Tratamento() {
 
                 </View>
                 {arrayTratamento.map((doenca, index) => (
-                    <View style={styles.containerDoencas} key={index} >
-                       <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} children={doenca.Remedio} />
-                         
+                    <View key={index} >
+                        <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} />
+
                     </View>
                 ))}
 
@@ -130,9 +134,6 @@ export function Tratamento() {
 // =================== Cadastro =======================
 
 
-let flag = false
-let rem = ''
-let opa
 
 export function CadastroTratamento() {
     const navigation = useNavigation()
@@ -185,14 +186,12 @@ export function CadastroTratamento() {
                         style={styles.input}
                         value={inputRemedio}
 
-                        onChangeText={(texto) => {
-                            setInputRemedio(texto)
-                        }
-                        }
+                        onChangeText={setInputRemedio}
+                        
                         placeholder="Remédio(s)"
                         onFocus={() => {
                             console.log('Focused on input');
-                            flag = true
+                         
 
                         }
                         }
@@ -226,13 +225,14 @@ export function CadastroTratamento() {
                     (navigation.goBack())
                         (objTratamento({
                             Enfermidade: inputDoenca,
-                            Remedio: function () {
-                                const listaRemedio = inputRemedio
-                                if (listaRemedio.includes(',') == true) {
+                            Remedio: inputRemedio,
+                            // function () {
+                            //     const listaRemedio = inputRemedio
+                            //     if (listaRemedio.includes(',') == true) {
 
-                                }
-                                return
-                            },
+                            //     }
+                                // return
+                            // },
                             Data: inputData,
                             id: arrayTratamento.length
                         }))
@@ -332,8 +332,8 @@ const styles = StyleSheet.create({
     containerCorpo: {
         width: '100%',
         height: '80%',
-        flexDirection: 'column'
-
+        flexDirection: 'column',
+    
     },
     containerIcons: {
         width: '100%',
@@ -344,13 +344,14 @@ const styles = StyleSheet.create({
     },
     icons: {
         width: 30,
-        height: 30
+        height: 30,
+        alignItems: 'center',
     },
     containerDoencas: {
         width: '100%',
-        height: 70,
-        borderWidth: 1,
-        borderColor: '#97D8AE',
+        height: 50,
+        // borderWidth: 1,
+        // borderColor: '#97D8AE',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
 
@@ -364,7 +365,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#7D7070',
         paddingTop: 25,
-        width: '50%'
+        width: '100%',
+      
     },
     footerBotao: {
         width: '100%',
