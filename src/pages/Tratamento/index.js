@@ -55,17 +55,21 @@ function AccordionItem(props) {
 
 
     return (
-        <View style={{borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20}}>
-            <TouchableOpacity style={styles.containerDoencas} onPress={toggleItem}>
-                <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
-                <Text style={styles.textoDoenca}>{props.data}</Text>
-                <Feather name={ expanded ? 'chevron-up' : 'chevron-down' }
-                size={40} color="#bbb" /> 
+        <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
+            <TouchableOpacity onPress={toggleItem}>
+                <View style={styles.containerDoencas} >
+                    <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
+                    <Text style={styles.textoDoenca}>{props.data}</Text>
+
+                        <Feather name={expanded ? 'chevron-up' : 'chevron-down'}
+                            size={35} color="#bbb" style={{ width: '6%', paddingTop: 15 }}/>
+                 
+                </View>
             </TouchableOpacity>
             {
-            expanded &&  <Text style={styles.textoDoenca}>Remédios: {props.remedio}</Text>
+                expanded && <Text style={styles.textoDoenca}>Remédios: {props.remedio}</Text>
             }
-   
+
         </View>
     );
 }
@@ -187,11 +191,11 @@ export function CadastroTratamento() {
                         value={inputRemedio}
 
                         onChangeText={setInputRemedio}
-                        
+
                         placeholder="Remédio(s)"
                         onFocus={() => {
                             console.log('Focused on input');
-                         
+
 
                         }
                         }
@@ -231,7 +235,7 @@ export function CadastroTratamento() {
                             //     if (listaRemedio.includes(',') == true) {
 
                             //     }
-                                // return
+                            // return
                             // },
                             Data: inputData,
                             id: arrayTratamento.length
@@ -257,36 +261,6 @@ export function CadastroTratamento() {
         </View >
 
     )
-}
-
-export function NovoRemedio() {
-    const { inputRemedio, setInputRemedio } = useContext(RemedioContext)
-
-    console.log('bbbbb')
-    return (
-        <View style={styles.containerDoencas}>
-            <TextInput
-                multiline
-                numberOfLines={2}
-
-                style={styles.input}
-                value={inputRemedio}
-
-                onChangeText={(texto) => {
-                    setInputRemedio(texto)
-                }
-                }
-                placeholder="Remédio(s)"
-                onFocus={() => {
-                    console.log('Focused on input');
-                    flag = true
-
-                }
-                }
-            />
-        </View>
-    )
-
 }
 
 
@@ -333,7 +307,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '80%',
         flexDirection: 'column',
-    
+
     },
     containerIcons: {
         width: '100%',
@@ -366,7 +340,7 @@ const styles = StyleSheet.create({
         color: '#7D7070',
         paddingTop: 25,
         width: '100%',
-      
+
     },
     footerBotao: {
         width: '100%',
