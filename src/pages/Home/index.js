@@ -6,8 +6,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from "@react-navigation/native";
+
 
 const Tab = createBottomTabNavigator();
+
 
 export default function Home() {
   return (
@@ -40,6 +43,19 @@ export default function Home() {
           headerShown: false,
         }}
       />
+   
+     
+      <Tab.Screen
+        name="QrCode"
+        component={QrCodeUser}
+        options={{
+          tabBarLabel: 'QRCode',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="qrcode" color={color} size={30} />
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -59,8 +75,10 @@ const styles = StyleSheet.create({
 
 function Feed() {
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#FFF' }}>
+    
 
+    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#FFF' }}>
+      
       <View style={feed.cima}>
  
         <TouchableOpacity style={{width:'40%', height:'40%', backgroundColor:'#97D8AE', borderRadius:10, justifyContent:'center', alignItems:'center', gap: 15, shadowColor: "#000",shadowOffset: {width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8,}}>
@@ -121,6 +139,8 @@ const feed = StyleSheet.create({
 
 
 function Profile() {
+  
+  const navigation = useNavigation()
   return (
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
@@ -173,15 +193,7 @@ function Profile() {
 
       </View>
 
-      <View style={profile.viewQR}>
-
-        <TouchableOpacity style={profile.btnQrCode}>
-
-        <MaterialCommunityIcons name="qrcode" color={'white'} size={40} />
-
-        </TouchableOpacity>
-
-      </View>
+      
 
 
 
@@ -218,64 +230,82 @@ const profile = StyleSheet.create({
   },
 
   infoView:{
-    width: '70%',
-    height:'40%',
+    width: '60%',
+    height:'45%',
     backgroundColor:'white',
     borderRadius:10,
     shadowColor: "#000",
     shadowOffset: {width: 0, height: 0}, 
-    shadowOpacity: 0.40, 
-    shadowRadius: 20, 
+    shadowOpacity: 0.30, 
+    shadowRadius: 10, 
     elevation: 3
   },
 
   infoUser:{
-    flex:1,
+    flex: 1,
     justifyContent:'center',
     alignItems:'center',
-    gap: 10,
-    padding:10
+    gap: 5,
+  
   },
 
   textInfo:{
-    fontSize:25, 
-    fontWeight:'bold',
-    color:'grey'
-  },
-
-  textInfoUser:{
     fontSize:20, 
     fontWeight:'bold',
     color:'grey'
   },
 
-  viewQR:{
-    width:'70%',
-    height:'10%',
-    padding: 10,
-    justifyContent:'center',
-    alignItems:'flex-end'
+  textInfoUser:{
+    fontSize:16, 
+    fontWeight:'bold',
+    color:'grey'
   },
-
-  btnQrCode:{
-    width:70, 
-    height:70, 
-    backgroundColor:'#990000', 
-    justifyContent:'center',
-     alignItems:'center', 
-     borderWidth:2,
-     borderColor:'white',
-     borderRadius:100,
-     shadowColor: "#000",
-     shadowOffset: {width: 0, height: 3}, 
-     shadowOpacity: 0.70, 
-     shadowRadius: 10, 
-     elevation: 10
-  },
-
-
-
 
 
 
 })
+
+function QrCodeUser(){
+  return(
+    <View style={qrcode.container}>
+
+      <View style={qrcode.viewTxt}>
+        <Text style={{fontSize:24, fontWeight:'bold', color:'grey'}}>Meu QRCode</Text>
+      </View>
+
+      <View style={qrcode.viewQrcode}>
+        
+        <MaterialCommunityIcons name="qrcode" color={'black'} size={400} />
+      </View>
+
+
+
+
+    </View>
+  )
+}
+
+const qrcode = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'white',
+  },
+
+  viewTxt:{
+    width:'100%',
+    height:60,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+
+  viewQrcode:{
+    height:400,
+    width:'100%',
+    justifyContent:'center',
+    alignItems:'center'
+
+  }
+})
+

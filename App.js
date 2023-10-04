@@ -8,10 +8,12 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+
 import Login from './src/pages/Login';
 import Home from './src/pages/Home'
 import cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
+
 
 
 const Stack = createStackNavigator();
