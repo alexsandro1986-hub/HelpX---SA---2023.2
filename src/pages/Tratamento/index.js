@@ -9,6 +9,10 @@ import { mdiEmoticonSickOutline } from '@mdi/js';
 import { useState, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
+import Collapsible from 'react-native-collapsible';
+
+
+
 
 
 const Stack = createStackNavigator();
@@ -40,9 +44,32 @@ export function StackTratamento() {
     )
 }
 
+function AccordionItem(props){
+    const [ expanded, setExpanded ] = useState(false);
+  
+    function toggleItem() {
+      setExpanded(!expanded);
+    }
+  
+    const body = <View >{ props.children }</View>;
+  
+    return (
+      <View style={styles.containerDoencas}>
+        <TouchableOpacity  onPress={ toggleItem }>
+          <Text style={styles.textoDoenca}>{ props.enfermidade }</Text>
+          <Text style={styles.textoDoenca}>{ props.data}</Text>
+          {/* <Icon name={ expanded ? 'chevron-up' : 'chevron-down' }
+                size={20} color="#bbb" /> */}
+        </TouchableOpacity>
+        { expanded && body }
+      </View>
+    );
+  }
+
 export function Tratamento() {
     const navigation = useNavigation()
     const { arrayTratamento } = useContext(RemedioContext)
+
 
 
     return (
@@ -68,10 +95,9 @@ export function Tratamento() {
 
                 </View>
                 {arrayTratamento.map((doenca, index) => (
-                    <View style={styles.containerDoencas} key={index}>
-                        <Text style={styles.textoDoenca}> {doenca.Enfermidade}</Text>
-                        <Text style={styles.textoDoenca} > {doenca.Remedio}</Text>
-                        <Text style={styles.textoDoenca} > {doenca.Data}</Text>
+                    <View style={styles.containerDoencas} key={index} >
+                       <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} children={doenca.Remedio} />
+                         
                     </View>
                 ))}
 
@@ -197,15 +223,15 @@ export function CadastroTratamento() {
 
             <View style={styles.footerBotao}>
                 <TouchableOpacity onPress={() =>
-                        (navigation.goBack())
+                    (navigation.goBack())
                         (objTratamento({
                             Enfermidade: inputDoenca,
-                            Remedio: function (){
+                            Remedio: function () {
                                 const listaRemedio = inputRemedio
-                                if (listaRemedio.includes(',') == true){
-                                    
-                                } 
-                                return 
+                                if (listaRemedio.includes(',') == true) {
+
+                                }
+                                return
                             },
                             Data: inputData,
                             id: arrayTratamento.length
