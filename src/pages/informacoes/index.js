@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 const Header = () => (
@@ -38,6 +38,24 @@ export default function informacoes() {
     );
 }
 
+function MyBackButton() {
+    const navigation = useNavigation();
+
+    return (
+        
+        <TouchableOpacity onPress={() => navigation.goBack()} >
+                            <Text >
+                                <Icon
+                                    name="arrow-left"
+                                    size={35}
+                                    color="white"
+
+                                />
+                            </Text>
+                        </TouchableOpacity>
+    );
+}
+
 function Nome(a) {
     return function ({ navigation }) {
 
@@ -48,8 +66,7 @@ function Nome(a) {
                         <TextInput
                             style={styles.input}
                             placeholder="Nome"
-                        // onChangeText={(text) => setNome(text)}
-                        // value={nome}
+                       
                         />
                     </View>
                     <View style={styles.botao}>
@@ -69,7 +86,7 @@ function Nome(a) {
 
 
                         </TouchableOpacity >
-                        <TouchableOpacity onPress={() => navigation.navigate()} >
+                        <TouchableOpacity  >
                             <Text style={styles.esquerda_bto}>
                                 <Icon
                                     name="arrow-left"
@@ -95,8 +112,7 @@ function Idade(a) {
                         <TextInput
                             style={styles.input}
                             placeholder="Idade"
-                        // onChangeText={(text) => setNome(text)}
-                        // value={nome}
+                        
                         />
                     </View>
                     <View style={styles.botao}>
@@ -114,17 +130,8 @@ function Idade(a) {
 
 
                         </TouchableOpacity>
+                        <View style={styles.esquerda_bto}><MyBackButton /></View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate()} >
-                            <Text style={styles.esquerda_bto}>
-                                <Icon
-                                    name="arrow-left"
-                                    size={35}
-                                    color="white"
-
-                                />
-                            </Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -156,18 +163,8 @@ function Alergias(a) {
 
                                 />
                             </Text>
-                            <Text style={styles.esquerda_bto}>
-                                <Icon
-                                    name="arrow-left"
-                                    size={35}
-                                    color="white"
-
-                                />
-                            </Text>
-
-
                         </TouchableOpacity>
-
+                        <View style={styles.esquerda_bto}><MyBackButton /></View>
 
                     </View>
                 </View></View>
@@ -210,6 +207,8 @@ function Contatos(a) {
 
                                 />
                             </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.goBack('Alergias')} >
                             <Text style={styles.esquerda_bto}>
                                 <Icon
                                     name="arrow-left"
@@ -218,9 +217,8 @@ function Contatos(a) {
 
                                 />
                             </Text>
-
-
-                        </TouchableOpacity></View>
+                        </TouchableOpacity>
+                    </View>
                 </View></View>
         );
     }
@@ -260,6 +258,8 @@ function Endereco(a) {
 
                                 />
                             </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.goBack()} >
                             <Text style={styles.esquerda_bto}>
                                 <Icon
                                     name="arrow-left"
@@ -268,10 +268,10 @@ function Endereco(a) {
 
                                 />
                             </Text>
-
-
-                        </TouchableOpacity></View>
-                </View></View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
         );
     }
 }
