@@ -4,12 +4,11 @@ import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from '@mdi/react';
-import { mdiEmoticonSickOutline } from '@mdi/js';
 import { useState, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
-import Collapsible from 'react-native-collapsible';
+// import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 
 
@@ -40,23 +39,23 @@ export function StackTratamento() {
                         headerTitleAlign: "center",
                     }} />
                 <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{
-                        title: 'Adicionar',
-                        headerStyle: {
-                            backgroundColor: '#97D8AE',
-                            borderColor: '#97D8AE',
-                            borderWidth: 2,
-                            borderBottomLeftRadius: 20,
-                            borderBottomRightRadius: 20,
-                            
+                    title: 'Adicionar',
+                    headerStyle: {
+                        backgroundColor: '#97D8AE',
+                        borderColor: '#97D8AE',
+                        borderWidth: 2,
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
 
-                        },
-                        headerTintColor: '#fff',
-                        headerTitleStyle: {
-                            fontWeight: '500',
-                            fontSize: 30,
-                        },
-                        headerTitleAlign: "center",
-                    }} />
+
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: '500',
+                        fontSize: 30,
+                    },
+                    headerTitleAlign: "center",
+                }} />
             </Stack.Navigator>
         </RemedioContextProvider>
     )
@@ -81,13 +80,13 @@ function AccordionItem(props) {
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
 
-                        <Feather name={expanded ? 'chevron-up' : 'chevron-down'}
-                            size={35} color="#bbb" style={{ width: '6%', paddingTop: 15 }}/>
-                 
+                    <Feather name={expanded ? 'chevron-up' : 'chevron-down'}
+                        size={35} color="#bbb" style={{ width: '10%', paddingTop: 15 }} />
+
                 </View>
             </TouchableOpacity>
             {
-                expanded && <Text style={[styles.textoDoenca, {fontWeight:300}]}>Remédios: {props.remedio}</Text>
+                expanded && <Text style={[styles.textoDoenca, { fontWeight: 300 }]}>Remédios: {props.remedio}</Text>
             }
 
         </View>
@@ -108,11 +107,18 @@ export function Tratamento() {
             <View style={styles.containerCorpo}>
                 <View style={styles.containerIcons}>
 
-                    <Icon path={mdiEmoticonSickOutline}
+
+                    {/* <Icon path={mdiEmoticonSickOutline}
                         size={1.5}
 
-                    />
+                    /> */}
 
+                    <Feather
+                        name="frown"
+                        size={30}
+                        color="black"
+                        style={styles.icons}
+                    />
                     <Feather
                         name="calendar"
                         size={30}
@@ -123,12 +129,12 @@ export function Tratamento() {
 
                 </View>
                 <ScrollView>
-                {arrayTratamento.map((doenca, index) => (
-                    <View key={index} >
-                        <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} />
+                    {arrayTratamento.map((doenca, index) => (
+                        <View key={index} >
+                            <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} />
 
-                    </View>
-                ))}
+                        </View>
+                    ))}
                 </ScrollView>
 
 
@@ -172,20 +178,6 @@ export function CadastroTratamento() {
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Adicionar</Text>
-                <TouchableOpacity
-                    style={styles.containerTitulo}
-                    onPress={() =>
-                        navigation.goBack()
-                    }>
-                    <Feather
-                        name="arrow-left"
-                        size={30}
-                        color="white"
-                    />
-                </TouchableOpacity>
-            </View> */}
             <View style={styles.containerCorpo}>
                 <View style={styles.containerDoencas}>
                     <TextInput
@@ -215,12 +207,7 @@ export function CadastroTratamento() {
                         onChangeText={setInputRemedio}
 
                         placeholder="Remédio(s)"
-                        onFocus={() => {
-                            console.log('Focused on input');
 
-
-                        }
-                        }
                     />
 
 
@@ -247,21 +234,15 @@ export function CadastroTratamento() {
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity onPress={() =>
-                    (navigation.goBack())
-                        (objTratamento({
-                            Enfermidade: inputDoenca,
-                            Remedio: inputRemedio,
-                            // function () {
-                            //     const listaRemedio = inputRemedio
-                            //     if (listaRemedio.includes(',') == true) {
-
-                            //     }
-                            // return
-                            // },
-                            Data: inputData,
-                            id: arrayTratamento.length
-                        }))
+                <TouchableOpacity onPress={() => {
+                    (objTratamento({
+                        Enfermidade: inputDoenca,
+                        Remedio: inputRemedio,
+                        Data: inputData,
+                        id: arrayTratamento.length
+                    }))
+                    navigation.goBack()
+                }
                 }
 
 
@@ -296,11 +277,12 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     container: {
-        flex: 1,
+        // flex: 1,
         // backgroundColor: "#C7FFCC",
         alignItems: "center",
         flexDirection: 'column',
-
+        width: 430,
+        height: 800,
         gap: 11,
     },
     containerTitulo: {
@@ -346,7 +328,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     containerDoencas: {
-        width: '100%',
+        width: '70%',
         height: 50,
         // borderWidth: 1,
         // borderColor: '#97D8AE',
@@ -382,7 +364,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderRadius: 16,
         color: 'black',
-        width: 200,
+        width: '100%',
         padding: 6,
         textAlign: 'center'
     },
