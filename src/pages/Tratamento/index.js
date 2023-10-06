@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Toucha
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
 
@@ -121,10 +121,21 @@ export function Tratamento() {
     );
 
 }
+
 function Sanfona(props) {
     const [expandir, setExpandir] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const { arrayTratamento, setArrayTratamento } = useContext(RemedioContext)
+    const aa = 1
+    // Pegando posição y do touch do usuário no post para modificar a posição do modal
+    const {toquePostY, setToquePostY} = useState(1) 
+    
+    const b =  function vai(a){
+        console.log('iiii', a)
+        setToquePostY(a)
+        console.log(toquePostY, typeof toquePostY)
+        return a
+    } 
 
     function alternarCompressao() {
         setExpandir(!expandir);
@@ -133,11 +144,21 @@ function Sanfona(props) {
         alert('oiiiii')
     }
 
-
+  
 
     return (
         <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
-            <TouchableOpacity onPress={alternarCompressao} onLongPress={oi}>
+            <TouchableOpacity 
+            onPress={(event) => {
+                console.log(event.nativeEvent.pageY)
+                const aa = event.nativeEvent.pageY
+                vai(aa)
+              
+
+                alternarCompressao()}
+            }
+             onLongPress={oi}
+             >
                 <View style={styles.containerDoencas} >
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
@@ -155,16 +176,16 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={styles.modalPosicao}>
+                        <View style={[styles.modalPosicao, {paddingTop: toquePostY}]}>
 
-
-                            <View style={styles.modalzinho}>
+                            <View style={[styles.modalzinho, {paddingLeft: {b} }]}>
 
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
-                                        console.log(arrayTratamento)
 
+                                        console.log(props.chave)
+                                        
 
                                     }}
                                 >
@@ -193,7 +214,13 @@ function Sanfona(props) {
                     {/* ============== FIM MODAL =========== */}
 
                     <TouchableOpacity
-                        onPress={() => setModalVisible(true)}>
+                     onPress={() => {
+                        
+                        setModalVisible(true)
+                        
+                    }}
+                        // onPress={() => setModalVisible(true)}
+                        >
                         <Text>Show Modal</Text>
                     </TouchableOpacity>
 
