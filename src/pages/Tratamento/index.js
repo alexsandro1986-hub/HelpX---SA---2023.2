@@ -123,19 +123,22 @@ export function Tratamento() {
 }
 
 function Sanfona(props) {
+    const navigation = useNavigation()
+
     const [expandir, setExpandir] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const { arrayTratamento, setArrayTratamento } = useContext(RemedioContext)
+    const { inputRemedio, inputDoenca, inputData, arrayTratamento, setArrayTratamento,
+    construindoObj, flagEditando, setFlagEditando } = useContext(RemedioContext)
     const aa = 1
     // Pegando posição y do touch do usuário no post para modificar a posição do modal
-    const {toquePostY, setToquePostY} = useState(1) 
-    
-    const b =  function vai(a){
+    const { toquePostY, setToquePostY } = useState(1)
+
+    const b = function vai(a) {
         console.log('iiii', a)
         setToquePostY(a)
         console.log(toquePostY, typeof toquePostY)
         return a
-    } 
+    }
 
     function alternarCompressao() {
         setExpandir(!expandir);
@@ -144,21 +147,22 @@ function Sanfona(props) {
         alert('oiiiii')
     }
 
-  
+
 
     return (
         <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
-            <TouchableOpacity 
-            onPress={(event) => {
-                console.log(event.nativeEvent.pageY)
-                const aa = event.nativeEvent.pageY
-                vai(aa)
-              
+            <TouchableOpacity
+                onPress={(event) => {
+                    console.log(event.nativeEvent.pageY)
+                    const aa = event.nativeEvent.pageY
+                    vai(aa)
 
-                alternarCompressao()}
-            }
-             onLongPress={oi}
-             >
+
+                    alternarCompressao()
+                }
+                }
+                onLongPress={oi}
+            >
                 <View style={styles.containerDoencas} >
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
@@ -176,16 +180,22 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={[styles.modalPosicao, {paddingTop: toquePostY}]}>
+                        <View style={[styles.modalPosicao, { paddingTop: toquePostY }]}>
 
-                            <View style={[styles.modalzinho, {paddingLeft: {b} }]}>
+                            <View style={[styles.modalzinho, { paddingLeft: { b } }]}>
 
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
-
+                                        arrayTratamento.map((elemento) => {
+                                            if (elemento.id == props.chave) {
+                                                setFlagEditando(true)
+                                                setModalVisible(!modalVisible)
+                                                navigation.navigate('AdicionarNovoTratamento')
+                                            }
+                                        })
                                         console.log(props.chave)
-                                        
+
 
                                     }}
                                 >
@@ -214,13 +224,13 @@ function Sanfona(props) {
                     {/* ============== FIM MODAL =========== */}
 
                     <TouchableOpacity
-                     onPress={() => {
-                        
-                        setModalVisible(true)
-                        
-                    }}
-                        // onPress={() => setModalVisible(true)}
-                        >
+                        onPress={() => {
+
+                            setModalVisible(true)
+
+                        }}
+                    // onPress={() => setModalVisible(true)}
+                    >
                         <Text>Show Modal</Text>
                     </TouchableOpacity>
 
@@ -242,7 +252,7 @@ export function AdicionarNovoTratamento() {
         inputDoenca, setInputDoenca,
         inputData, setInputData,
         arrayTratamento, setArrayTratamento,
-        objTratamento } = useContext(RemedioContext)
+        criandoTratamento, construindoObj, flagEditando, setFlagEditando, editandoTratamento} = useContext(RemedioContext)
 
 
     return (
@@ -304,19 +314,12 @@ export function AdicionarNovoTratamento() {
 
             <View style={styles.footerBotao}>
                 <TouchableOpacity onPress={() => {
-                    (objTratamento({
-                        Enfermidade: inputDoenca,
-                        Remedio: inputRemedio,
-                        Data: inputData,
-                        id: arrayTratamento.length
-                    }))
+                    flagEditando ?
+                    editandoTratamento(construindoObj(inputDoenca, inputRemedio, inputData)) : criandoTratamento(construindoObj(inputDoenca, inputRemedio, inputData))
                     navigation.goBack()
                 }
                 }
-
-
                 >
-
                     <LinearGradient
                         // Button Linear Gradient
                         colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
