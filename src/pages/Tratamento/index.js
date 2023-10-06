@@ -1,14 +1,15 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from '@mdi/react';
-import { mdiEmoticonSickOutline } from '@mdi/js';
 import { useState, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
+
+
+
 
 
 const Stack = createStackNavigator();
@@ -30,34 +31,53 @@ export function StackTratamento() {
                         },
                         headerTintColor: '#fff',
                         headerTitleStyle: {
-                            fontWeight: '700',
+                            fontWeight: '500',
+                            fontSize: 30,
                         },
                         headerTitleAlign: "center",
                     }} />
-                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{ headerShown: false }} />
+                <Stack.Screen name='AdicionarNovoTratamento' component={AdicionarNovoTratamento} options={{
+                    title: 'Adicionar',
+                    headerStyle: {
+                        backgroundColor: '#97D8AE',
+                        borderColor: '#97D8AE',
+                        borderWidth: 2,
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
+
+
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: '500',
+                        fontSize: 30,
+                    },
+                    headerTitleAlign: "center",
+                }} />
             </Stack.Navigator>
         </RemedioContextProvider>
     )
 }
 
+
+//  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
     const navigation = useNavigation()
     const { arrayTratamento } = useContext(RemedioContext)
 
 
+
     return (
         <View style={styles.container}>
-            {/* <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Tratamentos</Text>
-            </View> */}
+
             <View style={styles.containerCorpo}>
                 <View style={styles.containerIcons}>
-
-                    <Icon path={mdiEmoticonSickOutline}
-                        size={1.5}
-
+                    <Feather
+                        name="frown"
+                        size={30}
+                        color="black"
+                        style={styles.icons}
                     />
-
                     <Feather
                         name="calendar"
                         size={30}
@@ -67,19 +87,20 @@ export function Tratamento() {
 
 
                 </View>
-                {arrayTratamento.map((doenca, index) => (
-                    <View style={styles.containerDoencas} key={index}>
-                        <Text style={styles.textoDoenca}> {doenca.Enfermidade}</Text>
-                        <Text style={styles.textoDoenca} > {doenca.Remedio}</Text>
-                        <Text style={styles.textoDoenca} > {doenca.Data}</Text>
-                    </View>
-                ))}
+                <ScrollView>
+                    {arrayTratamento.map((doenca, index) => (
+                        <View key={index} >
+                            <Sanfona enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} chave={index} />
+
+                        </View>
+                    ))}
+                </ScrollView>
 
 
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity onPress={() => navigation.navigate('CadastroTratamento')}>
+                <TouchableOpacity onPress={() => navigation.navigate('AdicionarNovoTratamento')}>
 
                     <LinearGradient
                         // Button Linear Gradient
@@ -100,15 +121,95 @@ export function Tratamento() {
     );
 
 }
+function Sanfona(props) {
+    const [expandir, setExpandir] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
+    const { arrayTratamento, setArrayTratamento } = useContext(RemedioContext)
 
-// =================== Cadastro =======================
+    function alternarCompressao() {
+        setExpandir(!expandir);
+    }
+    function oi() {
+        alert('oiiiii')
+    }
 
 
-let flag = false
-let rem = ''
-let opa
 
-export function CadastroTratamento() {
+    return (
+        <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
+            <TouchableOpacity onPress={alternarCompressao} onLongPress={oi}>
+                <View style={styles.containerDoencas} >
+                    <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
+                    <Text style={styles.textoDoenca}>{props.data}</Text>
+
+                    <Feather name={expandir ? 'chevron-up' : 'chevron-down'}
+                        size={35} color="#bbb" style={{ width: '10%', paddingTop: 15 }} />
+
+                    {/* ========== MODAL (Botões: editar e excluir) =========== */}
+                    <Modal
+
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.modalPosicao}>
+
+
+                            <View style={styles.modalzinho}>
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => {
+                                        console.log(arrayTratamento)
+
+
+                                    }}
+                                >
+                                    <Text style={styles.textoModal}> Editar</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => {
+                                        setArrayTratamento(
+                                            arrayTratamento.filter(idPosts => idPosts.id != props.chave))
+                                    }}>
+                                    <Text style={styles.textoModal}> Excluir</Text>
+                                </TouchableOpacity>
+
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => setModalVisible(!modalVisible)}>
+                                    <Text style={styles.textoModal}> Cancelar</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
+                    {/* ============== FIM MODAL =========== */}
+
+                    <TouchableOpacity
+                        onPress={() => setModalVisible(true)}>
+                        <Text>Show Modal</Text>
+                    </TouchableOpacity>
+
+                </View>
+            </TouchableOpacity>
+            {
+                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300 }]}>Remédios: {props.remedio}</Text>
+            }
+
+        </View>
+    );
+}
+// =================== Adicionar TRATAMENTOS =======================
+
+
+export function AdicionarNovoTratamento() {
     const navigation = useNavigation()
     const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
@@ -119,20 +220,6 @@ export function CadastroTratamento() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Adicionar</Text>
-                <TouchableOpacity
-                    style={styles.containerTitulo}
-                    onPress={() =>
-                        navigation.goBack()
-                    }>
-                    <Feather
-                        name="arrow-left"
-                        size={30}
-                        color="white"
-                    />
-                </TouchableOpacity>
-            </View>
             <View style={styles.containerCorpo}>
                 <View style={styles.containerDoencas}>
                     <TextInput
@@ -159,17 +246,10 @@ export function CadastroTratamento() {
                         style={styles.input}
                         value={inputRemedio}
 
-                        onChangeText={(texto) => {
-                            setInputRemedio(texto)
-                        }
-                        }
-                        placeholder="Remédio(s)"
-                        onFocus={() => {
-                            console.log('Focused on input');
-                            flag = true
+                        onChangeText={setInputRemedio}
 
-                        }
-                        }
+                        placeholder="Remédio(s)"
+
                     />
 
 
@@ -196,20 +276,15 @@ export function CadastroTratamento() {
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity onPress={() =>
-                        (navigation.goBack())
-                        (objTratamento({
-                            Enfermidade: inputDoenca,
-                            Remedio: function (){
-                                const listaRemedio = inputRemedio
-                                if (listaRemedio.includes(',') == true){
-                                    
-                                } 
-                                return 
-                            },
-                            Data: inputData,
-                            id: arrayTratamento.length
-                        }))
+                <TouchableOpacity onPress={() => {
+                    (objTratamento({
+                        Enfermidade: inputDoenca,
+                        Remedio: inputRemedio,
+                        Data: inputData,
+                        id: arrayTratamento.length
+                    }))
+                    navigation.goBack()
+                }
                 }
 
 
@@ -233,36 +308,6 @@ export function CadastroTratamento() {
     )
 }
 
-export function NovoRemedio() {
-    const { inputRemedio, setInputRemedio } = useContext(RemedioContext)
-
-    console.log('bbbbb')
-    return (
-        <View style={styles.containerDoencas}>
-            <TextInput
-                multiline
-                numberOfLines={2}
-
-                style={styles.input}
-                value={inputRemedio}
-
-                onChangeText={(texto) => {
-                    setInputRemedio(texto)
-                }
-                }
-                placeholder="Remédio(s)"
-                onFocus={() => {
-                    console.log('Focused on input');
-                    flag = true
-
-                }
-                }
-            />
-        </View>
-    )
-
-}
-
 
 const styles = StyleSheet.create({
     geral: {
@@ -274,11 +319,12 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     container: {
-        flex: 1,
+        // flex: 1,
         // backgroundColor: "#C7FFCC",
         alignItems: "center",
         flexDirection: 'column',
-
+        width: 430,
+        height: 800,
         gap: 11,
     },
     containerTitulo: {
@@ -306,25 +352,28 @@ const styles = StyleSheet.create({
     containerCorpo: {
         width: '100%',
         height: '80%',
-        flexDirection: 'column'
+        flexDirection: 'column',
 
     },
     containerIcons: {
         width: '100%',
         height: 40,
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-between',
+        paddingLeft: '20%',
+        paddingRight: '20%'
 
     },
     icons: {
         width: 30,
-        height: 30
+        height: 30,
+        alignItems: 'center',
     },
     containerDoencas: {
-        width: '100%',
-        height: 70,
-        borderWidth: 1,
-        borderColor: '#97D8AE',
+        width: '70%',
+        height: 50,
+        // borderWidth: 1,
+        // borderColor: '#97D8AE',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
 
@@ -338,7 +387,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#7D7070',
         paddingTop: 25,
-        width: '50%'
+        width: '100%',
+
     },
     footerBotao: {
         width: '100%',
@@ -356,7 +406,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderRadius: 16,
         color: 'black',
-        width: 200,
+        width: '100%',
         padding: 6,
         textAlign: 'center'
     },
@@ -367,7 +417,39 @@ const styles = StyleSheet.create({
         borderColor: '#97D8AE',
         flexDirection: 'column',
 
-    }
+    },
+    modalPosicao: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalzinho: {
+        borderWidth: 2,
+        borderColor: 'black',
+        width: '100%',
+        borderRadius: 10,
+        backgroundColor: 'transparent',
+        height: '20%',
+        justifyContent: 'space-evenly'
+    },
+    botaoModal: {
+        backgroundColor: 'white',
+        height: '33.33%',
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
+    textoModal: {
+        color: '#7D7070',
+        fontSize: 20,
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
+
 
 
 
