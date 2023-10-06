@@ -1,14 +1,12 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
-// import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
-
 
 
 
@@ -38,7 +36,7 @@ export function StackTratamento() {
                         },
                         headerTitleAlign: "center",
                     }} />
-                <Stack.Screen name='CadastroTratamento' component={CadastroTratamento} options={{
+                <Stack.Screen name='AdicionarNovoTratamento' component={AdicionarNovoTratamento} options={{
                     title: 'Adicionar',
                     headerStyle: {
                         backgroundColor: '#97D8AE',
@@ -61,38 +59,8 @@ export function StackTratamento() {
     )
 }
 
-function AccordionItem(props) {
-    const [expanded, setExpanded] = useState(true);
 
-    function toggleItem() {
-        setExpanded(!expanded);
-    }
-    function oi() {
-        alert('oiiiii')
-    }
-
-
-
-    return (
-        <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
-            <TouchableOpacity onPress={toggleItem} onLongPress={oi}>
-                <View style={styles.containerDoencas} >
-                    <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
-                    <Text style={styles.textoDoenca}>{props.data}</Text>
-
-                    <Feather name={expanded ? 'chevron-up' : 'chevron-down'}
-                        size={35} color="#bbb" style={{ width: '10%', paddingTop: 15 }} />
-
-                </View>
-            </TouchableOpacity>
-            {
-                expanded && <Text style={[styles.textoDoenca, { fontWeight: 300 }]}>Remédios: {props.remedio}</Text>
-            }
-
-        </View>
-    );
-}
-
+//  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
     const navigation = useNavigation()
     const { arrayTratamento } = useContext(RemedioContext)
@@ -101,18 +69,9 @@ export function Tratamento() {
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.containerTitulo}>
-                <Text style={styles.textoTitulo}> Tratamentos</Text>
-            </View> */}
+
             <View style={styles.containerCorpo}>
                 <View style={styles.containerIcons}>
-
-
-                    {/* <Icon path={mdiEmoticonSickOutline}
-                        size={1.5}
-
-                    /> */}
-
                     <Feather
                         name="frown"
                         size={30}
@@ -131,7 +90,7 @@ export function Tratamento() {
                 <ScrollView>
                     {arrayTratamento.map((doenca, index) => (
                         <View key={index} >
-                            <AccordionItem enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} />
+                            <Sanfona enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} chave={index} />
 
                         </View>
                     ))}
@@ -141,7 +100,7 @@ export function Tratamento() {
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity onPress={() => navigation.navigate('CadastroTratamento')}>
+                <TouchableOpacity onPress={() => navigation.navigate('AdicionarNovoTratamento')}>
 
                     <LinearGradient
                         // Button Linear Gradient
@@ -162,12 +121,95 @@ export function Tratamento() {
     );
 
 }
+function Sanfona(props) {
+    const [expandir, setExpandir] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
+    const { arrayTratamento, setArrayTratamento } = useContext(RemedioContext)
 
-// =================== Cadastro =======================
+    function alternarCompressao() {
+        setExpandir(!expandir);
+    }
+    function oi() {
+        alert('oiiiii')
+    }
 
 
 
-export function CadastroTratamento() {
+    return (
+        <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
+            <TouchableOpacity onPress={alternarCompressao} onLongPress={oi}>
+                <View style={styles.containerDoencas} >
+                    <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
+                    <Text style={styles.textoDoenca}>{props.data}</Text>
+
+                    <Feather name={expandir ? 'chevron-up' : 'chevron-down'}
+                        size={35} color="#bbb" style={{ width: '10%', paddingTop: 15 }} />
+
+                    {/* ========== MODAL (Botões: editar e excluir) =========== */}
+                    <Modal
+
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.modalPosicao}>
+
+
+                            <View style={styles.modalzinho}>
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => {
+                                        console.log(arrayTratamento)
+
+
+                                    }}
+                                >
+                                    <Text style={styles.textoModal}> Editar</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => {
+                                        setArrayTratamento(
+                                            arrayTratamento.filter(idPosts => idPosts.id != props.chave))
+                                    }}>
+                                    <Text style={styles.textoModal}> Excluir</Text>
+                                </TouchableOpacity>
+
+
+                                <TouchableOpacity
+                                    style={styles.botaoModal}
+                                    onPress={() => setModalVisible(!modalVisible)}>
+                                    <Text style={styles.textoModal}> Cancelar</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
+                    {/* ============== FIM MODAL =========== */}
+
+                    <TouchableOpacity
+                        onPress={() => setModalVisible(true)}>
+                        <Text>Show Modal</Text>
+                    </TouchableOpacity>
+
+                </View>
+            </TouchableOpacity>
+            {
+                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300 }]}>Remédios: {props.remedio}</Text>
+            }
+
+        </View>
+    );
+}
+// =================== Adicionar TRATAMENTOS =======================
+
+
+export function AdicionarNovoTratamento() {
     const navigation = useNavigation()
     const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
@@ -375,7 +417,39 @@ const styles = StyleSheet.create({
         borderColor: '#97D8AE',
         flexDirection: 'column',
 
-    }
+    },
+    modalPosicao: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalzinho: {
+        borderWidth: 2,
+        borderColor: 'black',
+        width: '100%',
+        borderRadius: 10,
+        backgroundColor: 'transparent',
+        height: '20%',
+        justifyContent: 'space-evenly'
+    },
+    botaoModal: {
+        backgroundColor: 'white',
+        height: '33.33%',
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
+    textoModal: {
+        color: '#7D7070',
+        fontSize: 20,
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
+
 
 
 
