@@ -126,17 +126,12 @@ function Sanfona(props) {
     const navigation = useNavigation()
     const [expandir, setExpandir] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const { arrayTratamento, setArrayTratamento, setFlagEditando , setIdEdit} = useContext(RemedioContext)
+    const { arrayTratamento, setArrayTratamento, setFlagEditando, setIdEdit } = useContext(RemedioContext)
     const aa = 1
     // Pegando posição y do touch do usuário no post para modificar a posição do modal
-    const { toquePostY, setToquePostY } = useState(1)
+    const [toquePostY, setToquePostY] = useState(1)
 
-    const b = function vai(a) {
-        console.log('iiii', a)
-        setToquePostY(a)
-        console.log(toquePostY, typeof toquePostY)
-        return a
-    }
+
 
     function alternarCompressao() {
         setExpandir(!expandir);
@@ -144,17 +139,25 @@ function Sanfona(props) {
     function oi() {
         alert('oiiiii')
     }
-
-
+   
+    // function verificarPosicaoToque(toque){
+    //     console.log('Verificando posição do toque na pagina')
+    //     useEffect(() =>{
+            
+    //         console.log("PageY", toquePostY)
+    //         setToquePostY(toque)
+    //     }, [toque])
+    // }
 
     return (
-        <View style={{ borderWidth: 1, borderColor: '#97D8AE', paddingBottom: 20 }}>
+        <View style={styles.postTratamento}>
             <TouchableOpacity
                 onPress={(event) => {
                     console.log(event.nativeEvent.pageY)
                     const aa = event.nativeEvent.pageY
-                    vai(aa)
-
+                    setToquePostY(aa)
+                    // verificarPosicaoToque(aa)
+                   
 
                     alternarCompressao()
                 }
@@ -162,15 +165,19 @@ function Sanfona(props) {
                 onLongPress={oi}
             >
                 <View style={styles.containerDoencas} >
+                    <Feather name='clipboard' size={20}
+                    style={styles.iconsPosts} 
+                    onPress={() => {setModalVisible(true)}}/>
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
 
                     <Feather name={expandir ? 'chevron-up' : 'chevron-down'}
-                        size={35} color="#bbb" style={{ width: '10%', paddingTop: 15 }} />
+                        size={25} color="#bbb" style={styles.iconsPosts} />
+                    
 
                     {/* ========== MODAL (Botões: editar e excluir) =========== */}
                     <Modal
-
+    
                         animationType="slide"
                         transparent={true}
                         visible={modalVisible}
@@ -178,16 +185,16 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={[styles.modalPosicao, { paddingTop: toquePostY }]}>
+                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 300:0 }]}>
 
-                            <View style={[styles.modalzinho, { paddingLeft: { b } }]}>
+                            <View style={styles.modalzinho}>
 
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
                                         arrayTratamento.map((elemento) => {
                                             if (elemento.id == props.chave) {
-                                                setIdEdit(elemento.id )
+                                                setIdEdit(elemento.id)
                                                 setFlagEditando(true)
                                                 setModalVisible(!modalVisible)
                                                 navigation.navigate('AdicionarNovoTratamento')
@@ -222,20 +229,15 @@ function Sanfona(props) {
 
                     {/* ============== FIM MODAL =========== */}
 
-                    <TouchableOpacity
-                        onPress={() => {
-
-                            setModalVisible(true)
-
-                        }}
+                    {/* <TouchableOpacity
+                        onPress={() => {setModalVisible(true)}}
                     >
-                        <Text>Show Modal</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                 </View>
             </TouchableOpacity>
             {
-                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300 }]}>Remédios: {props.remedio}</Text>
+                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300, width: '100%', textAlign: 'left'}]}>Remédios: {props.remedio}</Text>
             }
 
         </View>
@@ -249,7 +251,7 @@ export function AdicionarNovoTratamento() {
     const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
         inputData, setInputData,
-        criandoTratamento, construindoObj, flagEditando, editandoTratamento} = useContext(RemedioContext)
+        criandoTratamento, construindoObj, flagEditando, editandoTratamento } = useContext(RemedioContext)
 
 
     return (
@@ -264,11 +266,7 @@ export function AdicionarNovoTratamento() {
                         onChangeText={setInputDoenca}
                         style={styles.input}
                         placeholder="Enfermidade"
-                    // onFocus={() => {
-                    //     console.log('Focused on input');
-
-                    // }
-                    // }
+                   
                     />
                 </View>
 
@@ -299,11 +297,7 @@ export function AdicionarNovoTratamento() {
                         value={inputData}
                         onChangeText={setInputData}
                         placeholder="Data"
-                    // onFocus={() => {
-                    //     console.log('Focused on input');
-
-                    // }
-                    // }
+                    
                     />
                 </View>
 
@@ -337,14 +331,7 @@ export function AdicionarNovoTratamento() {
 
 
 const styles = StyleSheet.create({
-    geral: {
-        width: '50%',
-        height: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 10,
-    },
+  
     container: {
         // flex: 1,
         // backgroundColor: "#C7FFCC",
@@ -387,8 +374,8 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingLeft: '20%',
-        paddingRight: '20%'
+        paddingLeft: '10%',
+        paddingRight: '10%'
 
     },
     icons: {
@@ -397,24 +384,35 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     containerDoencas: {
-        width: '70%',
+        width: '100%',
         height: 50,
         // borderWidth: 1,
         // borderColor: '#97D8AE',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
+        // alignItems: 'stretch'
 
 
+    },
+    postTratamento: {
+        width: '100%',
+        borderWidth: 1, 
+        borderColor: '#97D8AE',
+        paddingBottom: 20 
+    },
+    iconsPosts: {
+        width: '10%',
+        paddingTop: 25
     },
     textoDoenca: {
         fontWeight: 700,
         fontSize: 20,
-        lineHeight: 17,
+        // lineHeight: 17,
         alignItems: 'center',
         textAlign: 'center',
         color: '#7D7070',
         paddingTop: 25,
-        width: '100%',
+        width: '40%',
 
     },
     footerBotao: {
@@ -437,14 +435,7 @@ const styles = StyleSheet.create({
         padding: 6,
         textAlign: 'center'
     },
-    inputRemedios: {
-        width: '100%',
-        height: '60%',
-        borderWidth: 1,
-        borderColor: '#97D8AE',
-        flexDirection: 'column',
-
-    },
+   
     modalPosicao: {
         flex: 1,
         justifyContent: 'center',
