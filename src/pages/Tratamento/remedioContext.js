@@ -8,12 +8,14 @@ export const RemedioContextProvider = ({children}) => {
     const [inputDoenca, setInputDoenca] = useState('')
     const [inputData, setInputData] = useState('')
     const [arrayTratamento, setArrayTratamento] = useState([])
+    const [idEdit, setIdEdit] = useState()
+    
    
     const criandoTratamento = (post) =>
     setArrayTratamento([...arrayTratamento, post]);
  
     const editandoTratamento = (post) =>{
-        arrayTratamento.splice(post.id, 0, post)
+        arrayTratamento.splice(post.id, 1, post)
         setArrayTratamento(arrayTratamento)
         setFlagEditando(false)
     }
@@ -22,7 +24,7 @@ export const RemedioContextProvider = ({children}) => {
         { Enfermidade: doenca,
         Remedio: remedio,
         Data: data,
-        id: arrayTratamento.length
+        id: (flagEditando? idEdit : arrayTratamento.length)
     }
         return tratamento
     }
@@ -34,7 +36,9 @@ export const RemedioContextProvider = ({children}) => {
                  inputDoenca, setInputDoenca, 
                  inputData, setInputData,
                   arrayTratamento, setArrayTratamento,
-                  criandoTratamento, construindoObj, editandoTratamento, flagEditando, setFlagEditando
+                  criandoTratamento, construindoObj, editandoTratamento,
+                   flagEditando, setFlagEditando,
+                   idEdit, setIdEdit
                   }}>
             {children}
         </RemedioContext.Provider>

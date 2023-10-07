@@ -124,11 +124,9 @@ export function Tratamento() {
 
 function Sanfona(props) {
     const navigation = useNavigation()
-
-    const [expandir, setExpandir] = useState(true);
+    const [expandir, setExpandir] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const { inputRemedio, inputDoenca, inputData, arrayTratamento, setArrayTratamento,
-    construindoObj, flagEditando, setFlagEditando } = useContext(RemedioContext)
+    const { arrayTratamento, setArrayTratamento, setFlagEditando , setIdEdit} = useContext(RemedioContext)
     const aa = 1
     // Pegando posição y do touch do usuário no post para modificar a posição do modal
     const { toquePostY, setToquePostY } = useState(1)
@@ -189,6 +187,7 @@ function Sanfona(props) {
                                     onPress={() => {
                                         arrayTratamento.map((elemento) => {
                                             if (elemento.id == props.chave) {
+                                                setIdEdit(elemento.id )
                                                 setFlagEditando(true)
                                                 setModalVisible(!modalVisible)
                                                 navigation.navigate('AdicionarNovoTratamento')
@@ -229,7 +228,6 @@ function Sanfona(props) {
                             setModalVisible(true)
 
                         }}
-                    // onPress={() => setModalVisible(true)}
                     >
                         <Text>Show Modal</Text>
                     </TouchableOpacity>
@@ -251,8 +249,7 @@ export function AdicionarNovoTratamento() {
     const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
         inputData, setInputData,
-        arrayTratamento, setArrayTratamento,
-        criandoTratamento, construindoObj, flagEditando, setFlagEditando, editandoTratamento} = useContext(RemedioContext)
+        criandoTratamento, construindoObj, flagEditando, editandoTratamento} = useContext(RemedioContext)
 
 
     return (
