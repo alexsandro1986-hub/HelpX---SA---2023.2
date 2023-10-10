@@ -1,184 +1,190 @@
 import React from 'react';
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Input, Text } from 'react-native-elements';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native';
-import Feather from "@expo/vector-icons/Feather";
-import { TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
-export default function Cadastro({ navigation }) {
+const Stack = createStackNavigator();
 
 
-  return (
+const Header = () => (
+    
+  <View style={styles.header}>
+    <View style={styles.containerLogo}>
+  <Image
+   source={require('/img/logo.png')}
 
-    <View style={styles.container}>
-         <TouchableOpacity 
-         onPress={() =>
-          navigation.goBack()
-        }>
-        <Feather
-            name="arrow-left"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity> 
-      <Text style={styles.texto_primeira_cx}>CADASTRO</Text>
-      <View style={styles.primeira_Caixa}>
-        <ScrollView>
-          <View style={styles.usuario}>
-            {/* Usuario */}
-            <Input
-              placeholder='Nome...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
+    style={{ width: 300, height: 200 }}
+    resizeMode="contain"
+  />
+</View>
+  </View>
+);
 
-            <Input
-              placeholder='Telefone...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
+function Email(a) {
+  return function ({ navigation }) {
 
-            <Input
-              placeholder='Idade...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='CPF...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-            <Input
-              placeholder='Peso...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-          </View>
-          {/* Endereço */}
-          <View>
-            <Input
-              placeholder='Cep...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='Rua...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='numero...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='complemento...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-          </View>
-          {/* /*contato de Emergencia*/}
-
-          <View>
-            <Input
-              placeholder='Contato de Emergercia...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='Telefone de Emergencia...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='Nome Medico...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-            <Input
-              placeholder='Tel-Medico...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-            <Input
-              placeholder='Digite seu email...'
-              keyboardType='email-address'
-              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
-            />
-
-          </View>
-        </ScrollView>
+    return (
+      <View  style={styles.body}>
+        <View style={styles.container}>
+        <TextInput
+           style={[styles.input, { marginBottom: 20 }]}
+          placeholder="Email"
+        // onChangeText={(text) => setNome(text)}
+        // value={nome}
+        />
+         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+        <Text style={styles.textoBotao}>OK</Text>
+               
+        
+         </TouchableOpacity>
+        </View>
+        
       </View>
+    );
+  }
+}
 
-      <Button
-        icon={
-          <Icon
-            name="check"
-            size={15}
-            color="white"
+function Senha(a) {
+ 
+  return function ({ navigation }) {
+    return (
+            
+      <View  style={styles.body}>         
+        <View style={styles.container}>
+        <TextInput
+              style={[styles.input, { marginBottom: 20 }]}
+              placeholder="Senha"
+              secureTextEntry={true} 
+              // onChangeText={(text) => setNome(text)}
+              // value={nome}
+        />
+         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+        <Text style={styles.textoBotao}>OK</Text>
+               
+        
+         </TouchableOpacity>
+        </View>
+       
+      </View>
+    );
+  }
+}
 
-          />
-        }
-        title="Entrar"
-        // onPress={entrar}
+function ConfirmarSenha(a) {
+  return function ({ navigation }) {
+    return (
+      <View  style={styles.body}>
+        <View style={styles.container}>
+        <TextInput
+          style={[styles.input, { marginBottom: 20 }]}
+          placeholder="ConfirmarSenha"
+          secureTextEntry={true}
+        // onChangeText={(text) => setNome(text)}
+        // value={nome}
+        />
+         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+        
+        <Text style={styles.textoBotao}>Cadastrar</Text>
+           
+    
+     </TouchableOpacity>
+        </View>
+        
+      </View>
+    );
+  }
+}
 
 
-      />
+function Navegacao(a) {
+  return function ({ navigation }) {
+    return (
+      <View  style={styles.body}>
+        <View style={styles.container}>
+        <Text>Cadastro concluído com sucesso!</Text>
+        
+        </View>
+        
+      </View>
+    );
+  }
+}
+
+export default function Cadastro() {
+  return (
+    <>
+      <Header />
+      <Stack.Navigator>
+      <Stack.Group>
+
+<Stack.Screen name='Email' component={Email('Senha')} options={{ headerShown: false }} />
+<Stack.Screen name='Senha' component={Senha('Confirmar Senha')} options={{ headerShown: false }} />
+<Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Navegacao')} options={{ headerShown: false }} />
+<Stack.Screen name='Navegacao' component={Navegacao('')} options={{ headerShown: false }} />
 
 
-    </View>
+</Stack.Group>
+      </Stack.Navigator>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
+    backgroundColor: 'black',
+    height: 200, 
+    
+  },
+  body: {
     flex: 1,
-    backgroundColor: "#C7FFCC",
-    alignItems: "center",
-    flexDirection: 'column',
-    gap: 31,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#97d8ae',
+    
   },
-  primeira_Caixa: {
-    width: '85%',
-    backgroundColor:'#FFF',
-    borderRadius: 15,
-    alignItems: 'center'
+  containerLogo:{
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  texto_primeira_cx: {
-    fontSize: 50,
-    marginTop: 150,
-  },
-  botao: {
-    width: '100%',
-    marginTop: 10
-  },
-  usuario: {
+  container: {
     width: '90%',
-
-  }
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e0f3e9',
+    borderRadius: '40px',
+  },
+  input: {
+    
+    fontSize: 15,
+    width: '80%',
+    height: 50,
+    borderColor: 'black',
+    borderWidth: 1,
+    paddingLeft: 10,
+    marginBottom: 10,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    
+  },
+ 
+  botao: {
+    backgroundColor: '#78D1D2',
+    width: 180,
+    height: 50,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+    
+  },
+  textoBotao:{
+    color: 'white',
+    fontFamily: 'Helvetica',
+    fontWeight: 'bold',
+  },
 });
+
+
