@@ -17,7 +17,8 @@ const Header = () => (
 
 );
 
-export default function informacoes() {
+export default function Informacoes() {
+    const navigation = useNavigation();
     return (
         <><Header />
 
