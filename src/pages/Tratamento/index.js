@@ -185,7 +185,7 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 300:0 }]}>
+                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 310:0 }]}>
 
                             <View style={styles.modalzinho}>
 
