@@ -134,7 +134,16 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     
   },
+  container: {
+    width: '90%',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e0f3e9',
+    borderRadius: '40px',
+  },
   input: {
+    
     fontSize: 15,
     width: 250,
     height: 50,

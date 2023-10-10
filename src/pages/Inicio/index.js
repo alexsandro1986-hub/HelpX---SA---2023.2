@@ -10,14 +10,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function Inicio({ navigation }) {
 
   const entrar = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'principal' }]
-    })
-  }
+    navigation.navigate('Home')
+    }
+  
 
   const Cadastrar = () => {
-    navigation.navigate('cadastro')
+    navigation.navigate('Cadastro')
   }
 
   return (
