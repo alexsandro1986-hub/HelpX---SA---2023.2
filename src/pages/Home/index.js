@@ -7,9 +7,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from '@react-navigation/stack';
-
-import QRCode from 'react-native-qrcode-svg';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
