@@ -8,6 +8,7 @@ import Home from './src/pages/Home'
 import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
 import { StackTratamento } from './src/pages/Tratamento';
+import Informacoes from './src/pages/Informacoes';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ function MyStack() {
 
       <Stack.Navigator>
         <Stack.Group>
+        <Stack.Screen name='Informacoes' component={Informacoes} />
           <Stack.Screen name='Inicio' component={Inicio} />
           <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
