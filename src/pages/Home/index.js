@@ -7,13 +7,18 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
+<<<<<<< HEAD
+=======
+
+>>>>>>> profile_page
 
 const Tab = createBottomTabNavigator();
+
 
 export default function Home() {
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#9cf0b9',
       }}
@@ -41,6 +46,19 @@ export default function Home() {
           headerShown: false,
         }}
       />
+   
+     
+      <Tab.Screen
+        name="QrCode"
+        component={QrCodeUser}
+        options={{
+          tabBarLabel: 'QRCode',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="qrcode" color={color} size={30} />
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -61,8 +79,10 @@ const styles = StyleSheet.create({
 function Feed() {
   const navigation = useNavigation()
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#FFF' }}>
+    
 
+    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#FFF' }}>
+      
       <View style={feed.cima}>
  
         <TouchableOpacity 
@@ -125,6 +145,8 @@ const feed = StyleSheet.create({
 
 
 function Profile() {
+  
+  const navigation = useNavigation()
   return (
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
@@ -154,7 +176,32 @@ function Profile() {
 
       <View style={profile.infoView}>
 
+        <View style={profile.infoUser}> 
+
+          <Text style={profile.textInfo}>Idade</Text>
+          <Text style={profile.textInfoUser}>21</Text>
+
+        </View>
+
+        <View style={profile.infoUser}>
+
+          <Text style={profile.textInfo}>alergia</Text>
+          <Text style={profile.textInfoUser}> Dipirona, fermento</Text>
+
+        </View>
+
+        <View style={profile.infoUser}> 
+
+          <Text style={profile.textInfo}>Cont. emergencia</Text>     
+          <Text style={profile.textInfoUser}>48 996760904</Text>
+
+        </View>
+
       </View>
+
+      
+
+
 
 
 
@@ -189,12 +236,82 @@ const profile = StyleSheet.create({
   },
 
   infoView:{
-    width: '70%',
-    height:'50%',
-    backgroundColor:'purple',
-    
+    width: '60%',
+    height:'45%',
+    backgroundColor:'white',
+    borderRadius:10,
+    shadowColor: "#000",
+    shadowOffset: {width: 0, height: 0}, 
+    shadowOpacity: 0.30, 
+    shadowRadius: 10, 
+    elevation: 3
+  },
 
+  infoUser:{
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    gap: 5,
+  
+  },
+
+  textInfo:{
+    fontSize:20, 
+    fontWeight:'bold',
+    color:'grey'
+  },
+
+  textInfoUser:{
+    fontSize:16, 
+    fontWeight:'bold',
+    color:'grey'
   },
 
 
+
 })
+
+function QrCodeUser(){
+  return(
+    <View style={qrcode.container}>
+
+      <View style={qrcode.viewTxt}>
+        <Text style={{fontSize:24, fontWeight:'bold', color:'grey'}}>Meu QRCode</Text>
+      </View>
+
+      <View style={qrcode.viewQrcode}>
+        
+        <MaterialCommunityIcons name="qrcode" color={'black'} size={400} />
+      </View>
+
+
+
+
+    </View>
+  )
+}
+
+const qrcode = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'white',
+  },
+
+  viewTxt:{
+    width:'100%',
+    height:60,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+
+  viewQrcode:{
+    height:400,
+    width:'100%',
+    justifyContent:'center',
+    alignItems:'center'
+
+  }
+})
+

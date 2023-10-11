@@ -3,12 +3,19 @@ import { TouchableOpacity, StyleSheet, View  } from 'react-native';
 import { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+
 import Login from './src/pages/Login';
 import Home from './src/pages/Home'
 import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
+<<<<<<< HEAD
 import { StackTratamento } from './src/pages/Tratamento';
 import Informacoes from './src/pages/Informacoes';
+=======
+
+
+
+>>>>>>> profile_page
 const Stack = createStackNavigator();
 
 
