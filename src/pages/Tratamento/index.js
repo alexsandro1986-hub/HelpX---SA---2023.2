@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '80%',
         flexDirection: 'column',
+        paddingTop: '10%'
 
     },
     containerIcons: {
