@@ -5,54 +5,32 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Login from './src/pages/Login';
 import Home from './src/pages/Home'
-import  QrCodeUser  from './src/pages/Home'
+import QrCodeUser from './src/pages/Home'
 import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
 import { StackTratamento } from './src/pages/Tratamento';
 import Informacoes from './src/pages/Informacoes';
+import {ContextInfo, ContextInfoProvider } from './src/pages/ContextInfo/contextinfo';
 
 const Stack = createStackNavigator();
 
 
 function MyStack() {
   return (
-
+    <ContextInfoProvider>
       <Stack.Navigator>
         <Stack.Group>
-<<<<<<< HEAD
-        <Stack.Screen name='Informacoes' component={Informacoes} />
           <Stack.Screen name='Inicio' component={Inicio} />
           <Stack.Screen name='Home' component={Home} />
-=======
-          <Stack.Screen name='Inicio' component={Inicio} options={{ headerShown: false }}  />
-          <Stack.Screen name='Home' component={Home} 
-           options={{
-                        title: 'Home',
-                        headerStyle: {
-                            backgroundColor: '#97D8AE',
-                            borderColor: '#97D8AE',
-                            borderWidth: 2,
-                            borderBottomLeftRadius: 20,
-                            borderBottomRightRadius: 20,
-
-                        },
-                        headerTintColor: '#fff',
-                        headerTitleStyle: {
-                            fontWeight: '500',
-                            fontSize: 30,
-                        },
-                        headerTitleAlign: "center",
-                    }} 
-                    /> 
->>>>>>> e0d1e40972eaa3441307697c87d58a6cd6be089f
           <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
-          
+
         </Stack.Group>
       </Stack.Navigator>
 
+    </ContextInfoProvider>
 
   )
 }

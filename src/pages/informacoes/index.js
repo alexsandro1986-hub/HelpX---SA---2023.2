@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,6 +6,10 @@ import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity } fr
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
+
+
+
 
 const Stack = createStackNavigator();
 const Header = () => (
@@ -19,12 +23,10 @@ const Header = () => (
 );
 
 export default function Informacoes() {
-<<<<<<< HEAD
-    const[nome,setNome]= useState();
+    //const[nome,setNome]= useState();
+    
 
 
-=======
->>>>>>> e0d1e40972eaa3441307697c87d58a6cd6be089f
     return (
         <><Header />
 
@@ -64,7 +66,10 @@ function MyBackButton() {
 }
 
 function Nome(a) {
+
+
     return function ({ navigation }) {
+        const {inputNome, setInputNome} = useContext(ContextInfo)
 
         return (
             <View style={styles.caixa}>
@@ -76,11 +81,16 @@ function Nome(a) {
                         <TextInput
                             style={styles.input}
                             placeholder="Nome"
+                            value={inputNome}
+                            onChangeText={setInputNome}
 
                         />
                     </View>
                     <View style={styles.botao}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
+                        <TouchableOpacity onPress={() => {
+                          
+                            console.log('oi', inputNome)
+                            navigation.navigate(a)}}>
 
                             <Text style={styles.bto_Direita}>
 
