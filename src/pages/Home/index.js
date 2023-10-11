@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 export default function Home() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Profile"
       screenOptions={{
         tabBarActiveTintColor: '#9cf0b9',
       }}
