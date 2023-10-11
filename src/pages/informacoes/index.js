@@ -19,9 +19,12 @@ const Header = () => (
 );
 
 export default function Informacoes() {
+<<<<<<< HEAD
     const[nome,setNome]= useState();
 
 
+=======
+>>>>>>> e0d1e40972eaa3441307697c87d58a6cd6be089f
     return (
         <><Header />
 

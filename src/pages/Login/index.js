@@ -26,16 +26,16 @@ export default function Login({ navigation }) {
 
       <View style={styles.container}>
         <View>
-        {/* <TouchableOpacity 
+        <TouchableOpacity 
          onPress={() =>
-          navigation.navigate('Inicio')
+          navigation.goBack()
         }>
         <Feather
             name="arrow-left"
             size={30}
             color="white"
           />
-        </TouchableOpacity> */}
+        </TouchableOpacity> 
        
           <View style={styles.containerTitulo}>
             <Text style={styles.textoTitulo}>

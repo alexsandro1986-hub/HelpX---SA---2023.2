@@ -185,7 +185,7 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 300:0 }]}>
+                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 310:0 }]}>
 
                             <View style={styles.modalzinho}>
 
@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '80%',
         flexDirection: 'column',
+        paddingTop: '10%'
 
     },
     containerIcons: {
