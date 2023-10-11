@@ -5,21 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-<<<<<<< HEAD
-import { useNavigation } from "@react-navigation/native";
-
-
-=======
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
->>>>>>> ed23e490e552427e358909dbbd8a15f3201830a2
 
 const Tab = createBottomTabNavigator();
 
 export default function Home() {
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Feed"
       screenOptions={{
         tabBarActiveTintColor: '#9cf0b9',
       }}
@@ -71,13 +65,8 @@ function Feed() {
 
       <View style={feed.cima}>
  
-<<<<<<< HEAD
-        <TouchableOpacity
-         onPress={() => navigation.navigate('StackTratamento')}
-=======
         <TouchableOpacity 
         onPress={() => navigation.navigate('StackTratamento')}
->>>>>>> ed23e490e552427e358909dbbd8a15f3201830a2
         style={{width:'40%', height:'40%', backgroundColor:'#97D8AE', borderRadius:10, justifyContent:'center', alignItems:'center', gap: 15, shadowColor: "#000",shadowOffset: {width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8,}}>
             
             <MaterialCommunityIcons name="pill" color={'white'} size={50} />
@@ -135,18 +124,6 @@ const feed = StyleSheet.create({
 
 
 
-<<<<<<< HEAD
-
-function Profile() {
-  return (
-
-
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //   <Text>Profile!</Text>
-    // </View>
-  );
-}
-=======
 function Profile() {
   return (
     <LinearGradient
@@ -221,4 +198,3 @@ const profile = StyleSheet.create({
 
 
 })
->>>>>>> ed23e490e552427e358909dbbd8a15f3201830a2

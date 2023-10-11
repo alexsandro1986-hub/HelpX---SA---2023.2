@@ -17,7 +17,7 @@ const Header = () => (
 
 );
 
-export default function informacoes() {
+export default function Informacoes() {
     return (
         <><Header />
 

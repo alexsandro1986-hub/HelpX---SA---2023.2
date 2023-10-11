@@ -34,9 +34,7 @@ export default function Inicio({ navigation }) {
 
         <View>
           <View style={styles.tituloLogo}>
-          </View>
-          <View style={styles.viemtexto}>
-            <Text style={styles.textoTitulo}>
+           <Text style={styles.textoTitulo}>
               HELPX
             </Text>
           </View>
@@ -73,33 +71,39 @@ const styles = StyleSheet.create({
     // backgroundColor: "#C7FFCC",
     alignItems: "center",
     flexDirection: 'column',
-
     gap: 11,
   },
   tituloLogo:{
-    width: '100%',
-    height:'45%'
+    width:'100%',
+    height: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: '10%'
+
   },
   containerBotao: {
     width: '100%',
-    height: '55%',
+    height: '60%',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: '10%'
 
   },
   botao: {
-    width: '100%',
-    width: 130,
-    height: 30,
+    width: 180,
+    height: 80,
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
 
   },
   textoBotao: {
-    fontSize: 15,
+    fontSize: 25,
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
+  
 
   },
   img: {
@@ -107,16 +111,12 @@ const styles = StyleSheet.create({
     height: 140,
     marginTop: 25,
   },
-  viemtexto: {
-    width: 200,
-    height: 100,
+
+  textoTitulo: {
+    fontSize: 75,
+    color: 'white',
     justifyContent: 'center',
     alignItems: 'center'
-
-  },
-  textoTitulo: {
-    fontSize: 50,
-    color: 'white'
 
   },
 
