@@ -12,7 +12,7 @@ const Header = () => (
   <View style={styles.header}>
     <View style={styles.containerLogo}>
   <Image
-   source={require('/img/logo.png')}
+   source={require('../img/logo.png')}
 
     style={{ width: 300, height: 200 }}
     resizeMode="contain"
