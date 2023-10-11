@@ -7,10 +7,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
-<<<<<<< HEAD
-=======
-
->>>>>>> profile_page
 
 const Tab = createBottomTabNavigator();
 
