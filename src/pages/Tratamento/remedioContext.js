@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import React from 'react';
 
 export const RemedioContext = React.createContext()
-
+let idzinho = 0
 export const RemedioContextProvider = ({children}) => {
     const [inputRemedio, setInputRemedio] = useState('')
     const [inputDoenca, setInputDoenca] = useState('')
@@ -11,21 +11,27 @@ export const RemedioContextProvider = ({children}) => {
     const [idEdit, setIdEdit] = useState()
     
    
-    const criandoTratamento = (post) =>
+    const criandoPost = (post) =>
     setArrayTratamento([...arrayTratamento, post]);
  
-    const editandoTratamento = (post) =>{
+    const editandoPost = (post) =>{
         arrayTratamento.splice(post.id, 1, post)
         setArrayTratamento(arrayTratamento)
         setFlagEditando(false)
     }
+
+  
     function construindoObj(doenca, remedio, data)  {
-    let tratamento =
+        let tratamento =
         { Enfermidade: doenca,
         Remedio: remedio,
         Data: data,
-        id: (flagEditando? idEdit : arrayTratamento.length)
+        Indice: (flagEditando? idEdit : idzinho + 1)
     }
+   
+            idzinho++;
+    console.log(tratamento);
+
         return tratamento
     }
     const [flagEditando, setFlagEditando] = useState(false)
@@ -36,7 +42,7 @@ export const RemedioContextProvider = ({children}) => {
                  inputDoenca, setInputDoenca, 
                  inputData, setInputData,
                   arrayTratamento, setArrayTratamento,
-                  criandoTratamento, construindoObj, editandoTratamento,
+                  criandoPost, construindoObj, editandoPost,
                    flagEditando, setFlagEditando,
                    idEdit, setIdEdit
                   }}>

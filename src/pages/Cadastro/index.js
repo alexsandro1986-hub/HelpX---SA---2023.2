@@ -2,6 +2,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
+import { useContext } from 'react';
 
 
 const Stack = createStackNavigator();
@@ -12,8 +14,7 @@ const Header = () => (
   <View style={styles.header}>
     <View style={styles.containerLogo}>
   <Image
-   source={require("../img/logo.png")}
-   
+   source={require('../img/logo.png')}
 
     style={{ width: 300, height: 200 }}
     resizeMode="contain"
@@ -24,17 +25,19 @@ const Header = () => (
 
 function Email(a) {
   return function ({ navigation }) {
-
+    const {inputEmail, setInputEmail} = useContext(ContextInfo)
     return (
       <View  style={styles.body}>
         <View style={styles.container}>
         <TextInput
            style={[styles.input, { marginBottom: 20 }]}
           placeholder="Email"
-        // onChangeText={(text) => setNome(text)}
-        // value={nome}
+          onChangeText={setInputEmail}
+          value={inputEmail}
         />
-         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+         <TouchableOpacity style={styles.botao} onPress={() => {
+          console.log('oi', inputEmail)
+          navigation.navigate(a)}}>
         
         <Text style={styles.textoBotao}>OK</Text>
                
