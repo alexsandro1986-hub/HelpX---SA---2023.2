@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e0f3e9',
-    borderRadius: '40px',
+    borderRadius: '40',
   },
   input: {
     
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   textoBotao:{
     color: 'white',
-    fontFamily: 'Helvetica',
+    // fontFamily: 'Helvetica',
     fontWeight: 'bold',
   },
 });

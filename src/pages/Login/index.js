@@ -108,16 +108,14 @@ const styles = StyleSheet.create({
   inputLabel: {
     width: "100%",
     height: 16,
-    fontStyle: 'normal',
     fontWeight: 400,
     fontSize: 17,
-    lineHeight: 16,
     alignItems: 'flex-start',
     justifyContent: 'center',
     color: 'black',
     paddingLeft: 10,
     paddingTop: 18,
-    opacity: 1
+ 
   },
   botao: {
     width: '80%',
