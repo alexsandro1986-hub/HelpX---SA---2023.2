@@ -1,102 +1,115 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingViewBase, Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 
 
 const Stack = createStackNavigator();
 
 
 const Header = () => (
-    
+
   <View style={styles.header}>
     <View style={styles.containerLogo}>
-  <Image
-   source={require('../img/logo.png')}
+      <Image
+        source={require('../img/logo.png')}
 
-    style={{ width: 300, height: 200 }}
-    resizeMode="contain"
-  />
-</View>
+        style={{ width: 300, height: 200 }}
+        resizeMode="contain"
+      />
+    </View>
   </View>
 );
 
 function Email(a) {
   return function ({ navigation }) {
-    const {inputEmail, setInputEmail} = useContext(ContextInfo)
+    const { inputEmail, setInputEmail } = useContext(ContextInfo)
     return (
-      <View  style={styles.body}>
+      <View style={styles.body}>
         <View style={styles.container}>
-        <TextInput
-           style={[styles.input, { marginBottom: 20 }]}
-          placeholder="Email"
-          onChangeText={setInputEmail}
-          value={inputEmail}
-        />
-         <TouchableOpacity style={styles.botao} onPress={() => {
-          console.log('oi', inputEmail)
-          navigation.navigate(a)}}>
-        
-        <Text style={styles.textoBotao}>OK</Text>
-               
-        
-         </TouchableOpacity>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="Email"
+            onChangeText={setInputEmail}
+            value={inputEmail}
+            returnKeyType="done"
+          />
+          <TouchableOpacity style={styles.botao} onPress={() => {
+            console.log('oi', inputEmail)
+            navigation.navigate(a)
+          }}>
+
+            <Text style={styles.textoBotao}>OK</Text>
+
+
+          </TouchableOpacity>
         </View>
-        
+
       </View>
     );
   }
 }
 
 function Senha(a) {
- 
+
   return function ({ navigation }) {
+    const { inputSenha, setInputSenha } = useContext(ContextInfo)
     return (
-            
-      <View  style={styles.body}>         
+
+      <KeyboardAvoidingView 
+      style={styles.body}
+      behavior={Platform.OS === 'ios' ? 'padding':'height'}
+      keyboardVerticalOffset={80}
+      
+      >
         <View style={styles.container}>
-        <TextInput
-              style={[styles.input, { marginBottom: 20 }]}
-              placeholder="Senha"
-              secureTextEntry={true} 
-              // onChangeText={(text) => setNome(text)}
-              // value={nome}
-        />
-         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
-        
-        <Text style={styles.textoBotao}>OK</Text>
-               
-        
-         </TouchableOpacity>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="Senha"
+            secureTextEntry={true}
+            onChangeText={setInputSenha}
+            value={inputSenha}
+            returnKeyType="done"
+
+          />
+          <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+
+            <Text style={styles.textoBotao}>OK</Text>
+
+
+          </TouchableOpacity>
         </View>
-       
-      </View>
+
+      </KeyboardAvoidingView>
     );
   }
 }
 
 function ConfirmarSenha(a) {
   return function ({ navigation }) {
+    const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
     return (
-      <View  style={styles.body}>
+      <View style={styles.body}>
         <View style={styles.container}>
-        <TextInput
-          style={[styles.input, { marginBottom: 20 }]}
-          placeholder="ConfirmarSenha"
-          secureTextEntry={true}
-        // onChangeText={(text) => setNome(text)}
-        // value={nome}
-        />
-         <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
-        
-        <Text style={styles.textoBotao}>Cadastrar</Text>
-           
-    
-     </TouchableOpacity>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="ConfirmarSenha"
+            secureTextEntry={true}
+            onChangeText={setInputConfirmaSenha}
+            value={inputConfirmaSenha}
+            returnKeyType="done"
+          />
+          <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
+
+            <Text style={styles.textoBotao}>Cadastrar</Text>
+
+
+          </TouchableOpacity>
         </View>
-        
+
       </View>
     );
   }
@@ -110,14 +123,14 @@ export default function Cadastro() {
     <>
       <Header />
       <Stack.Navigator>
-      <Stack.Group>
+        <Stack.Group>
 
-<Stack.Screen name='Email' component={Email('Senha')}/>
-<Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
-<Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')}/>
+          <Stack.Screen name='Email' component={Email('Senha')} />
+          <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')} />
 
 
-</Stack.Group>
+        </Stack.Group>
       </Stack.Navigator>
     </>
   );
@@ -126,17 +139,17 @@ export default function Cadastro() {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'black',
-    height: 200, 
-    
+    height: 200,
+
   },
   body: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'#97d8ae',
-    
+    backgroundColor: '#97d8ae',
+
   },
-  containerLogo:{
+  containerLogo: {
     justifyContent: 'center',
     alignItems: 'center',
 
@@ -147,10 +160,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e0f3e9',
-    borderRadius: '40px',
+    borderRadius: 40,
   },
   input: {
-    
+
     fontSize: 15,
     width: '80%',
 
@@ -162,9 +175,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
 
     backgroundColor: 'white',
-    
+
   },
- 
+
   botao: {
     backgroundColor: '#78D1D2',
     width: 180,
@@ -172,12 +185,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    
-    
+
+
   },
-  textoBotao:{
+  textoBotao: {
     color: 'white',
-    fontFamily: 'Helvetica',
+<<<<<<< HEAD
+    //fontFamily: 'Helvetica',
+=======
+    // fontFamily: 'Helvetica',
+>>>>>>> 58a925fa22833942143b9def482173fb60cbe0cc
     fontWeight: 'bold',
   },
 });
