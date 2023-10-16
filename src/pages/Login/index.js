@@ -107,9 +107,9 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     width: "100%",
-    height: 16,
+    height: 40,
     fontWeight: 400,
-    fontSize: 17,
+    fontSize: 20,
     alignItems: 'flex-start',
     justifyContent: 'center',
     color: 'black',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#589BAA',
     // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    borderRadius: 10,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     color: '#FFFFFF',
-    fontSize: 22,
+    fontSize: 23,
     fontWeight: 500,
     fontStyle: 'normal',
     color: 'white'

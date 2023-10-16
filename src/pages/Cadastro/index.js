@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e0f3e9',
-    borderRadius: '40',
+    borderRadius: 40,
   },
   input: {
     
