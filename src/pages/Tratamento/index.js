@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Modal, KeyboardAvoidingView } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Feather from "@expo/vector-icons/Feather";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -36,7 +36,7 @@ export function StackTratamento() {
                         },
                         headerTitleAlign: "center",
                     }} />
-                <Stack.Screen name='AdicionarNovoTratamento' component={AdicionarNovoTratamento} options={{
+                <Stack.Screen name='AdicionarPost' component={AdicionarPost} options={{
                     title: 'Adicionar',
                     headerStyle: {
                         backgroundColor: '#97D8AE',
@@ -88,9 +88,13 @@ export function Tratamento() {
 
                 </View>
                 <ScrollView>
+
                     {arrayTratamento.map((doenca, index) => (
+                        //  Criando post. 
+                        // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
+                        //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
                         <View key={index} >
-                            <Sanfona enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} chave={index} />
+                            <PostSanfona enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} indice={doenca.Indice} />
 
                         </View>
                     ))}
@@ -100,7 +104,7 @@ export function Tratamento() {
             </View>
 
             <View style={styles.footerBotao}>
-                <TouchableOpacity onPress={() => navigation.navigate('AdicionarNovoTratamento')}>
+                <TouchableOpacity onPress={() => navigation.navigate('AdicionarPost')}>
 
                     <LinearGradient
                         // Button Linear Gradient
@@ -122,7 +126,7 @@ export function Tratamento() {
 
 }
 
-function Sanfona(props) {
+function PostSanfona(props) {
     const navigation = useNavigation()
     const [expandir, setExpandir] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -139,11 +143,11 @@ function Sanfona(props) {
     function oi() {
         alert('oiiiii')
     }
-   
+
     // function verificarPosicaoToque(toque){
     //     console.log('Verificando posição do toque na pagina')
     //     useEffect(() =>{
-            
+
     //         console.log("PageY", toquePostY)
     //         setToquePostY(toque)
     //     }, [toque])
@@ -157,7 +161,7 @@ function Sanfona(props) {
                     const aa = event.nativeEvent.pageY
                     setToquePostY(aa)
                     // verificarPosicaoToque(aa)
-                   
+
 
                     alternarCompressao()
                 }
@@ -166,18 +170,18 @@ function Sanfona(props) {
             >
                 <View style={styles.containerDoencas} >
                     <Feather name='clipboard' size={20}
-                    style={styles.iconsPosts} 
-                    onPress={() => {setModalVisible(true)}}/>
+                        style={styles.iconsPosts}
+                        onPress={() => { setModalVisible(true) }} />
                     <Text style={styles.textoDoenca}>{props.enfermidade}</Text>
                     <Text style={styles.textoDoenca}>{props.data}</Text>
 
                     <Feather name={expandir ? 'chevron-up' : 'chevron-down'}
                         size={25} color="#bbb" style={styles.iconsPosts} />
-                    
+
 
                     {/* ========== MODAL (Botões: editar e excluir) =========== */}
                     <Modal
-    
+
                         animationType="slide"
                         transparent={true}
                         visible={modalVisible}
@@ -185,7 +189,7 @@ function Sanfona(props) {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <View style={[styles.modalPosicao, {paddingBottom: toquePostY>450? 310:0 }]}>
+                        <View style={[styles.modalPosicao, { paddingBottom: toquePostY > 450 ? 310 : 0 }]}>
 
                             <View style={styles.modalzinho}>
 
@@ -193,14 +197,16 @@ function Sanfona(props) {
                                     style={styles.botaoModal}
                                     onPress={() => {
                                         arrayTratamento.map((elemento) => {
-                                            if (elemento.id == props.chave) {
-                                                setIdEdit(elemento.id)
+                                            console.log(elemento.Indice, props.indice)
+                                            console.log(elemento)
+                                            if (elemento.Indice == props.indice) {
+
+                                                setIdEdit(props.indice)
                                                 setFlagEditando(true)
                                                 setModalVisible(!modalVisible)
-                                                navigation.navigate('AdicionarNovoTratamento')
+                                                navigation.navigate('AdicionarPost')
                                             }
                                         })
-                                        console.log(props.chave)
 
 
                                     }}
@@ -212,7 +218,8 @@ function Sanfona(props) {
                                     style={styles.botaoModal}
                                     onPress={() => {
                                         setArrayTratamento(
-                                            arrayTratamento.filter(idPosts => idPosts.id != props.chave))
+                                            arrayTratamento.filter(idPosts => idPosts.Indice != props.indice))
+                                        setModalVisible(!modalVisible)
                                     }}>
                                     <Text style={styles.textoModal}> Excluir</Text>
                                 </TouchableOpacity>
@@ -237,7 +244,7 @@ function Sanfona(props) {
                 </View>
             </TouchableOpacity>
             {
-                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300, width: '100%', textAlign: 'left'}]}>Remédios: {props.remedio}</Text>
+                expandir && <Text style={[styles.textoDoenca, { fontWeight: 300, width: '100%', textAlign: 'left' }]}>Remédios: {props.remedio}</Text>
             }
 
         </View>
@@ -246,16 +253,17 @@ function Sanfona(props) {
 // =================== Adicionar TRATAMENTOS =======================
 
 
-export function AdicionarNovoTratamento() {
+export function AdicionarPost() {
     const navigation = useNavigation()
     const { inputRemedio, setInputRemedio,
         inputDoenca, setInputDoenca,
         inputData, setInputData,
-        criandoTratamento, construindoObj, flagEditando, editandoTratamento } = useContext(RemedioContext)
+        criandoPost, construindoObj, flagEditando, editandoPost } = useContext(RemedioContext)
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}> 
+        {/* <View style={styles.container}> */}
             <View style={styles.containerCorpo}>
                 <View style={styles.containerDoencas}>
                     <TextInput
@@ -266,7 +274,7 @@ export function AdicionarNovoTratamento() {
                         onChangeText={setInputDoenca}
                         style={styles.input}
                         placeholder="Enfermidade"
-                   
+
                     />
                 </View>
 
@@ -297,7 +305,7 @@ export function AdicionarNovoTratamento() {
                         value={inputData}
                         onChangeText={setInputData}
                         placeholder="Data"
-                    
+
                     />
                 </View>
 
@@ -305,8 +313,12 @@ export function AdicionarNovoTratamento() {
 
             <View style={styles.footerBotao}>
                 <TouchableOpacity onPress={() => {
+                    // Os valores dos inputs são transferidos para o context, 
+                    // onde o objeto é construido. 
                     flagEditando ?
-                    editandoTratamento(construindoObj(inputDoenca, inputRemedio, inputData)) : criandoTratamento(construindoObj(inputDoenca, inputRemedio, inputData))
+                        editandoPost(construindoObj(inputDoenca, inputRemedio, inputData))
+                        :
+                        criandoPost(construindoObj(inputDoenca, inputRemedio, inputData))
                     navigation.goBack()
                 }
                 }
@@ -324,14 +336,14 @@ export function AdicionarNovoTratamento() {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </View >
-
+        {/* </View > */}
+        </KeyboardAvoidingView>
     )
 }
 
 
 const styles = StyleSheet.create({
-  
+
     container: {
         // flex: 1,
         // backgroundColor: "#C7FFCC",
@@ -340,28 +352,6 @@ const styles = StyleSheet.create({
         width: 430,
         height: 800,
         gap: 11,
-    },
-    containerTitulo: {
-        width: '100%',
-        height: '8%',
-        backgroundColor: '#97D8AE',
-        borderColor: '#97D8AE',
-        borderWidth: 2,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        // box-shadow: 0px 1px 8px rgba(85, 74, 74, 0.44);
-        justifyContent: 'center'
-    },
-    textoTitulo: {
-        fontStyle: 'normal',
-        fontWeight: 700,
-        fontSize: 20,
-        lineHeight: 24,
-        alignItems: 'center',
-        textAlign: 'center',
-        color: '#FFFFFF',
-
-
     },
     containerCorpo: {
         width: '100%',
@@ -397,9 +387,9 @@ const styles = StyleSheet.create({
     },
     postTratamento: {
         width: '100%',
-        borderWidth: 1, 
+        borderWidth: 1,
         borderColor: '#97D8AE',
-        paddingBottom: 20 
+        paddingBottom: 20
     },
     iconsPosts: {
         width: '10%',
@@ -436,7 +426,7 @@ const styles = StyleSheet.create({
         padding: 6,
         textAlign: 'center'
     },
-   
+
     modalPosicao: {
         flex: 1,
         justifyContent: 'center',

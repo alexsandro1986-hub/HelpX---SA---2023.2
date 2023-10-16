@@ -190,7 +190,11 @@ const styles = StyleSheet.create({
   },
   textoBotao: {
     color: 'white',
+<<<<<<< HEAD
     //fontFamily: 'Helvetica',
+=======
+    // fontFamily: 'Helvetica',
+>>>>>>> 58a925fa22833942143b9def482173fb60cbe0cc
     fontWeight: 'bold',
   },
 });
