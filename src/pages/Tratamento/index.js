@@ -262,8 +262,11 @@ export function AdicionarPost() {
 
 
     return (
-        <KeyboardAvoidingView style={styles.container}> 
-        {/* <View style={styles.container}> */}
+        <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={80} 
+            style={styles.container}>
+            {/* <View style={styles.container}> */}
             <View style={styles.containerCorpo}>
                 <View style={styles.containerDoencas}>
                     <TextInput
@@ -336,7 +339,7 @@ export function AdicionarPost() {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        {/* </View > */}
+            {/* </View > */}
         </KeyboardAvoidingView>
     )
 }
