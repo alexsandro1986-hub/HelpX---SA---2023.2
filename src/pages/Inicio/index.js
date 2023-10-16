@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function Inicio({ navigation }) {
 
   const entrar = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Login')
     }
   
 

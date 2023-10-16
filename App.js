@@ -20,12 +20,12 @@ function MyStack() {
     <ContextInfoProvider>
       <Stack.Navigator>
         <Stack.Group>
-          <Stack.Screen name='Inicio' component={Inicio} />
-          <Stack.Screen name='Home' component={Home} />
-          <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
-          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
           <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
+          <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
 
         </Stack.Group>
       </Stack.Navigator>
