@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity,Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -72,6 +72,7 @@ function Nome(a) {
         const { inputNome, setInputNome } = useContext(ContextInfo)
 
         return (
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.caixa}>
                 <View style={styles.body}>
                     <View style={styles.teste}>
@@ -121,6 +122,7 @@ function Nome(a) {
                     </View>
                 </View>
             </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -141,6 +143,7 @@ function Idade(a) {
                             value={inputIdade}
                             onChangeText={setInputIdade}
                             returnKeyType="done"
+                            
                         />
                     </View>
                     <View style={styles.botao}>
