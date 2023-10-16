@@ -2,22 +2,21 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Input, Text } from 'react-native-elements';
-import { Button } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
-import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
+
+
+
 
 export default function Inicio({ navigation }) {
 
   const entrar = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'principal' }]
-    })
-  }
+    navigation.navigate('Home')
+    }
+  
 
   const Cadastrar = () => {
-    navigation.navigate('cadastro')
+    navigation.navigate('Cadastro')
   }
 
   return (
@@ -28,7 +27,10 @@ export default function Inicio({ navigation }) {
       style={styles.container}
     >
       <View style={styles.container}>
-
+      {/* <Image style={styles.img}
+            source={require('/img/Texto do seu parágrafo.jpg')}
+           
+          /> */}
 
         <View>
           <View style={styles.tituloLogo}>
@@ -101,8 +103,8 @@ const styles = StyleSheet.create({
 
   },
   img: {
-    width: 200,
-    height: 100,
+    width: 440,
+    height: 140,
     marginTop: 25,
   },
   viemtexto: {

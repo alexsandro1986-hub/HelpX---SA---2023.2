@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,8 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import QRCode from 'react-native-qrcode-svg';
-import { TextInput } from 'react-native-gesture-handler';
-
+import { ContextInfo } from '../ContextInfo/contextinfo';
+import { useContext } from 'react';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -352,7 +352,7 @@ const qrcode = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
 
-  }
+  },
 })
 
 
@@ -361,20 +361,31 @@ const qrcode = StyleSheet.create({
 export function EditUser() {
 
   const navigation = useNavigation()
+  const {inputNome, setInputNome,
+    inputIdade, setInputIdade,
+    inputTelefone, setInputTelefone,
+    inputEmail, setInputEmail
+      } = useContext(ContextInfo)
 
-
+const teste = [
+  {Nome: inputNome, Settar: setInputNome},
+ { Nome: inputIdade, Settar: setInputIdade},
+  {Nome: inputTelefone, Settar: setInputTelefone},
+  {Nome: inputEmail, Settar: setInputEmail},
+]
 
 
   return (
     <View style={editU.container}>
 
-      <Input
-              style={styles.inpt}
-              
-              value={}
-              
-              onChangeText={}
-          />
+  {teste.map((elemento, index)=>(
+      <TextInput
+        style={editU.input}
+        value={elemento.Nome}
+        onChangeText={elemento.Settar}
+        key={index}
+      />))}
+      
     
     </View>
   )
@@ -387,6 +398,16 @@ const editU = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+
+  input:{
+    width: '40%',
+    height: '10%',
+    backgroundColor: '#cdcdcd',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap:10
+  }
 
 })
 

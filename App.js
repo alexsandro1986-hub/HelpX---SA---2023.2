@@ -1,45 +1,50 @@
 import React from 'react';
-import { TouchableOpacity} from 'react-native';
 
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Input, Text } from 'react-native-elements';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Login from './src/pages/Login';
 import Home from './src/pages/Home'
-import cadastro from './src/pages/Cadastro';
+import QrCodeUser from './src/pages/Home'
+import Cadastro from './src/pages/Cadastro';
 import Inicio from './src/pages/Inicio';
-
-
+import { StackTratamento } from './src/pages/Tratamento';
+import Informacoes from './src/pages/Informacoes';
+import {ContextInfo, ContextInfoProvider } from './src/pages/ContextInfo/contextinfo';
 
 const Stack = createStackNavigator();
 
 
 function MyStack() {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name='home' component={Home}  options={{headerShown: false}} />
-      <Stack.Screen name='Login' component={Login} />
-      <Stack.Screen name='inicio' component={Inicio} />
-      <Stack.Screen name='cadastro' component={cadastro} />
-    </Stack.Navigator>
+  return (
+    <ContextInfoProvider>
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen name='Inicio' component={Inicio} />
+          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
+          <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
+
+        </Stack.Group>
+      </Stack.Navigator>
+
+    </ContextInfoProvider>
+
   )
 }
 
 export default function App() {
- return(
- 
-    <NavigationContainer>
-      <MyStack/>
-    </NavigationContainer>
- )
-  }
+  return (
 
-  
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  )
+}
+
+
 
 
 

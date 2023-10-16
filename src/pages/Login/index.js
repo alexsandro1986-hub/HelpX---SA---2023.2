@@ -2,35 +2,41 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Input, Text } from 'react-native-elements';
-import { Button } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
+import Feather from "@expo/vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function Login({ navigation }) {
 
   const entrar = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'principal' }]
-    })
-  }
-
-  const Cadastrar = () => {
-    navigation.navigate('cadastro')
+    navigation.navigate('Home')
   }
 
   return (
+
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
       //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
       style={styles.container}
     >
+   
 
       <View style={styles.container}>
         <View>
-
+        <TouchableOpacity 
+         onPress={() =>
+          navigation.goBack()
+        }>
+        <Feather
+            name="arrow-left"
+            size={30}
+            color="white"
+          />
+        </TouchableOpacity> 
+       
           <View style={styles.containerTitulo}>
             <Text style={styles.textoTitulo}>
               Login
@@ -66,7 +72,7 @@ export default function Login({ navigation }) {
 
         <TouchableOpacity
           style={styles.botao}
-        //onPress={} DEFINIR FUNÇÃO AAAAAAAAAAAAA
+          onPress={entrar}
         >
           <Text style={styles.textoBotao}> Confirmar </Text>
 
@@ -137,6 +143,9 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontStyle: 'normal',
 
+  },
+  botaoBack: {
+  
   },
   img: {
     width: 200,
