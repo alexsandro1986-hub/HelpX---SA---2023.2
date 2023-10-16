@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 
 export default function Home() {
   return (
-  
+
     <Tab.Navigator
       initialRouteName="StackFeed"
       screenOptions={{
@@ -26,7 +26,7 @@ export default function Home() {
     >
       <Tab.Screen
         name="StackFeed"
-        component={ StackFeed}
+        component={StackFeed}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -70,8 +70,8 @@ function StackFeed() {
   return (
     <Stack.Navigator>
       <Stack.Screen name='Home' component={Feed} options={{ title: '' }} />
-      <Stack.Screen name='QrCodeUser' component={QrCodeUser} options={{ title: '' }}/>
-      <Stack.Screen name='EditUser' component={EditUser} options={{ title: '' }}/>
+      <Stack.Screen name='QrCodeUser' component={QrCodeUser} options={{ title: '' }} />
+      <Stack.Screen name='EditUser' component={EditUser} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }
@@ -278,25 +278,25 @@ const profile = StyleSheet.create({
     color: 'grey'
   },
 
-  viewOptions:{
-    width:'100%',
-    height:'10%',
-    flexDirection:'row',
+  viewOptions: {
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    gap:20
+    gap: 20
   },
 
-  btns:{
-    width:55,
-    height:55,
-    backgroundColor:'#97D8AE',
-    borderRadius:100,
+  btns: {
+    width: 55,
+    height: 55,
+    backgroundColor: '#97D8AE',
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
- 
+
 
 
 
@@ -361,35 +361,31 @@ const qrcode = StyleSheet.create({
 export function EditUser() {
 
   const navigation = useNavigation()
-  const {inputNome, setInputNome,
-    inputIdade, setInputIdade,
-    inputTelefone, setInputTelefone,
-    inputEmail, setInputEmail
-      } = useContext(ContextInfo)
+  const {teste} = useContext(ContextInfo)
 
-const teste = [
-  {Nome: inputNome, Settar: setInputNome},
- { Nome: inputIdade, Settar: setInputIdade},
-  {Nome: inputTelefone, Settar: setInputTelefone},
-  {Nome: inputEmail, Settar: setInputEmail},
-]
+  
 
 
   return (
     <View style={editU.container}>
 
-  {teste.map((elemento, index)=>(
-      <TextInput
-        style={editU.input}
-        value={elemento.Nome}
-        onChangeText={elemento.Settar}
-        key={index}
-      />))}
-      
-    
+      {teste.map((elemento, index)=>(
+
+       <ScrollView style={{width:'100%', height:'100%'}}>
+         <TextInput
+         style={editU.input}
+         value={elemento.Nome}
+         onChangeText={elemento.Settar}
+         key={index}
+              />
+       </ScrollView>
+
+      ))}
     </View>
   )
 }
+
+
 
 const editU = StyleSheet.create({
   container: {
@@ -399,14 +395,14 @@ const editU = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  input:{
+  input: {
     width: '40%',
     height: '10%',
     backgroundColor: '#cdcdcd',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    gap:10
+    margin: 10
   }
 
 })
