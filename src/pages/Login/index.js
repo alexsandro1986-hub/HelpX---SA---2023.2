@@ -9,10 +9,13 @@ import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 
 
+
 export default function Login({ navigation }) {
 
+  const [name, setName] = useState('');
+  const [senha, setSenha] = useState('');
   const entrar = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Chat', { name: name })
   }
 
   return (
@@ -22,21 +25,21 @@ export default function Login({ navigation }) {
       //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
       style={styles.container}
     >
-   
+
 
       <View style={styles.container}>
         <View>
-        {/* <TouchableOpacity 
-         onPress={() =>
-          navigation.navigate('Inicio')
-        }>
-        <Feather
-            name="arrow-left"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity> */}
-       
+          <TouchableOpacity
+            onPress={() =>
+              navigation.goBack()
+            }>
+            <Feather
+              name="arrow-left"
+              size={30}
+              color="white"
+            />
+          </TouchableOpacity>
+
           <View style={styles.containerTitulo}>
             <Text style={styles.textoTitulo}>
               Login
@@ -52,8 +55,9 @@ export default function Login({ navigation }) {
               style={styles.inpt}
               // placeholder='Digite seu email...'
               keyboardType='email-address'
+            
               // leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-              onChangeText={value => setEmail(value)}
+              onChangeText={setName}
             />
           </View>
           <View>
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
 
   },
   botaoBack: {
-  
+
   },
   img: {
     width: 200,
