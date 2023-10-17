@@ -11,6 +11,7 @@ import Inicio from './src/pages/Inicio';
 import { StackTratamento } from './src/pages/Tratamento';
 import Informacoes from './src/pages/Informacoes';
 import {ContextInfo, ContextInfoProvider } from './src/pages/ContextInfo/contextinfo';
+import StackAdmin from './src/pages/Admin'
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function MyStack() {
     <ContextInfoProvider>
       <Stack.Navigator>
         <Stack.Group>
+          <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
           <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
           <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
