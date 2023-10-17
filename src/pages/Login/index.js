@@ -10,9 +10,12 @@ import { useNavigation } from "@react-navigation/native";
 
 
 export default function Login({ navigation }) {
+  const [name, setName] = useState('');
+  const [senha, setSenha] = useState('');
+
 
   const entrar = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Chat', {name: name})
   }
 
   return (
@@ -40,7 +43,7 @@ export default function Login({ navigation }) {
             // placeholder='Email'
             keyboardType='email-address'
             // leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-            onChangeText={value => setEmail(value)}
+            onChangeText={setName}
           />
         </View>
 
