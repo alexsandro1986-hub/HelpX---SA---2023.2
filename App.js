@@ -25,7 +25,7 @@ function MyStack() {
           <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
           <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
+          <Stack.Screen name='Chat' component={Chat} />
           <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
           <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
