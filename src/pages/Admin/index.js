@@ -75,7 +75,7 @@ function FeedAdmin() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('StackTratamento')}
+                    onPress={() =>  navigation.navigate('Chat', {name: 'admin'})}
                     style={feed.botao}>
 
                     <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />

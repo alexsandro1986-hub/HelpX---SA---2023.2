@@ -9,6 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import QRCode from 'react-native-qrcode-svg';
+import { useContext } from 'react';
+import { ContextInfo } from '../ContextInfo/contextinfo';
 
 
 const Tab = createBottomTabNavigator();
@@ -16,7 +18,7 @@ const Stack = createStackNavigator();
 
 export default function Home() {
   return (
-  
+
     <Tab.Navigator
       initialRouteName="StackFeed"
       screenOptions={{
@@ -25,7 +27,7 @@ export default function Home() {
     >
       <Tab.Screen
         name="StackFeed"
-        component={ StackFeed}
+        component={StackFeed}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -76,6 +78,7 @@ function StackFeed() {
 
 function Feed() {
   const navigation = useNavigation()
+  const {inputNome, setInputNome} = useContext(ContextInfo)
   return (
 
 
@@ -95,9 +98,17 @@ function Feed() {
 
         </TouchableOpacity>
 
-        <View style={feed.options}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Chat', { name: {inputNome} })}
+          style={feed.botao}>
 
-        </View>
+          <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
+
+          <Text style={feed.textoBotao}>
+            Suporte
+          </Text>
+
+        </TouchableOpacity>
 
         <View style={feed.options}>
 
