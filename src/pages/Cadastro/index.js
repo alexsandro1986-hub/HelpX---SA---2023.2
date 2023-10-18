@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingViewBase, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingViewBase } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
@@ -35,7 +35,6 @@ function Email(a) {
             placeholder="Email"
             onChangeText={setInputEmail}
             value={inputEmail}
-            returnKeyType="done"
           />
           <TouchableOpacity style={styles.botao} onPress={() => {
             console.log('oi', inputEmail)
@@ -59,20 +58,16 @@ function Senha(a) {
     const { inputSenha, setInputSenha } = useContext(ContextInfo)
     return (
 
-      <KeyboardAvoidingView 
-      style={styles.body}
-      behavior={Platform.OS === 'ios' ? 'padding':'height'}
-      keyboardVerticalOffset={80}
-      
+      <KeyboardAvoidingView
+       style={styles.body}
       >
         <View style={styles.container}>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
             placeholder="Senha"
-            secureTextEntry={true}
+            //secureTextEntry={true}
             onChangeText={setInputSenha}
             value={inputSenha}
-            returnKeyType="done"
 
           />
           <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
@@ -100,7 +95,6 @@ function ConfirmarSenha(a) {
             secureTextEntry={true}
             onChangeText={setInputConfirmaSenha}
             value={inputConfirmaSenha}
-            returnKeyType="done"
           />
           <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
 
@@ -190,7 +184,7 @@ const styles = StyleSheet.create({
   },
   textoBotao: {
     color: 'white',
-    //fontFamily: 'Helvetica',
+    // fontFamily: 'Helvetica',
     fontWeight: 'bold',
   },
 });
