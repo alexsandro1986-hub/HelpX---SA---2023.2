@@ -379,18 +379,16 @@ export function EditUser() {
   return (
     <View style={editU.container}>
 
-      {teste.map((elemento, index)=>(
+           <TextInput
+           style={editU.input}
+           value={teste}
+           onChangeText={elemento.Settar}
+           key={index}
+                />
+    
+       
 
-       <ScrollView style={{width:'100%', height:'100%'}}>
-         <TextInput
-         style={editU.input}
-         value={elemento.Nome}
-         onChangeText={elemento.Settar}
-         key={index}
-              />
-       </ScrollView>
-
-      ))}
+  
     </View>
   )
 }
@@ -405,14 +403,20 @@ const editU = StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  viewInput:{
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'red'
+  },
+
   input: {
     width: '40%',
     height: '10%',
     backgroundColor: '#cdcdcd',
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10
+    
   }
 
 })
