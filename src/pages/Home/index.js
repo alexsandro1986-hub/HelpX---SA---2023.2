@@ -1,16 +1,16 @@
 
-import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as React from 'react';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+
 import { useContext } from 'react';
 import { ContextInfo } from '../ContextInfo/contextinfo';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -70,7 +70,7 @@ function StackFeed() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name='EditUser' component={EditUser} options={{ title: '' }} />
+      <Stack.Screen name='EditUser' component={EditUser} options={{ title: 'Editar Dados' }} />
       <Stack.Screen name='Home' component={Feed} options={{ title: '' }} />
       <Stack.Screen name='QrCodeUser' component={QrCodeUser} options={{ title: '' }} />
     </Stack.Navigator>
@@ -79,7 +79,7 @@ function StackFeed() {
 
 function Feed() {
   const navigation = useNavigation()
-  const {inputNome, setInputNome} = useContext(ContextInfo)
+  const { inputNome, setInputNome } = useContext(ContextInfo)
   return (
 
 
@@ -100,7 +100,7 @@ function Feed() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Chat', { name: {inputNome} })}
+          onPress={() => navigation.navigate('Chat', { name: { inputNome } })}
           style={{ width: '40%', height: '40%', backgroundColor: '#97D8AE', borderRadius: 10, justifyContent: 'center', alignItems: 'center', gap: 15, shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8, }}>
 
           <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
@@ -372,92 +372,142 @@ export function EditUser() {
 
   const navigation = useNavigation()
   const {
-     inputNome, setInputNome,
-    inputIdade, setInputIdade,  
+    inputNome, setInputNome,
+    inputIdade, setInputIdade,
     inputAlergias, setInputAlergias,
     inputTelefone, setInputTelefone,
     inputContatoEmergencia, setInputContatoEmergencia,
     inputNtelefoneEmergencia, setNtelefoneEmergencia,
-    inputNCep,setInputNcep,
-    inputLogradouro,setInputLogradouro,
-    inputNumeroCasa,setNumeroCasa,
+    inputNCep, setInputNcep,
+    inputLogradouro, setInputLogradouro,
+    inputNumeroCasa, setNumeroCasa,
     inputDoador, setInputDoador,
     inputSangue, setInputSangue,
     inputOrgao, setInputOrgao,
   } = useContext(ContextInfo)
 
-  
+
 
 
   return (
     <View style={editU.container}>
-      
-           <ScrollView style={{width:'100%', height:'100%',}}>
-             <View style={{flex:1, justifyContent:'center', alignItems:'center'}} >
 
-                
-               <TextInput
-               style={editU.input}
-               value={inputNome}
-               onChangeText={setInputNome}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputIdade}
-               onChangeText={setInputIdade}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputAlergias}
-               onChangeText={setInputAlergias}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputTelefone}
-               onChangeText={setInputTelefone}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputContatoEmergencia}
-               onChangeText={setInputContatoEmergencia}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputNtelefoneEmergencia}
-               onChangeText={setNtelefoneEmergencia}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputNCep}
-               onChangeText={setInputNcep}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputLogradouro}
-               onChangeText={setInputLogradouro}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputNumeroCasa}
-               onChangeText={setNumeroCasa}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputDoador}
-               onChangeText={setInputDoador}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputSangue}
-               onChangeText={setInputSangue}
-                    />
-               <TextInput
-               style={editU.input}
-               value={inputOrgao}
-               onChangeText={setInputOrgao}
-                    />
-             </View>
-           </ScrollView>
+      <ScrollView style={{ width: '100%', height: '100%', }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+
+
+          <View style={editU.viewInput}>
+            <Text>Nome</Text>
+            <TextInput
+              style={editU.input}
+              value={inputNome}
+              onChangeText={setInputNome}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>Idade</Text>
+            <TextInput
+              style={editU.input}
+              value={inputIdade}
+              onChangeText={setInputIdade}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>Alergias</Text>
+            <TextInput
+              style={editU.input}
+              value={inputAlergias}
+              onChangeText={setInputAlergias}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>Telefone</Text>
+            <TextInput
+              style={editU.input}
+              value={inputTelefone}
+              onChangeText={setInputTelefone}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>Contato de Emergencia</Text>
+            <TextInput
+              style={editU.input}
+              value={inputContatoEmergencia}
+              onChangeText={setInputContatoEmergencia}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>telefone de Emergencia</Text>
+            <TextInput
+              style={editU.input}
+              value={inputNtelefoneEmergencia}
+              onChangeText={setNtelefoneEmergencia}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>CEP</Text>
+            <TextInput
+              style={editU.input}
+              value={inputNCep}
+              onChangeText={setInputNcep}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>Logradouro</Text>
+            <TextInput
+              style={editU.input}
+              value={inputLogradouro}
+              onChangeText={setInputLogradouro}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>N.° Casa</Text>
+            <TextInput
+              style={editU.input}
+              value={inputNumeroCasa}
+              onChangeText={setNumeroCasa}
+            />
+          </View>
+
+
+          <View style={editU.viewInput}>
+            <Text> Tipo Sanguíneo </Text>
+            <TextInput
+              style={editU.input}
+              value={inputDoador}
+              onChangeText={setInputDoador}
+            />
+          </View>
+
+          <View style={editU.viewInput}>
+            <Text>É Doador de Sangue?</Text>
+            <TextInput
+              style={editU.input}
+              value={inputSangue}
+              onChangeText={setInputSangue}
+            />
+          </View>
+
+
+          <View style={editU.viewInput}>
+            <Text>é Doador de Orgão?</Text>
+            <TextInput
+              style={editU.input}
+              value={inputOrgao}
+              onChangeText={setInputOrgao}
+            />
+          </View>
+
+        </View>
+      </ScrollView>
     </View>
   )
 }
@@ -472,17 +522,21 @@ const editU = StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  viewInput: {
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    margin:20
+  },
 
 
   input: {
-    width: '80%',
-    height: 60,
-    borderRadius: 10,
-    margin:15,
-    backgroundColor:'blue',
+    width: '100%',
+    height: 40,
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
-    
+    paddingLeft:10,
+    paddingTop: 10
   }
 
 })

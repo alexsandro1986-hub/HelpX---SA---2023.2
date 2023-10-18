@@ -22,9 +22,9 @@ function MyStack() {
       <Stack.Navigator>
         <Stack.Group>
           <Stack.Screen name='Home' component={Home} options={{ headerShown: false }}/>
+          <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
           <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
-          <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='Chat' component={Chat} />
           <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />

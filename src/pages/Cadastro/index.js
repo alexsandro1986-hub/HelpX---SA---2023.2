@@ -15,9 +15,9 @@ const Header = () => (
   <View style={styles.header}>
     <View style={styles.containerLogo}>
       <Image
-        source={require('../img/logo.png')}
+        source={require('../img/logoS.svg')}
 
-        style={{ width: 300, height: 200 }}
+        style={{ width: 300, height: 200, color:'red' }}
         resizeMode="contain"
       />
     </View>
@@ -132,7 +132,7 @@ export default function Cadastro() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     height: 200,
 
   },
