@@ -18,19 +18,10 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputNCep,setInputNcep]= useState('')
     const [inputLogradouro,setInputLogradouro]= useState('')
     const [inputNumeroCasa,setNumeroCasa]= useState('')
+    const [inputDoador, setInputDoador] =useState('')
+    const [inputSangue, setInputSangue]=useState('')
+    const [inputOrgao, setInputOrgao] =useState('')
 
-    const teste = [
-        { Nome: inputNome, Settar: setInputNome },
-        { Nome: inputIdade, Settar: setInputIdade },
-        { Nome: inputEmail, Settar: setInputEmail },
-        { Nome: inputTelefone, Settar: setInputTelefone },
-        { Nome: inputAlergias, Settar: setInputAlergias },
-        { Nome: inputContatoEmergencia, Settar: setInputContatoEmergencia },
-        { Nome: inputNtelefoneEmergencia, Settar: setNtelefoneEmergencia },
-        { Nome: inputNCep, Settar: setInputNcep },
-        { Nome: inputLogradouro, Settar: setInputLogradouro },
-        { Nome: inputNumeroCasa, Settar: setNumeroCasa },
-    ]
 
     return (
         <ContextInfo.Provider
@@ -44,13 +35,14 @@ export const ContextInfoProvider = ({ children }) => {
                 inputIdade, setInputIdade,
                 inputTelefone, setInputTelefone,
                 inputAlergias, setInputAlergias,
-                inputTelefone, setInputTelefone,
                 inputContatoEmergencia, setInputContatoEmergencia,
                 inputNtelefoneEmergencia, setNtelefoneEmergencia,
                 inputNCep,setInputNcep,
                 inputLogradouro,setInputLogradouro,
                 inputNumeroCasa,setNumeroCasa,
-                teste
+                inputDoador, setInputDoador,
+                inputSangue, setInputSangue,
+                inputOrgao, setInputOrgao,
                 
             }}>
             {children}

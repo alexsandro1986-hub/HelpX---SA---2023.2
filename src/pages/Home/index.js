@@ -70,9 +70,9 @@ function StackFeed() {
 
   return (
     <Stack.Navigator>
+      <Stack.Screen name='EditUser' component={EditUser} options={{ title: '' }} />
       <Stack.Screen name='Home' component={Feed} options={{ title: '' }} />
       <Stack.Screen name='QrCodeUser' component={QrCodeUser} options={{ title: '' }} />
-      <Stack.Screen name='EditUser' component={EditUser} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }
@@ -371,24 +371,93 @@ const qrcode = StyleSheet.create({
 export function EditUser() {
 
   const navigation = useNavigation()
-  const {teste} = useContext(ContextInfo)
+  const {
+     inputNome, setInputNome,
+    inputIdade, setInputIdade,  
+    inputAlergias, setInputAlergias,
+    inputTelefone, setInputTelefone,
+    inputContatoEmergencia, setInputContatoEmergencia,
+    inputNtelefoneEmergencia, setNtelefoneEmergencia,
+    inputNCep,setInputNcep,
+    inputLogradouro,setInputLogradouro,
+    inputNumeroCasa,setNumeroCasa,
+    inputDoador, setInputDoador,
+    inputSangue, setInputSangue,
+    inputOrgao, setInputOrgao,
+  } = useContext(ContextInfo)
 
   
 
 
   return (
     <View style={editU.container}>
+      
+           <ScrollView style={{width:'100%', height:'100%',}}>
+             <View style={{flex:1, justifyContent:'center', alignItems:'center'}} >
 
-           <TextInput
-           style={editU.input}
-           value={teste}
-           onChangeText={elemento.Settar}
-           key={index}
-                />
-    
-       
-
-  
+                
+               <TextInput
+               style={editU.input}
+               value={inputNome}
+               onChangeText={setInputNome}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputIdade}
+               onChangeText={setInputIdade}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputAlergias}
+               onChangeText={setInputAlergias}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputTelefone}
+               onChangeText={setInputTelefone}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputContatoEmergencia}
+               onChangeText={setInputContatoEmergencia}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputNtelefoneEmergencia}
+               onChangeText={setNtelefoneEmergencia}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputNCep}
+               onChangeText={setInputNcep}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputLogradouro}
+               onChangeText={setInputLogradouro}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputNumeroCasa}
+               onChangeText={setNumeroCasa}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputDoador}
+               onChangeText={setInputDoador}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputSangue}
+               onChangeText={setInputSangue}
+                    />
+               <TextInput
+               style={editU.input}
+               value={inputOrgao}
+               onChangeText={setInputOrgao}
+                    />
+             </View>
+           </ScrollView>
     </View>
   )
 }
@@ -403,19 +472,16 @@ const editU = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  viewInput:{
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'red'
-  },
+
 
   input: {
-    width: '40%',
-    height: '10%',
-    backgroundColor: '#cdcdcd',
+    width: '80%',
+    height: 60,
     borderRadius: 10,
+    margin:15,
+    backgroundColor:'blue',
+    borderBottomColor: '#000000',
+    borderBottomWidth: 1,
     
   }
 
