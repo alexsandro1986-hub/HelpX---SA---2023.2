@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity,Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,7 +11,7 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 
 const Stack = createStackNavigator();
 const Header = () => (
-    <LinearGradient  colors={['#CDE4AD', '#97D8AE', '#78D1D2']}>
+    <LinearGradient colors={['#CDE4AD', '#97D8AE', '#78D1D2']}>
         <View style={styles.header}>
             <View style={styles.containerinfromacoes} >
                 <Text style={styles.textoInforma}>INFORMAÇÕES</Text>
@@ -25,7 +25,7 @@ export default function Informacoes() {
     const navigation = useNavigation();
 
     //const[nome,setNome]= useState();
-    
+
 
 
 
@@ -40,7 +40,7 @@ export default function Informacoes() {
                     <Stack.Screen name='Idade' component={Idade('Alergias')} options={{ headerShown: false }} />
                     <Stack.Screen name='Alergias' component={Alergias('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Endereco' component={Endereco('Login')} options={{ headerShown: false }} />
 
                 </Stack.Group>
 
@@ -71,9 +71,10 @@ function Nome(a) {
 
 
     return function ({ navigation }) {
-        const {inputNome, setInputNome} = useContext(ContextInfo)
+        const { inputNome, setInputNome } = useContext(ContextInfo)
 
         return (
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.caixa}>
                 <View style={styles.body}>
                     <View style={styles.teste}>
@@ -85,14 +86,16 @@ function Nome(a) {
                             placeholder="Nome"
                             value={inputNome}
                             onChangeText={setInputNome}
+                            returnKeyType="done"
 
                         />
                     </View>
                     <View style={styles.botao}>
                         <TouchableOpacity onPress={() => {
-                          
+
                             console.log('oi', inputNome)
-                            navigation.navigate(a)}}>
+                            navigation.navigate(a)
+                        }}>
 
                             <Text style={styles.bto_Direita}>
 
@@ -121,12 +124,14 @@ function Nome(a) {
                     </View>
                 </View>
             </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
 
 function Idade(a) {
     return function ({ navigation }) {
+        const { inputIdade, setInputIdade } = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -137,7 +142,10 @@ function Idade(a) {
                         <TextInput
                             style={styles.input}
                             placeholder="Idade"
-
+                            value={inputIdade}
+                            onChangeText={setInputIdade}
+                            returnKeyType="done"
+                            
                         />
                     </View>
                     <View style={styles.botao}>
@@ -166,6 +174,7 @@ function Idade(a) {
 
 function Alergias(a) {
     return function ({ navigation }) {
+        const { inputAlergias, setInputAlergias } = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -176,6 +185,9 @@ function Alergias(a) {
                         <TextInput
                             style={styles.input}
                             placeholder="Alergias"
+                            value={inputAlergias}
+                            onChangeText={setInputAlergias}
+                            returnKeyType="done"
                         />
                     </View>
                     <View style={styles.botao}>
@@ -201,6 +213,9 @@ function Alergias(a) {
 
 function Contatos(a) {
     return function ({ navigation }) {
+        const { inputNtelefone, setInputNtelefone } = useContext(ContextInfo)
+        const {inputContatoEmergencia, setInputContatoEmergencia} = useContext(ContextInfo)
+        const {inputNtelefoneEmergencia,setNtelefoneEmergencia} = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -211,16 +226,25 @@ function Contatos(a) {
                         <TextInput
                             style={styles.input_Contato}
                             placeholder="N° de Telefone"
+                            value={inputNtelefone}
+                            onChangeText={setInputNtelefone}
+                            returnKeyType="done"
 
                         />
                         <TextInput
                             style={styles.input_Contato}
                             placeholder="Contato Emergência"
+                            value={inputContatoEmergencia}
+                            onChangeText={setInputContatoEmergencia}
+                            returnKeyType="done"
 
                         />
                         <TextInput
                             style={styles.input_Contato}
                             placeholder="Telefone de Emergência"
+                            value={inputNtelefoneEmergencia}
+                            onChangeText={setNtelefoneEmergencia}
+                            returnKeyType="done"
 
                         />
                     </View>
@@ -256,6 +280,9 @@ function Contatos(a) {
 
 function Endereco(a) {
     return function ({ navigation }) {
+        const { inputNCep, setInputNcep } = useContext(ContextInfo)
+        const {inputLogradouro, setInputLogradouro} = useContext(ContextInfo)
+        const {inputNumeroCasa,setNumeroCasa} = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -266,17 +293,23 @@ function Endereco(a) {
                         <TextInput
                             style={styles.input_endereco}
                             placeholder="N°-CEP"
-
+                            value={inputNCep}
+                            onChangeText={setInputNcep}
+                            returnKeyType="done"
                         />
                         <TextInput
                             style={styles.input_endereco}
                             placeholder="Logradouro"
-
+                            value={inputLogradouro}
+                            onChangeText={setInputLogradouro}
+                            returnKeyType="done"
                         />
                         <TextInput
                             style={styles.input_endereco}
                             placeholder="Número"
-
+                            value={inputNumeroCasa}
+                            onChangeText={setNumeroCasa}
+                            returnKeyType="done"
                         />
                     </View>
                     <View style={styles.botao}>
@@ -320,7 +353,7 @@ const styles = StyleSheet.create({
     // top: 83px;
     header: {
         height: 200,
-        
+
 
 
     },
@@ -402,7 +435,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         borderBottomWidth: 1,
         marginBottom: 100,
-        textAlign:'center'
+        textAlign: 'center'
 
     },
     input_Contato: {
@@ -410,14 +443,14 @@ const styles = StyleSheet.create({
         bottom: 10,
         marginBottom: 10,
         borderBottomWidth: 1,
-        textAlign:'center'
+        textAlign: 'center'
 
     },
     input_endereco: {
         fontSize: 30,
         marginBottom: 10,
         borderBottomWidth: 1,
-        textAlign:'center'
+        textAlign: 'center'
     },
     botao: {
         gap: 25,
