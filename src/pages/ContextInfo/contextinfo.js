@@ -18,8 +18,9 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputNCep,setInputNcep]= useState('')
     const [inputLogradouro,setInputLogradouro]= useState('')
     const [inputNumeroCasa,setNumeroCasa]= useState('')
-
-
+    const [inputDoador, setInputDoador] =useState('')
+    const [inputSangue, setInputSnague]=useState('')
+    const [inputOrgao, setInputOrgao] =useState('')
     return (
         <ContextInfo.Provider
             value={{
@@ -37,7 +38,11 @@ export const ContextInfoProvider = ({ children }) => {
                 inputNtelefoneEmergencia, setNtelefoneEmergencia,
                 inputNCep,setInputNcep,
                 inputLogradouro,setInputLogradouro,
-                inputNumeroCasa,setNumeroCasa
+                inputNumeroCasa,setNumeroCasa,
+                inputDoador, setInputDoador,
+                inputSangue, setInputSnague,
+                inputOrgao, setInputOrgao
+
 
                 
             }}>
