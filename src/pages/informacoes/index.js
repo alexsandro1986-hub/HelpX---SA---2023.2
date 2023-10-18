@@ -38,7 +38,7 @@ export default function Informacoes() {
                     <Stack.Screen name='Idade' component={Idade('Alergias')} options={{ headerShown: false }} />
                     <Stack.Screen name='Alergias' component={Alergias('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Endereco' component={Endereco('Login')} options={{ headerShown: false }} />
 
                 </Stack.Group>
 
