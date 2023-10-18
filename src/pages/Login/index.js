@@ -15,10 +15,11 @@ export default function Login({ navigation }) {
   const [senha, setSenha] = useState('');
 
 
-  const [name, setName] = useState('');
-  const [senha, setSenha] = useState('');
+ 
   const entrar = () => {
-    navigation.navigate('Chat', {name: name})
+    // navigation.navigate('Chat', {name: name})
+    navigation.navigate('Informacoes')
+
   }
 
   return (

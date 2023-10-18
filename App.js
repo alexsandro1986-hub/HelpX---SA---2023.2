@@ -11,12 +11,13 @@ import Inicio from './src/pages/Inicio';
 import { StackTratamento } from './src/pages/Tratamento';
 import Informacoes from './src/pages/Informacoes';
 import Chat from './src/pages/Chat';
+// import Descricao from './src/pages/Descricao'
 
 
 
 import {ContextInfo, ContextInfoProvider } from './src/pages/ContextInfo/contextinfo';
 import StackAdmin from './src/pages/Admin'
-import Chat from './src/pages/Chat';
+
 const Stack = createStackNavigator();
 
 
@@ -25,8 +26,10 @@ function MyStack() {
     <ContextInfoProvider>
       <Stack.Navigator>
         <Stack.Group>
+        {/* <Stack.Screen name='Descricao' component={Descricao}  options={{ headerShown: false }}/> */}
+        <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
           <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
-          <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
+         
           <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='Chat' component={Chat} />

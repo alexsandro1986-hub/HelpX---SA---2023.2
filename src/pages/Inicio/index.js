@@ -1,67 +1,58 @@
 import React from 'react';
-import { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Input, Text } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-
-
+import * as Animatable from 'react-native-animatable';
 
 export default function Inicio({ navigation }) {
-
   const entrar = () => {
-    navigation.navigate('Login')
-    }
-  
+    navigation.navigate('Login');
+  };
 
   const Cadastrar = () => {
-    navigation.navigate('Cadastro')
-  }
+    navigation.navigate('Cadastro');
+  };
 
   return (
-
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
-      //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
       style={styles.container}
     >
-      <View style={styles.container}>
-      {/* <Image style={styles.img}
-            source={require('/img/Texto do seu parágrafo.jpg')}
-           
-          /> */}
-
-        <View>
-          <View style={styles.tituloLogo}>
+     
+        <View style={styles.logoMarca}>
+          <View style={styles.containerLogo}>
+            
+            <Image
+              source={require('../img/logoHelpX.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
           </View>
-          <View style={styles.viemtexto}>
-            <Text style={styles.textoTitulo}>
-              HELPX
+        </View>
+
+        
+        <View style={styles.h1}>
+          
+            <Text style={styles.titulo}>HelpX: Seu Passaporte de Informações Médicas</Text>
+                 
+            <Text style={styles.subtitulo}>
+              Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.
             </Text>
-          </View>
+          
+            <Text style={styles.descricao}>Esteja preparado para qualquer situação!</Text>
+            <Text style={styles.descricao}>
+              Basta escanear o seu QR Code para compartilhar rapidamente informações críticas com profissionais de saúde em caso de necessidade.
+            </Text>
         </View>
+        
+     
 
-        <View style={styles.containerBotao}>
-
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={entrar}
-          >
-            <Text style={styles.textoBotao}> Entrar </Text>
-
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={Cadastrar}
-          >
-            <Text style={styles.textoBotao}> Cadastrar </Text>
-
-          </TouchableOpacity>
-        </View>
-
-
-
+      <View style={styles.containerBotao}>
+        <TouchableOpacity style={styles.botao} onPress={entrar}>
+          <Text style={styles.textoBotao}>Entrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
+          <Text style={styles.textoBotao}>Cadastrar</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
@@ -70,55 +61,73 @@ export default function Inicio({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#C7FFCC",
-    alignItems: "center",
     flexDirection: 'column',
-
-    gap: 11,
   },
-  tituloLogo:{
+ 
+  logoMarca: {
     width: '100%',
-    height:'45%'
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    
+  },
+  containerLogo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -60, 
+  },
+  logo: {
+    width: 400,
+    height: 200,
+    // backgroundColor: 'black',
   },
   containerBotao: {
     width: '100%',
-    height: '55%',
+    height: 100,
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
-
+    alignItems: 'center',
   },
   botao: {
-    width: '100%',
     width: 130,
-    height: 30,
+    height: 40,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: 'black',
     borderRadius: 20,
-
   },
   textoBotao: {
-    fontSize: 15,
+    fontSize: 20,
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
+  },
 
-  },
-  img: {
-    width: 440,
-    height: 140,
-    marginTop: 25,
-  },
-  viemtexto: {
-    width: 200,
-    height: 100,
+  h1: {
+    height: 400,
     justifyContent: 'center',
-    alignItems: 'center'
-
+    alignItems: 'center',
+    
+    
+    
   },
-  textoTitulo: {
-    fontSize: 50,
-    color: 'white'
-
+  titulo: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    bottom: 50,
   },
-
+  subtitulo: {
+    fontSize: 22,
+    textAlign: 'center',
+    Bottom: 10,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  descricao: {
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
+    top: 30,
+  },
 });
-
