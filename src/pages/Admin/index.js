@@ -6,14 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
-// import {
-//     LineChart,
-//     BarChart,
-//     PieChart,
-//     ProgressChart,
-//     ContributionGraph,
-//     StackedBarChart
-// } from "react-native-chart-kit";
+import { PieChart } from "react-native-gifted-charts";
 
 
 
@@ -234,31 +227,6 @@ function Relatorio() {
             <ScrollView>
                 <View style={telaRelatorio.cima}>
 
-                    {/* <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'UF' })}
-                        style={telaRelatorio.botao}>
-
-                        <MaterialCommunityIcons name="city" color={'white'} size={50} />
-
-                        <Text style={telaRelatorio.textoBotao}>
-                            UF
-                        </Text>
-
-                    </TouchableOpacity> */}
-
-                    {/* <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Usuarios' })}
-                        style={telaRelatorio.botao}>
-
-                        <MaterialCommunityIcons name="account-supervisor-circle" color={'white'} size={50} />
-
-                        <Text style={telaRelatorio.textoBotao}>
-                            Usuários
-                        </Text>
-
-                    </TouchableOpacity> */}
-
-
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Graficos', { tipo: 'idade' })}
                         style={telaRelatorio.botao}>
@@ -342,107 +310,93 @@ function Graficos({ route }) {
     const { tipo } = route.params
     const { vetorUser } = useContext(ContextInfo)
     let amostra = []
-    const data = [] //Dados do Grafico (valores)
-    const coresGraph = [ 
-        "rgba(255, 0, 0, 1)",
-        "rgba(0, 255, 0, 1)",
-        "rgba(0, 0, 255, 1)",
-        "rgba(255, 255, 0, 1)",
-        "rgba(255, 0, 255, 1)",
-        "rgba(0, 255, 255, 1)",
-        "rgba(128, 0, 0, 1)",
-        "rgba(0, 128, 0, 1)",
-        "rgba(0, 0, 128, 1)",
-        "rgba(128, 128, 0, 1)",
-        "rgba(128, 0, 128, 1)",
-        "rgba(0, 128, 128, 1)",
-        "rgba(128, 128, 128, 1)",
-        "rgba(192, 192, 192, 1)",
-        "rgba(255, 165, 0, 1)",
-        "rgba(255, 192, 203, 1)",
-        "rgba(0, 128, 64, 1)",
-        "rgba(255, 69, 0, 1)",
-        "rgba(0, 0, 0, 0.5)",
-        "rgba(255, 255, 255, 0.5)",
-        "rgba(128, 0, 0, 0.5)",
-        "rgba(0, 128, 0, 0.5)",
-        "rgba(0, 0, 128, 0.5)",
-        "rgba(255, 0, 0, 0.75)",
-        "rgba(0, 255, 0, 0.75)",
-        "rgba(0, 0, 255, 0.75)",
-        "rgba(255, 255, 0, 0.75)",
-        "rgba(255, 0, 255, 0.75)",
-        "rgba(0, 255, 255, 0.75)",
-        "rgba(128, 0, 0, 0.75)",
-        "rgba(0, 128, 0, 0.75)",
-        "rgba(0, 0, 128, 0.75)",
-        "rgba(128, 128, 0, 0.75)",
-        "rgba(128, 0, 128, 0.75)",
-        "rgba(0, 128, 128, 0.75)"
-     ]
-    
+    const pieData = []
+    // const data = [] //Dados do Grafico (valores)
+    const coresGraph = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+        "#800000",
+        "#008000",
+        "#000080",
+        "#808000",
+        "#800080",
+        "#008080",
+        "#808080",
+        "#C0C0C0",
+        "#FFA500",
+        "#FFC0CB",
+        "#008040",
+        "#FF4500",
+        "#800000",
+        "#008000",
+        "#000080",
+        "#800000",
+        "#008000",
+        "#000080",
+      
+    ]
+
     vetorUser.map((infos) => {
         console.log(tipo)
         let i = Object.keys(infos).indexOf(tipo)
         amostra.push(Object.values(infos)[i])
         console.log('1', amostra)
 
-        
+
     })
     // Contando números de elementos repetidos dentro da amostra
     const contadorElementos = {};
     amostra.forEach(elemento => {
-        if (contadorElementos[elemento]){
+        if (contadorElementos[elemento]) {
 
             contadorElementos[elemento] += 1
         }
-        else{
+        else {
             contadorElementos[elemento] = 1
-        }  
+        }
     })
     console.log(contadorElementos)
-    
+   
     // Criando objeto para o grafico 
     for (const [key, value] of Object.entries(contadorElementos)) {
         console.log(`${key}: ${value}`);
+        let perc = (100 *Number(value)) / vetorUser.length 
+        console.log(perc)
         const objGraph = {
-            name: key,
-            valor: value,
+            value: value,
             color: coresGraph[Math.floor(Math.random() * (coresGraph.length - 1))],
-            legendFontColor: "black",
-            legendFontSize: 20
-        }
-        data.push(objGraph)
-      }
-      
+            text: `${perc}% ${key}`,
 
-    const chartConfig = {
-        backgroundGradientFrom: "red",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "green",
-        backgroundGradientToOpacity: 0.8,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        // color: 'black',
-        strokeWidth: 6, // optional, default 3
-        barPercentage: 1,
-        useShadowColorFromDataset: false // optional
-    };
+        }
+        pieData.push(objGraph)
+    }
+
+   
+
 
     return (
         <View>
             <Text> {tipo} </Text>
 
-            {/* <PieChart
-                data={data}
-                width={300}
-                height={220}
-                chartConfig={chartConfig}
-                accessor={"valor"}
-                backgroundColor={"transparent"}
-                paddingLeft={"20"}
-                center={[10, 0]}
-                // absolute
-            /> */}
+            <PieChart
+                donut
+                isThreeD
+                showText
+                innerCircleBorderWidth={10}
+                innerCircleBorderColor="lightgreen"
+                textColor="black"
+                radius={200}
+                textSize={20}
+                showTextBackground
+                textBackgroundRadius={26}
+                data={pieData}
+                initialAngle={290}
+            />
+
 
         </View>
     )
