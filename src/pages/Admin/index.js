@@ -6,14 +6,14 @@ import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from "react-native-chart-kit";
+// import {
+//     LineChart,
+//     BarChart,
+//     PieChart,
+//     ProgressChart,
+//     ContributionGraph,
+//     StackedBarChart
+// } from "react-native-chart-kit";
 
 
 
@@ -432,7 +432,7 @@ function Graficos({ route }) {
         <View>
             <Text> {tipo} </Text>
 
-            <PieChart
+            {/* <PieChart
                 data={data}
                 width={300}
                 height={220}
@@ -442,7 +442,7 @@ function Graficos({ route }) {
                 paddingLeft={"20"}
                 center={[10, 0]}
                 // absolute
-            />
+            /> */}
 
         </View>
     )
