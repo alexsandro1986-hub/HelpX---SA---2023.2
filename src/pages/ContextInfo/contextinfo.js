@@ -232,6 +232,13 @@ export const ContextInfoProvider = ({ children }) => {
                 inputLogradouro, setInputLogradouro,
                 inputNumeroCasa, setNumeroCasa,
 
+
+            //Admin 
+            flagAdm, setFlagAdm,
+            senhaAdm,
+            loginAdm,
+
+            
                 // OBJETOS INFOS USUARIOS
                 vetorUser,
 

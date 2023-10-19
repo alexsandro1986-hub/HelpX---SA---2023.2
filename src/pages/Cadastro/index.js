@@ -121,7 +121,7 @@ export default function Cadastro() {
 
           <Stack.Screen name='Email' component={Email('Senha')} />
           <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('StackDeAcesso')} />
 
 
         </Stack.Group>

@@ -4,14 +4,35 @@ import { View, Image, StyleSheet } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
+import Cadastro from '../Cadastro';
 
+import StackDeAcesso from '../Login';
 
+const Stack = createStackNavigator();
 
-export default function Inicio({ navigation }) {
+export default function StackHomePage() {
+
+  return (
+
+    <Stack.Navigator>
+      <Stack.Group>
+
+      <Stack.Screen name='Inicio' component={Inicio}  options={{ headerShown: false }}/>
+      <Stack.Screen name='StackDeAcesso' component={StackDeAcesso} options={{ headerShown: false }} />
+      <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
+
+      </Stack.Group>
+    </Stack.Navigator>
+    )
+
+}
+export function Inicio({ navigation }) {
 
   const entrar = () => {
-    navigation.navigate('Login')
+    navigation.navigate('StackDeAcesso')
     }
   
 

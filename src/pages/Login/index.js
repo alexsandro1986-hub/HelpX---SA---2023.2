@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { View, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Text } from 'react-native-elements';
@@ -6,16 +6,76 @@ import { TouchableOpacity } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from "@expo/vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from '../Home'
+import { StackTratamento } from '../Tratamento';
+import Informacoes from '../Informacoes';
+import StackAdmin from '../Admin'
+import Chat from '../Chat';
+import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 
 
-export default function Login({ navigation }) {
-  const [name, setName] = useState('');
-  const [senha, setSenha] = useState('');
+
+
+const Stack = createStackNavigator();
+
+export default function StackDeAcesso() {
+  const {flagAdm} = useContext(ContextInfo)
+
+  return (
+
+    <Stack.Navigator>
+        
+        
+      {
+      flagAdm?
+       ( <>
+      
+        <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
+        <Stack.Screen name='Chat' component={Chat} />
+    
+        </>)
+        :
+        (<>
+   
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name='Home' component={Home} />
+        <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
+        <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
+        <Stack.Screen name='Chat' component={Chat} />
+    
+        </>)
+      }
+    </Stack.Navigator>
+    )
+
+}
+
+
+
+
+export function Login({ navigation }) {
+  const [emailLogin, setEmailLogin] = useState('');
+  const [senhaLogin, setSenhaLogin] = useState('');
+  const {flagAdm, setFlagAdm, senhaAdm , loginAdm,
+    inputSenha, setInputSenha,
+    inputEmail, setInputEmail,
+  
+  } = useContext(ContextInfo)
+
 
 
   const entrar = () => {
-    navigation.navigate('Chat', {name: name})
+    if (emailLogin == loginAdm && senhaLogin == senhaAdm){
+      setFlagAdm(!flagAdm)
+    } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
+      navigation.navigate('Home')
+    } else {
+      navigation.navigate('Cadastro')
+    }
+
+    // navigation.navigate('Chat', { name: name })
   }
 
   return (
@@ -31,7 +91,7 @@ export default function Login({ navigation }) {
         style={styles.icon}
         color='grey'
       />
- 
+
       <KeyboardAvoidingView style={styles.containerInputs}>
 
         <View style={styles.AlturaElementosInput}>
@@ -43,7 +103,7 @@ export default function Login({ navigation }) {
             // placeholder='Email'
             keyboardType='email-address'
             // leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-            onChangeText={setName}
+            onChangeText={setEmailLogin}
           />
         </View>
 
@@ -54,7 +114,7 @@ export default function Login({ navigation }) {
             // placeholder='Senha'
             secureTextEntry={true}
             // leftIcon={{ type: 'font-awesome', name: 'lock' }}
-            onChangeText={value => setSenha(value)}
+            onChangeText={setSenhaLogin}
           />
         </View>
 
@@ -118,7 +178,7 @@ const styles = StyleSheet.create({
     color: 'black',
     paddingLeft: 10,
     paddingTop: 18,
- 
+
   },
   botao: {
     width: '80%',
