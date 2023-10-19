@@ -2,11 +2,15 @@ import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity,Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
+import { RadioButton } from 'react-native-paper';
+import { ScrollView } from 'react-native';
+
+
 
 
 const Stack = createStackNavigator();
@@ -22,11 +26,6 @@ const Header = () => (
 
 export default function Informacoes() {
 
-    const navigation = useNavigation();
-
-    //const[nome,setNome]= useState();
-
-
 
 
     return (
@@ -38,7 +37,8 @@ export default function Informacoes() {
 
                     <Stack.Screen name='Nome' component={Nome('Idade')} options={{ headerShown: false }} />
                     <Stack.Screen name='Idade' component={Idade('Alergias')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Alergias' component={Alergias('Contatos')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Alergias' component={Alergias('Doador')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Doador' component={Doador('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
                     <Stack.Screen name='Endereco' component={Endereco('Home')} options={{ headerShown: false }} />
 
@@ -75,55 +75,52 @@ function Nome(a) {
 
         return (
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+                <View style={styles.caixa}>
+                    <View style={styles.body}>
+                        <View style={styles.teste}>
+                            <View style={styles.viwInfomativo}>
+                                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+                            </View>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Nome"
+                                value={inputNome}
+                                onChangeText={setInputNome}
+                                returnKeyType="done"
+
+                            />
                         </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Nome"
-                            value={inputNome}
-                            onChangeText={setInputNome}
-                            returnKeyType="done"
+                        <View style={styles.botao}>
+                            <TouchableOpacity onPress={() => navigation.navigate(a)
+                            }>
 
-                        />
-                    </View>
-                    <View style={styles.botao}>
-                        <TouchableOpacity onPress={() => {
+                                <Text style={styles.bto_Direita}>
 
-                            console.log('oi', inputNome)
-                            navigation.navigate(a)
-                        }}>
+                                    <Icon
+                                        name="arrow-right"
+                                        size={35}
+                                        color="black"
 
-                            <Text style={styles.bto_Direita}>
+                                    />
 
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-
-                            </Text>
+                                </Text>
 
 
 
-                        </TouchableOpacity >
-                        <TouchableOpacity  >
-                            <Text style={styles.esquerda_bto}>
-                                <Icon
-                                    name="arrow-left"
-                                    size={35}
-                                    color="black"
+                            </TouchableOpacity >
+                            <TouchableOpacity  >
+                                <Text style={styles.esquerda_bto}>
+                                    <Icon
+                                        name="arrow-left"
+                                        size={35}
+                                        color="black"
 
-                                />
-                            </Text>
-                        </TouchableOpacity>
+                                    />
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
             </TouchableWithoutFeedback>
         );
     }
@@ -145,7 +142,7 @@ function Idade(a) {
                             value={inputIdade}
                             onChangeText={setInputIdade}
                             returnKeyType="done"
-                            
+
                         />
                     </View>
                     <View style={styles.botao}>
@@ -211,11 +208,130 @@ function Alergias(a) {
 }
 
 
+function Doador(a) {
+    return function ({ navigation }) {
+        const { inputDoador, setInputDoador } = useContext(ContextInfo)
+
+        const [inputSnague, setInputSnague] = useState('option1');
+        const [inputOrgao, setInputOrgao] = useState('option3');
+
+        return (
+            <ScrollView style={styles.caixa}>
+                <View style={styles.body}>
+                    <View style={styles.teste}>
+                        <View style={styles.viwInfomativo}>
+                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+                        </View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Tipo Sanguinio"
+                            value={inputDoador}
+                            onChangeText={setInputDoador}
+                            returnKeyType="done"
+                        />
+
+                        {/* radioButton  doador sangue*/}
+
+                        <View style={styles.tiposSangue}>
+                            <View style={styles.radioGroup}>
+                                <View style={styles.radioButton}>
+                                    <Text>Vôce é doador de sangue</Text>
+                                    <RadioButton.Android
+                                        value="option1"
+                                        status={inputSnague === 'option1' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputSnague('option1')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={styles.radioLabel}>
+                                        Sim
+                                    </Text>
+                                </View>
+                                <View style={styles.radioButton}>
+                                    <RadioButton.Android
+                                        value="option2"
+                                        status={inputSnague === 'option2' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputSnague('option2')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={styles.radioLabel}>
+                                        Não
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* radioButton  doador orgãos*/}
+                        <View style={styles.tiposSangue}>
+                            <View style={styles.radioGroup}>
+                                <View style={styles.radioButton}>
+                                    <Text>Vôce é doador de orgãos</Text>
+                                    <RadioButton.Android
+                                        value="option3"
+                                        status={inputOrgao === 'option3' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputOrgao('option3')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={styles.radioLabel}>
+                                        Sim
+                                    </Text>
+                                </View>
+                                <View style={styles.radioButton}>
+                                    <RadioButton.Android
+                                        value="option4"
+                                        status={inputOrgao === 'option4' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputOrgao('option4')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={styles.radioLabel}>
+                                        Não
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+
+
+                    </View>
+
+
+
+
+
+                    <View style={styles.botaoDoador}>
+                        <TouchableOpacity onPress={() => {
+
+                            console.log('oi', inputSnague)
+                            console.log('noob', inputDoador)
+                            navigation.navigate(a)
+                        }
+                        }>
+                            <Text style={styles.bto_DireitaDoador}>
+                                <Icon
+                                    name="arrow-right"
+                                    size={35}
+                                    color="black"
+
+                                />
+                            </Text>
+                        </TouchableOpacity>
+                        <View style={styles.esquerda_bto_Doador}><MyBackButton /></View>
+
+                    </View>
+                </View>
+            </ScrollView >
+        );
+    }
+}
+
+
 function Contatos(a) {
     return function ({ navigation }) {
         const { inputNtelefone, setInputNtelefone } = useContext(ContextInfo)
-        const {inputContatoEmergencia, setInputContatoEmergencia} = useContext(ContextInfo)
-        const {inputNtelefoneEmergencia,setNtelefoneEmergencia} = useContext(ContextInfo)
+        const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
+        const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -281,8 +397,8 @@ function Contatos(a) {
 function Endereco(a) {
     return function ({ navigation }) {
         const { inputNCep, setInputNcep } = useContext(ContextInfo)
-        const {inputLogradouro, setInputLogradouro} = useContext(ContextInfo)
-        const {inputNumeroCasa,setNumeroCasa} = useContext(ContextInfo)
+        const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
+        const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -352,7 +468,7 @@ const styles = StyleSheet.create({
     // left: 0px;
     // top: 83px;
     header: {
-        height: 200,
+        height: 250,
 
 
 
@@ -438,6 +554,42 @@ const styles = StyleSheet.create({
         textAlign: 'center'
 
     },
+
+    tiposSangue: {
+        marginBottom: 15,
+
+
+    },
+    radioGroup: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+
+        borderRadius: 8,
+        backgroundColor: 'white',
+
+        elevation: 3,
+        shadowColor: '#000',
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 0,
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 1.84,
+    },
+
+    radioButton: {
+
+
+        alignItems: 'center',
+
+    },
+    radioLabel: {
+        marginLeft: 8,
+        fontSize: 16,
+        color: '#333',
+    },
+
     input_Contato: {
         fontSize: 30,
         bottom: 10,
@@ -465,6 +617,11 @@ const styles = StyleSheet.create({
     // top: 396px;
 
     // transform: rotate(-180deg);
+    botaoDoador: {
+
+        top: 25
+    },
+
     bto_Direita: {
         position: 'relative',
         display: 'flex',
@@ -472,6 +629,14 @@ const styles = StyleSheet.create({
         left: 155,
 
 
+    },
+    bto_DireitaDoador: {
+        left: 155,
+
+    },
+    esquerda_bto_Doador: {
+        bottom: 35,
+        right: 155
     },
     esquerda_bto: {
         right: 155,
