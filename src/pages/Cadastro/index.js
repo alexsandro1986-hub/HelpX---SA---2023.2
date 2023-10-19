@@ -10,19 +10,10 @@ import { KeyboardAvoidingView } from 'react-native';
 const Stack = createStackNavigator();
 
 
-const Header = () => (
 
-  <View style={styles.header}>
-    <View style={styles.containerLogo}>
-      <Image
-        source={require('../img/logo.png')}
 
-        style={{ width: 300, height: 200 }}
-        resizeMode="contain"
-      />
-    </View>
-  </View>
-);
+
+
 
 function Email(a) {
   return function ({ navigation }) {
@@ -114,28 +105,24 @@ function ConfirmarSenha(a) {
 
 export default function Cadastro() {
   return (
-    <>
-      <Header />
+    
+      
       <Stack.Navigator>
         <Stack.Group>
 
           <Stack.Screen name='Email' component={Email('Senha')} />
           <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('StackDeAcesso')} />
 
 
         </Stack.Group>
       </Stack.Navigator>
-    </>
+    
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'black',
-    height: 200,
-
-  },
+  
   body: {
     flex: 1,
     justifyContent: 'center',

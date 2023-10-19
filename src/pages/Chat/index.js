@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 //importação do firebase e database
 import { collection, addDoc,onSnapshot, query,orderBy } from "firebase/firestore";
 import { database } from "../Config/firebase.js";
+// import { database } from "./src/pages/Config/Firebase";
 
 export default function Chat() {
     const [messages, setMessages] = useState([]);

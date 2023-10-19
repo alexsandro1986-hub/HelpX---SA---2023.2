@@ -4,6 +4,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
+import { ContextInfo } from '../ContextInfo/contextinfo';
+import { useContext } from 'react';
+import { PieChart } from "react-native-gifted-charts";
+
+
 
 const Stack = createStackNavigator();
 
@@ -46,8 +51,8 @@ export default function StackAdmin() {
                 },
                 headerTitleAlign: "center",
             }} />
-            <Stack.Screen name='Usuarios' component={FeedAdmin} />
-            <Stack.Screen name='Suporte' component={FeedAdmin} />
+            <Stack.Screen name='Usuarios' component={Usuarios} />
+            {/* <Stack.Screen name='Suporte' component={Suporte} /> */}
             <Stack.Screen name='Graficos' component={Graficos} />
         </Stack.Navigator>
     );
@@ -75,7 +80,7 @@ function FeedAdmin() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() =>  navigation.navigate('Chat', {name: 'admin'})}
+                    onPress={() => navigation.navigate('Chat', { name: 'admin' })}
                     style={feed.botao}>
 
                     <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
@@ -88,7 +93,7 @@ function FeedAdmin() {
 
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('StackTratamento')}
+                    onPress={() => navigation.navigate('Usuarios')}
                     style={feed.botao}>
 
                     <MaterialCommunityIcons name="account-multiple-outline" color={'white'} size={50} />
@@ -169,7 +174,7 @@ const telaRelatorio = StyleSheet.create({
         gap: 11,
     },
     cima: {
-        paddingTop: '22%',
+        paddingTop: '37%',
         height: '100%',
         width: '100%',
         justifyContent: 'center',
@@ -193,7 +198,7 @@ const telaRelatorio = StyleSheet.create({
     },
     botao: {
         width: '40%',
-        height: '30%',
+        height: '55%',
         backgroundColor: '#97D8AE',
         borderRadius: 10,
         justifyContent: 'center',
@@ -223,32 +228,7 @@ function Relatorio() {
                 <View style={telaRelatorio.cima}>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'UF' })}
-                        style={telaRelatorio.botao}>
-
-                        <MaterialCommunityIcons name="city" color={'white'} size={50} />
-
-                        <Text style={telaRelatorio.textoBotao}>
-                            UF
-                        </Text>
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Usuarios' })}
-                        style={telaRelatorio.botao}>
-
-                        <MaterialCommunityIcons name="account-supervisor-circle" color={'white'} size={50} />
-
-                        <Text style={telaRelatorio.textoBotao}>
-                            Usuários
-                        </Text>
-
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Idade' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'idade' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="format-list-numbered-rtl" color={'white'} size={50} />
@@ -259,7 +239,7 @@ function Relatorio() {
 
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Medicamentos' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'medicamentos' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="pill" color={'white'} size={50} />
@@ -270,18 +250,18 @@ function Relatorio() {
 
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Comordidades' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'Comorbidades' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="diabetes" color={'white'} size={50} />
 
                         <Text style={telaRelatorio.textoBotao}>
-                            Comordidades
+                            Comorbidades
                         </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Alergias' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'alergia' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="allergy" color={'white'} size={50} />
@@ -292,7 +272,7 @@ function Relatorio() {
 
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Sangue' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'sangue' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="iv-bag" color={'white'} size={50} />
@@ -303,7 +283,7 @@ function Relatorio() {
 
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Graficos', { tipo: 'Doador' })}
+                        onPress={() => navigation.navigate('Graficos', { tipo: 'doador' })}
                         style={telaRelatorio.botao}>
 
                         <MaterialCommunityIcons name="hand-heart" color={'white'} size={50} />
@@ -325,10 +305,180 @@ function Relatorio() {
 
 }
 
-function Graficos({ route, navigation }) {
+function Graficos({ route }) {
+    const navigation = useNavigation()
     const { tipo } = route.params
+    const { vetorUser } = useContext(ContextInfo)
+    let amostra = []
+    const pieData = []
+    // const data = [] //Dados do Grafico (valores)
+    const coresGraph = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+        "#800000",
+        "#008000",
+        "#000080",
+        "#808000",
+        "#800080",
+        "#008080",
+        "#808080",
+        "#C0C0C0",
+        "#FFA500",
+        "#FFC0CB",
+        "#008040",
+        "#FF4500",
+        "#800000",
+        "#008000",
+        "#000080",
+        "#800000",
+        "#008000",
+        "#000080",
+      
+    ]
+
+    vetorUser.map((infos) => {
+        console.log(tipo)
+        let i = Object.keys(infos).indexOf(tipo)
+        amostra.push(Object.values(infos)[i])
+        console.log('1', amostra)
+
+
+    })
+    // Contando números de elementos repetidos dentro da amostra
+    const contadorElementos = {};
+    amostra.forEach(elemento => {
+        if (contadorElementos[elemento]) {
+
+            contadorElementos[elemento] += 1
+        }
+        else {
+            contadorElementos[elemento] = 1
+        }
+    })
+    console.log(contadorElementos)
+   
+    // Criando objeto para o grafico 
+    for (const [key, value] of Object.entries(contadorElementos)) {
+        console.log(`${key}: ${value}`);
+        let perc = (100 *Number(value)) / vetorUser.length 
+        console.log(perc)
+        const objGraph = {
+            value: value,
+            color: coresGraph[Math.floor(Math.random() * (coresGraph.length - 1))],
+            text: `${perc}% ${key}`,
+
+        }
+        pieData.push(objGraph)
+    }
+
+   
+
 
     return (
-        <Text> {tipo} </Text>
+        <View>
+            <Text> {tipo} </Text>
+
+            <PieChart
+                donut
+                isThreeD
+                showText
+                innerCircleBorderWidth={10}
+                innerCircleBorderColor="lightgreen"
+                textColor="black"
+                radius={200}
+                textSize={20}
+                showTextBackground
+                textBackgroundRadius={26}
+                data={pieData}
+                initialAngle={290}
+            />
+
+
+        </View>
     )
 }
+
+
+function Usuarios() {
+    const navigation = useNavigation()
+    const { vetorUser } = useContext(ContextInfo)
+
+    return (
+
+        <View style={feedCards.container}>
+            <ScrollView style={{ width: '100%' }}>
+                {vetorUser.map((infos, index) =>
+
+                    <View style={feedCards.cards} key={index}>
+
+                        <Text style={feedCards.textoCards}> Nome: {infos.nome}</Text>
+                        <Text style={feedCards.textoCards}> Idade: {infos.idade} </Text>
+                        <Text style={feedCards.textoCards}> Alergia: {infos.alergia}</Text>
+                        <Text style={feedCards.textoCards}> Tipo Sanguíneo: {infos.sangue}</Text>
+                        <Text style={feedCards.textoCards}> Doador de orgãos: {infos.doador}</Text>
+                        <Text style={feedCards.textoCards}> Telefone: {infos.telefone}</Text>
+                        <Text style={feedCards.textoCards}> CEP: {infos.cep}</Text>
+                        <Text style={feedCards.textoCards}> Logradouro: {infos.logradouro}</Text>
+                        <Text style={feedCards.textoCards}> Número da Residência: {infos.nCasa}</Text>
+                        <Text style={feedCards.textoCards}> E-mail: {infos.email}</Text>
+                        <Text style={feedCards.textoCards}> Nome do Contanto de Emergência: {infos.contatoEmergencia}</Text>
+                        <Text style={feedCards.textoCards}> Telefone de Emergência: {infos.telefoneEmergencia}</Text>
+
+                    </View>
+                )
+                }
+            </ScrollView>
+        </View>
+    )
+}
+
+const feedCards = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+
+    },
+    cima: {
+        height: '50%',
+        width: '100%',
+        justifyContent: 'center',
+        alignContent: 'center',
+        gap: 20,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 2,
+        borderColor: '#97D8AE',
+    },
+
+    containerCards: {
+        width: '100%',
+        height: 50,
+        // borderWidth: 1,
+        // borderColor: '#97D8AE',
+        flexDirection: 'row',
+        // justifyContent: 'space-evenly',
+        // alignItems: 'stretch'
+        paddingBottom: 200
+    },
+    cards: {
+        borderWidth: 2,
+        borderRadius: 20,
+        height: 300,
+        width: '100%',
+        borderColor: '#97D8AE',
+        marginBottom: 20
+
+    },
+    textoCards: {
+        fontSize: 18,
+        color: 'black',
+
+    }
+
+})
+
