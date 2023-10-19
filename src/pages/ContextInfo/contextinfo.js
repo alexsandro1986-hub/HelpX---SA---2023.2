@@ -22,6 +22,8 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputSangue, setInputSangue]=useState('sim')
     const [inputOrgao, setInputOrgao] =useState('sim')
 
+   
+
 
     return (
         <ContextInfo.Provider
@@ -43,6 +45,7 @@ export const ContextInfoProvider = ({ children }) => {
                 inputDoador, setInputDoador,
                 inputSangue, setInputSangue,
                 inputOrgao, setInputOrgao,
+
                 
             }}>
             {children}
@@ -52,3 +55,14 @@ export const ContextInfoProvider = ({ children }) => {
     )
 
 }
+
+
+
+
+
+
+
+
+
+
+
