@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Image, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
@@ -12,38 +12,47 @@ export default function Inicio({ navigation }) {
     navigation.navigate('Cadastro');
   };
 
+  
+
   return (
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
       style={styles.container}
     >
      
-        <View style={styles.logoMarca}>
-          <View style={styles.containerLogo}>
-            
-            <Image
-              source={require('../img/logoHelpX.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
-        </View>
+      <View style={styles.inicio}>
+        <Text style={styles.inicioText}>
+          HelpX
+        </Text>
+      </View>
 
         
-        <View style={styles.h1}>
-          
-            <Text style={styles.titulo}>HelpX: Seu Passaporte de Informações Médicas</Text>
-                 
-            <Text style={styles.subtitulo}>
-              Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.
-            </Text>
-          
-            <Text style={styles.descricao}>Esteja preparado para qualquer situação!</Text>
-            <Text style={styles.descricao}>
-              Basta escanear o seu QR Code para compartilhar rapidamente informações críticas com profissionais de saúde em caso de necessidade.
-            </Text>
-        </View>
+  <ScrollView style={styles.scrollView} horizontal={true}>
+
+    <View style={styles.divScroll}>
+ 
+      <View style={styles.h1}>
+        <Text style={styles.textoUm}>Seu Passaporte de Informações Médicas</Text>
+      </View>
+
+      <View style={styles.h2}>
+        <Text style={styles.textoDois}>Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.</Text>
+      </View>
+
+      <View style={styles.h3}>
+        <Text style={styles.textoTres}>Esteja preparado para qualquer situação!</Text>       
+      </View>
+
+     
+
+
+    </View>
+
+    </ScrollView>
+
+   
         
+    
      
 
       <View style={styles.containerBotao}>
@@ -64,23 +73,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
  
-  logoMarca: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    
-  },
-  containerLogo: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -60, 
-  },
-  logo: {
-    width: 400,
-    height: 200,
-    // backgroundColor: 'black',
-  },
   containerBotao: {
     width: '100%',
     height: 100,
@@ -102,32 +94,76 @@ const styles = StyleSheet.create({
   },
 
   h1: {
-    height: 400,
-    justifyContent: 'center',
-    alignItems: 'center',
     
-    
+  height: 400,
+  width: 390,
+  justifyContent: 'center',
+  alignItems: 'center',
+   },
+  h2: {
+  marginTop: 50,
+  height: 400,
+  width: 390,   
+  justifyContent: 'center',
+  alignItems: 'center',
     
   },
-  titulo: {
-    fontSize: 30,
-    fontWeight: 'bold',
+  h3: {
+  marginTop: 140,
+  height: 400,
+  width: 390,   
+  justifyContent: 'center',
+  alignItems: 'center',
+  
+      
+  },
+
+  textoUm: {
+    marginTop: 170,
+    width: '100%',
+    fontSize: 34,
     color: 'white',
     textAlign: 'center',
     bottom: 50,
   },
-  subtitulo: {
-    fontSize: 22,
+  textoDois: {
+    
+    width: '95%',
+    height: '100%', 
+    fontSize: 40,
     textAlign: 'center',
-    Bottom: 10,
-    fontWeight: 'bold',
+    
     color: 'white',
   },
-  descricao: {
-    fontSize: 18,
+  textoTres: {
+    width: '95%',
+    height: '100%', 
+    fontSize: 40,
     textAlign: 'center',
-    fontWeight: 'bold',
+  
     color: 'white',
-    top: 30,
   },
+  
+  inicio:{
+    height: 100,
+    marginTop: 140,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inicioText:{
+    fontSize: 90,
+    fontWeight: 'bold',
+    color: 'Black',
+    textAlign: 'center',
+    bottom: 50,
+  }, 
+  scrollView: {
+    
+    marginHorizontal: 20,
+    width: '90%',
+  },
+  divScroll:{
+    flexDirection: 'row',
+  },
+  
 });
