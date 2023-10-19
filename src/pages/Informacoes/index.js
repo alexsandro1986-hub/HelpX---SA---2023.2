@@ -13,8 +13,6 @@ import { ScrollView } from 'react-native';
 
 
 
-
-
 const Stack = createStackNavigator();
 const Header = () => (
     <LinearGradient colors={['#CDE4AD', '#97D8AE', '#78D1D2']}>
@@ -42,7 +40,7 @@ export default function Informacoes() {
                     <Stack.Screen name='Alergias' component={Alergias('Doador')} options={{ headerShown: false }} />
                     <Stack.Screen name='Doador' component={Doador('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('Login')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Endereco' component={Endereco('Home')} options={{ headerShown: false }} />
 
                 </Stack.Group>
 

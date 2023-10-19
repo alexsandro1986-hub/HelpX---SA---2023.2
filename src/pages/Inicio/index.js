@@ -1,8 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Input, Text } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Image, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -37,50 +34,59 @@ export function Inicio({ navigation }) {
   
 
   const Cadastrar = () => {
-    navigation.navigate('Cadastro')
-  }
+    navigation.navigate('Cadastro');
+  };
+
+  
 
   return (
-
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
-      //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
       style={styles.container}
     >
-      <View style={styles.container}>
-      {/* <Image style={styles.img}
-            source={require('/img/Texto do seu parágrafo.jpg')}
-           
-          /> */}
+     
+      <View style={styles.inicio}>
+        <Text style={styles.inicioText}>
+          HelpX
+        </Text>
+      </View>
 
-        <View>
-          <View style={styles.tituloLogo}>
-           <Text style={styles.textoTitulo}>
-              HELPX
-            </Text>
-          </View>
-        </View>
+        
+  <ScrollView style={styles.scrollView} horizontal={true}>
 
-        <View style={styles.containerBotao}>
+    <View style={styles.divScroll}>
+ 
+      <View style={styles.h1}>
+        <Text style={styles.textoUm}>Seu Passaporte de Informações Médicas</Text>
+      </View>
 
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={entrar}
-          >
-            <Text style={styles.textoBotao}> Entrar </Text>
+      <View style={styles.h2}>
+        <Text style={styles.textoDois}>Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.</Text>
+      </View>
 
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={Cadastrar}
-          >
-            <Text style={styles.textoBotao}> Cadastrar </Text>
+      <View style={styles.h3}>
+        <Text style={styles.textoTres}>Esteja preparado para qualquer situação!</Text>       
+      </View>
 
-          </TouchableOpacity>
-        </View>
+     
 
 
+    </View>
 
+    </ScrollView>
+
+   
+        
+    
+     
+
+      <View style={styles.containerBotao}>
+        <TouchableOpacity style={styles.botao} onPress={entrar}>
+          <Text style={styles.textoBotao}>Entrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
+          <Text style={styles.textoBotao}>Cadastrar</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
@@ -89,57 +95,100 @@ export function Inicio({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#C7FFCC",
-    alignItems: "center",
     flexDirection: 'column',
-    gap: 11,
   },
-  tituloLogo:{
-    width:'100%',
-    height: '40%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: '10%'
-
-  },
+ 
   containerBotao: {
     width: '100%',
-    height: '60%',
+    height: 100,
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingBottom: '10%'
-
   },
   botao: {
-    width: 180,
-    height: 80,
+    width: 130,
+    height: 40,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: 'black',
     borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center'
-
   },
   textoBotao: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'white',
     textAlign: 'center',
+  },
+
+  h1: {
+    
+  height: 400,
+  width: 390,
+  justifyContent: 'center',
+  alignItems: 'center',
+   },
+  h2: {
+  marginTop: 50,
+  height: 400,
+  width: 390,   
+  justifyContent: 'center',
+  alignItems: 'center',
+    
+  },
+  h3: {
+  marginTop: 140,
+  height: 400,
+  width: 390,   
+  justifyContent: 'center',
+  alignItems: 'center',
   
-
-  },
-  img: {
-    width: 440,
-    height: 140,
-    marginTop: 25,
+      
   },
 
-  textoTitulo: {
-    fontSize: 75,
+  textoUm: {
+    marginTop: 170,
+    width: '100%',
+    fontSize: 34,
     color: 'white',
-    justifyContent: 'center',
-    alignItems: 'center'
-
+    textAlign: 'center',
+    bottom: 50,
   },
-
+  textoDois: {
+    
+    width: '95%',
+    height: '100%', 
+    fontSize: 40,
+    textAlign: 'center',
+    
+    color: 'white',
+  },
+  textoTres: {
+    width: '95%',
+    height: '100%', 
+    fontSize: 40,
+    textAlign: 'center',
+  
+    color: 'white',
+  },
+  
+  inicio:{
+    height: 100,
+    marginTop: 140,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inicioText:{
+    fontSize: 90,
+    fontWeight: 'bold',
+    color: 'Black',
+    textAlign: 'center',
+    bottom: 50,
+  }, 
+  scrollView: {
+    
+    marginHorizontal: 20,
+    width: '90%',
+  },
+  divScroll:{
+    flexDirection: 'row',
+  },
+  
 });
-
