@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native';
-
+import { Picker } from '@react-native-picker/picker';
 
 
 
@@ -173,7 +173,8 @@ function Idade(a) {
 
 function Alergias(a) {
     return function ({ navigation }) {
-        const { inputAlergias, setInputAlergias } = useContext(ContextInfo)
+        const [alergias, setAlergias] = useState(['', 'Latex', 'Polem', 'Alimnetos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'picada de Insetos', 'Iodo'])
+        const {alergiaSelecionado, setAlergiaSelecionada} = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -181,13 +182,21 @@ function Alergias(a) {
                         <View style={styles.viwInfomativo}>
                             <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
                         </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Alergias"
-                            value={inputAlergias}
-                            onChangeText={setInputAlergias}
-                            returnKeyType="done"
-                        />
+
+                        <Picker
+                            style={styles.inputAlergias}
+                            selectedValue={alergiaSelecionado}
+                            onValueChange={(itemValue) =>
+                                setAlergiaSelecionada(itemValue)
+                            }>
+
+                            {
+                                alergias.map(al => {
+                                    return <Picker.Item label={al} value={al} />
+                                })
+                            }
+                        </Picker>
+
                     </View>
                     <View style={styles.botao}>
                         <TouchableOpacity onPress={() => navigation.navigate(a)}>
@@ -212,7 +221,9 @@ function Alergias(a) {
 
 function Doador(a) {
     return function ({ navigation }) {
-        const { inputDoador, setInputDoador } = useContext(ContextInfo)
+        const [sangue, setSangue] = useState(['', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        
+        const { inputTiposangineo, setInputTiposangineo } = useContext(ContextInfo)
 
         const [inputSnague, setInputSnague] = useState('option1');
         const [inputOrgao, setInputOrgao] = useState('option3');
@@ -224,13 +235,19 @@ function Doador(a) {
                         <View style={styles.viwInfomativo}>
                             <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
                         </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Tipo Sanguinio"
-                            value={inputDoador}
-                            onChangeText={setInputDoador}
-                            returnKeyType="done"
-                        />
+                        <Picker
+                            style={styles.inputAlergias}
+                            selectedValue={inputTiposangineo}
+                            onValueChange={(itemValue) =>
+                                setInputTiposangineo(itemValue)
+                            }>
+
+                            {
+                                sangue.map(al => {
+                                    return <Picker.Item label={al} value={al} />
+                                })
+                            }
+                        </Picker>
 
                         {/* radioButton  doador sangue*/}
 
@@ -303,13 +320,9 @@ function Doador(a) {
 
 
                     <View style={styles.botaoDoador}>
-                        <TouchableOpacity onPress={() => {
+                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
 
-                            console.log('oi', inputSnague)
-                            console.log('noob', inputDoador)
-                            navigation.navigate(a)
-                        }
-                        }>
+
                             <Text style={styles.bto_DireitaDoador}>
                                 <Icon
                                     name="arrow-right"
@@ -319,7 +332,7 @@ function Doador(a) {
                                 />
                             </Text>
                         </TouchableOpacity>
-                        <View style={styles.esquerda_bto_Doador}><MyBackButton /></View>
+                        <View style={styles.bto_EsquerdaDoador}><MyBackButton /></View>
 
                     </View>
                 </View>
@@ -370,7 +383,7 @@ function Contatos(a) {
                     <View style={styles.botao}>
                         <TouchableOpacity onPress={() => navigation.navigate(a)}>
 
-                            <Text style={styles.bto_Direita}>
+                            <Text style={styles.direita_btoContato}>
                                 <Icon
                                     name="arrow-right"
                                     size={35}
@@ -378,9 +391,11 @@ function Contatos(a) {
 
                                 />
                             </Text>
+
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.goBack('Alergias')} >
-                            <Text style={styles.esquerda_bto}>
+
+                            <Text style={styles.esquerda_btoContato} >
                                 <Icon
                                     name="arrow-left"
                                     size={35}
@@ -388,6 +403,7 @@ function Contatos(a) {
 
                                 />
                             </Text>
+
                         </TouchableOpacity>
                     </View>
                 </View></View>
@@ -430,10 +446,10 @@ function Endereco(a) {
                             returnKeyType="done"
                         />
                     </View>
-                    <View style={styles.botao}>
+                    <View style={styles.botaoEndereco}>
                         <TouchableOpacity onPress={() => navigation.navigate(a)}>
 
-                            <Text style={styles.bto_Direita}>
+                            <Text style={styles.bto_Direita_Endereco}>
                                 <Icon
                                     name="arrow-right"
                                     size={35}
@@ -443,7 +459,7 @@ function Endereco(a) {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.goBack()} >
-                            <Text style={styles.esquerda_bto}>
+                            <Text style={styles.bto_esquerda_Endereco}>
                                 <Icon
                                     name="arrow-left"
                                     size={35}
@@ -556,6 +572,13 @@ const styles = StyleSheet.create({
         textAlign: 'center'
 
     },
+    inputAlergias: {
+        alignItems: 'center',
+        fontSize: 35,
+        marginLeft: 5,
+        borderColor:'#000000',
+        borderBottomEndRadius:10
+    },
 
     tiposSangue: {
         marginBottom: 15,
@@ -609,6 +632,7 @@ const styles = StyleSheet.create({
     botao: {
         gap: 25,
         padding: 45,
+        display: 'flex'
     },
     // /* fluent:arrow-left-12-filled */
 
@@ -620,7 +644,7 @@ const styles = StyleSheet.create({
 
     // transform: rotate(-180deg);
     botaoDoador: {
-
+        left: 40,
         top: 25
     },
 
@@ -633,17 +657,58 @@ const styles = StyleSheet.create({
 
     },
     bto_DireitaDoador: {
-        left: 155,
+        position: 'relative',
+        display: 'flex',
+        left: 115,
 
     },
-    esquerda_bto_Doador: {
+    bto_EsquerdaDoador: {
+        position: 'relative',
+        display: 'flex',
         bottom: 35,
-        right: 155
+        right: 195
+    },
+   
+    esquerda_btoContato: {
+        position: 'relative',
+        display: 'flex',
+        bottom:30,
+        width:35
+    },
+    direita_btoContato: {
+        position: 'relative',
+        display: 'flex',
+        marginLeft: 290,
+       top:30,
+        width:35
+    },
+
+    botaoEndereco: {
+        position: 'relative',
+        display: 'flex',
+        padding: 45
+
+    },
+    bto_Direita_Endereco: {
+        position: 'relative',
+        display: 'flex',
+        marginLeft: 290,
+        width:35
+
+    },
+    bto_esquerda_Endereco: {
+        position: 'relative',
+        display: 'flex',
+        bottom: 35,
+        width:35
+
+
     },
     esquerda_bto: {
         right: 155,
         bottom: 118
     },
+
 
 
 })
