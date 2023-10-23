@@ -171,7 +171,7 @@ function Idade(a) {
 
 function Alergias(a) {
     return function ({ navigation }) {
-        const [alergias, setAlergias] = useState(['', 'Latex', 'Polem', 'Alimnetos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'picada de Insetos', 'Iodo'])
+        const [alergias, setAlergias] = useState(['', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'picada de Insetos', 'Iodo'])
         const {alergiaSelecionado, setAlergiaSelecionada} = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
