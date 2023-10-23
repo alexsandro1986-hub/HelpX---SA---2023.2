@@ -221,9 +221,9 @@ function Doador(a) {
     return function ({ navigation }) {
         const [sangue, setSangue] = useState(['', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
         
-        const { inputTiposangineo, setInputTiposangineo } = useContext(ContextInfo)
+        const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-        const [inputSnague, setInputSnague] = useState('option1');
+        const [inputSangue, setInputSangue] = useState('option1');
         const [inputOrgao, setInputOrgao] = useState('option3');
 
         return (
@@ -235,9 +235,9 @@ function Doador(a) {
                         </View>
                         <Picker
                             style={styles.inputAlergias}
-                            selectedValue={inputTiposangineo}
+                            selectedValue={inputTiposanguineo}
                             onValueChange={(itemValue) =>
-                                setInputTiposangineo(itemValue)
+                                setInputTiposanguineo(itemValue)
                             }>
 
                             {
@@ -257,7 +257,7 @@ function Doador(a) {
                                         value="option1"
                                         status={inputSnague === 'option1' ?
                                             'checked' : 'unchecked'}
-                                        onPress={() => setInputSnague('option1')}
+                                        onPress={() => setInputSangue('option1')}
                                         color="#007BFF"
                                     />
                                     <Text style={styles.radioLabel}>
@@ -267,9 +267,9 @@ function Doador(a) {
                                 <View style={styles.radioButton}>
                                     <RadioButton.Android
                                         value="option2"
-                                        status={inputSnague === 'option2' ?
+                                        status={inputSangue === 'option2' ?
                                             'checked' : 'unchecked'}
-                                        onPress={() => setInputSnague('option2')}
+                                        onPress={() => setInputSangue('option2')}
                                         color="#007BFF"
                                     />
                                     <Text style={styles.radioLabel}>

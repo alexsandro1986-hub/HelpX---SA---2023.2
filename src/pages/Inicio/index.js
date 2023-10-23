@@ -178,10 +178,11 @@ const styles = StyleSheet.create({
   inicioText:{
     fontSize: 90,
     fontWeight: 'bold',
-    color: 'Black',
+    color: 'black',
     textAlign: 'center',
     bottom: 50,
   }, 
+
   scrollView: {
     
     marginHorizontal: 20,
