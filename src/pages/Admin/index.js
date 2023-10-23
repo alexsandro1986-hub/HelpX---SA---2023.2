@@ -6,14 +6,14 @@ import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
-import { PieChart } from "react-native-gifted-charts";
-
+// import { PieChart } from "react-native-gifted-charts";
+import { IconButton } from 'react-native-paper';
 
 
 const Stack = createStackNavigator();
 
 export default function StackAdmin() {
-
+    const {logout} = useContext(ContextInfo)
     return (
         <Stack.Navigator initialRouteName='FeedAdmin'>
             <Stack.Screen name='FeedAdmin' component={FeedAdmin}
@@ -33,6 +33,14 @@ export default function StackAdmin() {
                         fontSize: 30,
                     },
                     headerTitleAlign: "center",
+                    headerRight: () => (
+                        <IconButton
+                          icon='message-plus'
+                          size={28}
+                          color='#ffffff'
+                          onPress={() => logout()}
+                        />
+                      )
                 }} />
             <Stack.Screen name='Relatorio' component={Relatorio} options={{
                 title: 'Relatórios',
@@ -382,7 +390,7 @@ function Graficos({ route }) {
         <View>
             <Text> {tipo} </Text>
 
-            <PieChart
+            {/* <PieChart
                 donut
                 isThreeD
                 showText
@@ -395,7 +403,7 @@ function Graficos({ route }) {
                 textBackgroundRadius={26}
                 data={pieData}
                 initialAngle={290}
-            />
+            /> */}
 
 
         </View>

@@ -14,6 +14,7 @@ import Informacoes from '../Informacoes';
 import StackAdmin from '../Admin'
 import Chat from '../Chat';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
+import { IconButton } from 'react-native-paper';
 
 
 
@@ -21,7 +22,7 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
-  const {flagAdm} = useContext(ContextInfo)
+  const {flagAdm, logout} = useContext(ContextInfo)
 
   return (
 
@@ -40,7 +41,31 @@ export default function StackDeAcesso() {
         (<>
    
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} />
+        <Stack.Screen name='Home' component={Home} options={{
+                    title: 'Home',
+                    headerStyle: {
+                        backgroundColor: '#97D8AE',
+                        borderColor: '#97D8AE',
+                        borderWidth: 2,
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
+
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: '500',
+                        fontSize: 30,
+                    },
+                    headerTitleAlign: "center",
+                    headerRight: () => (
+                        <IconButton
+                          icon='door-open'
+                          size={34}
+                          color='#ffffff'
+                          onPress={() =>logout() }
+                        />
+                      )
+                }}/>
         <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
         <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
         <Stack.Screen name='Chat' component={Chat} />

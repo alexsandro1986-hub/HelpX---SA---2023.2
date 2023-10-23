@@ -104,7 +104,7 @@ function Feed() {
 
           <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
 
-          <Text style={feed.textoBotao}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
             Suporte
           </Text>
 
