@@ -322,6 +322,8 @@ function Doador(a) {
                         <View style={styles.esquerda_bto_Doador}><MyBackButton /></View>
 
                     </View>
+
+                
                 </View>
             </ScrollView >
         );
