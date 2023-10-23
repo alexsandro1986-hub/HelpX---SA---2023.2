@@ -42,19 +42,17 @@ export default function StackDeAcesso() {
    
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{
-                    title: 'Home',
+                    title: 'HelpX',
                     headerStyle: {
                         backgroundColor: '#97D8AE',
                         borderColor: '#97D8AE',
-                        borderWidth: 2,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-
+                        borderBottomColor: 'transparent',
                     },
-                    headerTintColor: '#fff',
+                    headerTintColor: 'transparent',
                     headerTitleStyle: {
                         fontWeight: '500',
-                        fontSize: 30,
+                        fontSize: 28,
+                        color: '#FFF'
                     },
                     headerTitleAlign: "center",
                     headerRight: () => (
@@ -64,7 +62,8 @@ export default function StackDeAcesso() {
                           color='#ffffff'
                           onPress={() =>logout() }
                         />
-                      )
+                      ),
+                      headerLeft: () => null,
                 }}/>
         <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
         <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
