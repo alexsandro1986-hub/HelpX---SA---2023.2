@@ -114,8 +114,8 @@ function ConfirmarSenha(a) {
 
 export default function Cadastro() {
   return (
-    <>
-      <Header />
+    
+      
       <Stack.Navigator>
         <Stack.Group>
 
@@ -126,7 +126,7 @@ export default function Cadastro() {
 
         </Stack.Group>
       </Stack.Navigator>
-    </>
+    
   );
 }
 

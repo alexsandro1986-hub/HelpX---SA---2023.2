@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat } from "react-native-gifted-chat";
 import { useCallback, useEffect, useState } from "react";
 
 //importação do firebase e database

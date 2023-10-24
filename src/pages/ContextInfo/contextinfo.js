@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import React from 'react';
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 export const ContextInfo = React.createContext()
 
@@ -220,18 +221,25 @@ export const ContextInfoProvider = ({ children }) => {
                 inputEmail, setInputEmail,
                 inputSenha, setInputSenha,
                 inputConfirmaSenha, setInputConfirmaSenha,
-                //Alexs
+                //dadosPessoais
                 inputNome, setInputNome,
                 inputIdade, setInputIdade,
                 inputTelefone, setInputTelefone,
                 inputAlergias, setInputAlergias,
-                inputTelefone, setInputTelefone,
                 inputContatoEmergencia, setInputContatoEmergencia,
                 inputNtelefoneEmergencia, setNtelefoneEmergencia,
+                inputNCep,setInputNcep,
+                inputLogradouro,setInputLogradouro,
+                inputNumeroCasa,setNumeroCasa,
+                inputDoador, setInputDoador,
+                inputSangue, setInputSangue,
+                inputOrgao, setInputOrgao,
+
                 inputNCep, setInputNcep,
                 inputLogradouro, setInputLogradouro,
                 inputNumeroCasa, setNumeroCasa,
 
+            
 
             //Admin 
             flagAdm, setFlagAdm,
@@ -250,3 +258,14 @@ export const ContextInfoProvider = ({ children }) => {
     )
 
 }
+
+
+
+
+
+
+
+
+
+
+
