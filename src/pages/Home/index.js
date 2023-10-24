@@ -109,11 +109,20 @@ function Feed() {
           </Text>
 
         </TouchableOpacity>
+        
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Chat', { name: {inputNome} })}
+          style={{ width: '40%', height: '40%', backgroundColor: '#97D8AE', borderRadius: 10, justifyContent: 'center', alignItems: 'center', gap: 15, shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8, }}>
 
-        <View style={feed.options}>
+          <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
 
-        </View>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
+            Suporte
+          </Text>
 
+        </TouchableOpacity>
+
+      
         <View style={feed.options}>
 
         </View>
