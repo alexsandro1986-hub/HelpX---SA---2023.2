@@ -42,17 +42,19 @@ export default function StackDeAcesso() {
    
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{
-                    title: 'HelpX',
+                    title: 'Home',
                     headerStyle: {
                         backgroundColor: '#97D8AE',
                         borderColor: '#97D8AE',
-                        borderBottomColor: 'transparent',
+                        borderWidth: 2,
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
+
                     },
-                    headerTintColor: 'transparent',
+                    headerTintColor: '#fff',
                     headerTitleStyle: {
                         fontWeight: '500',
-                        fontSize: 28,
-                        color: '#FFF'
+                        fontSize: 30,
                     },
                     headerTitleAlign: "center",
                     headerRight: () => (
@@ -62,8 +64,7 @@ export default function StackDeAcesso() {
                           color='#ffffff'
                           onPress={() =>logout() }
                         />
-                      ),
-                      headerLeft: () => null,
+                      )
                 }}/>
         <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
         <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
@@ -83,8 +84,8 @@ export function Login({ navigation }) {
   const [emailLogin, setEmailLogin] = useState('');
   const [senhaLogin, setSenhaLogin] = useState('');
   const {flagAdm, setFlagAdm, senhaAdm , loginAdm,
-    inputSenha, setInputSenha,
-    inputEmail, setInputEmail,
+    inputSenha,
+    inputEmail,
   
   } = useContext(ContextInfo)
 
@@ -246,4 +247,3 @@ const styles = StyleSheet.create({
 
   }
 });
-
