@@ -333,8 +333,6 @@ function Doador(a) {
                         <View style={styles.bto_EsquerdaDoador}><MyBackButton /></View>
 
                     </View>
-
-                
                 </View>
             </ScrollView >
         );
@@ -712,106 +710,6 @@ const styles = StyleSheet.create({
 
 
 })
-
-// /* CADASTRO */
-
-
-
-// background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%);
-
-
-// /* Informações */
-
-// position: absolute;
-// width: 219px;
-// height: 55px;
-// left: 0px;
-// top: 83px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 24px;
-// line-height: 29px;
-// display: flex;
-// align-items: center;
-// text-align: center;
-
-// color: #FFFFFF;
-
-// /* Rectangle 20 */
-
-// position: absolute;
-// width: 199px;
-// height: 234px;
-// left: 10px;
-// top: 146px;
-
-// border-radius: 10px;
-
-
-// /* fluent:arrow-left-12-filled */
-
-// position: absolute;
-// width: 25px;
-// height: 25px;
-// left: 8px;
-// top: 371px;
-
-
-
-// /* Vector */
-
-// position: absolute;
-// left: 10.42%;
-// right: 12.5%;
-// top: 16.82%;
-// bottom: 16.82%;
-
-// background: #000000;
-
-
-// /* fluent:arrow-left-12-filled */
-
-// position: absolute;
-// width: 25px;
-// height: 25px;
-// left: 214px;
-// top: 396px;
-
-// transform: rotate(-180deg);
-
-
-// /* Vector */
-
-// position: absolute;
-// left: 89.58%;
-// right: -66.66%;
-// top: 83.18%;
-// bottom: -49.53%;
-
-// background: #000000;
-// transform: rotate(-180deg);
-
-
-// /* Avançar */
-
-// position: absolute;
-// width: 51px;
-// height: 24px;
-// left: 131px;
-// top: 371px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 13px;
-// line-height: 16px;
-// display: flex;
-// align-items: center;
-// text-align: center;
-
-// color: #000000;
 
 
 
