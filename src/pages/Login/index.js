@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { View, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
-import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
@@ -23,6 +22,8 @@ const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
   const {flagAdm, logout} = useContext(ContextInfo)
+  const navigation = useNavigation()
+
 
   return (
 
@@ -62,7 +63,9 @@ export default function StackDeAcesso() {
                           icon='door-open'
                           size={34}
                           color='#ffffff'
-                          onPress={() =>logout() }
+                          onPress={() => {
+                            navigation.navigate('Inicio')
+                            logout()}}
                         />
                       )
                 }}/>

@@ -9,6 +9,24 @@ import { KeyboardAvoidingView } from 'react-native';
 
 const Stack = createStackNavigator();
 
+export default function Cadastro() {
+  return (
+    
+      
+      <Stack.Navigator>
+        <Stack.Group>
+
+          <Stack.Screen name='Email' component={Email('Senha')} options={{ headerShown: false }}/>
+          <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} options={{ headerShown: false }} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('StackDeAcesso')} options={{ headerShown: false }} />
+
+
+        </Stack.Group>
+      </Stack.Navigator>
+    
+  );
+}
+
 
 const Header = () => (
 
@@ -112,23 +130,6 @@ function ConfirmarSenha(a) {
 
 
 
-export default function Cadastro() {
-  return (
-    
-      
-      <Stack.Navigator>
-        <Stack.Group>
-
-          <Stack.Screen name='Email' component={Email('Senha')} />
-          <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('StackDeAcesso')} />
-
-
-        </Stack.Group>
-      </Stack.Navigator>
-    
-  );
-}
 
 const styles = StyleSheet.create({
   header: {

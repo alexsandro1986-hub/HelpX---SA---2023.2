@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import React from 'react';
 import { NavigationHelpersContext } from '@react-navigation/native';
+import { useNavigation, NavigationContainer } from "@react-navigation/native";
 
 export const ContextInfo = React.createContext()
 
@@ -27,8 +28,8 @@ export const ContextInfoProvider = ({ children }) => {
 
     //ADMIN
     const [flagAdm, setFlagAdm] = useState(false)
-    const senhaAdm = '123321'
-    const loginAdm = 'oiAdmin'
+    const senhaAdm = '123'
+    const loginAdm = 'adm'
 
     // LOGOUT
 
@@ -39,7 +40,7 @@ export const ContextInfoProvider = ({ children }) => {
         }
         setInputEmail('')
         setInputSenha('')
-        navigation.navigate('Inicio')
+       
     }
     //Objeto Info User
     const vetorUser = [
