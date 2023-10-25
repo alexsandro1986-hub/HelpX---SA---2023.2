@@ -130,8 +130,6 @@ function ConfirmarSenha(a) {
 
 
 
-
-
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'black',
