@@ -23,7 +23,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputTiposanguineo, setInputTiposanguineo] = useState('')
     const [inputSangue, setInputSangue] = useState('')
     const [inputOrgao, setInputOrgao] = useState('')
-
+    
     //Cadastro
 
     //ADMIN
