@@ -255,7 +255,7 @@ function Doador(a) {
                                     <Text>Vôce é doador de sangue</Text>
                                     <RadioButton.Android
                                         value="option1"
-                                        status={inputSnague === 'option1' ?
+                                        status={inputSangue === 'option1' ?
                                             'checked' : 'unchecked'}
                                         onPress={() => setInputSangue('option1')}
                                         color="#007BFF"

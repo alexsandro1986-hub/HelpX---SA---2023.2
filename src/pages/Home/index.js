@@ -111,13 +111,13 @@ function Feed() {
         </TouchableOpacity>
         
         <TouchableOpacity
-          onPress={() => navigation.navigate('Chat', { name: {inputNome} })}
+          onPress={() => navigation.navigate('QrCodeUser')}
           style={{ width: '40%', height: '40%', backgroundColor: '#97D8AE', borderRadius: 10, justifyContent: 'center', alignItems: 'center', gap: 15, shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.30, shadowRadius: 4.65, elevation: 8, }}>
 
-          <MaterialCommunityIcons name="comment-account" color={'white'} size={50} />
+          <MaterialCommunityIcons name="qrcode" color={'white'} size={50} />
 
           <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
-            Suporte
+            QR Code
           </Text>
 
         </TouchableOpacity>
