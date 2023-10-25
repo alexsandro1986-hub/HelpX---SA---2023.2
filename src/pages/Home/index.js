@@ -30,8 +30,10 @@ export default function Home() {
         component={StackFeed}
         options={{
           tabBarLabel: 'Home',
+          // tabBarLabel: ({ focused }) => <Text style={{ fontSize: 12, color: focused ? colors.primary : colors.gray }}>{item.name}</Text>
+
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={30} />
+            <MaterialCommunityIcons name="home" color={color} size={50} />
           ),
           headerShown: false,
         }}
@@ -43,7 +45,7 @@ export default function Home() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={30} />
+            <MaterialCommunityIcons name="account" color={color} size={50} />
           ),
           headerShown: false,
         }}

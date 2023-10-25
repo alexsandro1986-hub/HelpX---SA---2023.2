@@ -62,7 +62,7 @@ export default function StackDeAcesso() {
                         <IconButton
                           icon='door-open'
                           size={34}
-                          color='#ffffff'
+                          color='white'
                           onPress={() => {
                             navigation.navigate('Inicio')
                             logout()}}
