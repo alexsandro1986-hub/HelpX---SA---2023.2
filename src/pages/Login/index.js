@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { View, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
@@ -22,8 +23,6 @@ const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
   const {flagAdm, logout} = useContext(ContextInfo)
-  const navigation = useNavigation()
-
 
   return (
 
@@ -63,9 +62,7 @@ export default function StackDeAcesso() {
                           icon='door-open'
                           size={34}
                           color='#ffffff'
-                          onPress={() => {
-                            navigation.navigate('Inicio')
-                            logout()}}
+                          onPress={() =>logout() }
                         />
                       )
                 }}/>
@@ -108,17 +105,24 @@ export function Login({ navigation }) {
 
   return (
 
+    
+
     <LinearGradient
       colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
       //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
       style={styles.container}>
 
-      <Feather
-        name='user'
-        size={120}
-        style={styles.icon}
-        color='grey'
-      />
+        <View style={styles.logo}>
+        <Image
+          source={require('../img/logoPreto.png')}
+
+          style={{ width: 500, height: 400 }}
+          resizeMode="contain"
+        />
+
+      </View>
+
+
 
       <KeyboardAvoidingView style={styles.containerInputs}>
 
@@ -144,7 +148,16 @@ export function Login({ navigation }) {
             // leftIcon={{ type: 'font-awesome', name: 'lock' }}
             onChangeText={setSenhaLogin}
           />
+
+         
         </View>
+        <View>
+          
+        </View>
+        
+        {/* <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
+          <Text style={styles.textoBotao}>Cadastrar</Text>
+        </TouchableOpacity> */}
 
         <View style={styles.AlturaElementosInput}>
           <TouchableOpacity
@@ -153,16 +166,33 @@ export function Login({ navigation }) {
             <Text style={styles.textoBotao}> Confirmar </Text>
 
           </TouchableOpacity>
+          
         </View>
+
+        <View style={styles.viewCadastro}>
+          <View style={styles.cadastroText}>
+            <Text style={styles.textoVoltarCadastro}>Ainda não tem uma conta?</Text>
+          </View>
+
+
+          <View style={styles.cadastroBotao}>
+          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.botaoClique}>
+          <Text style={styles.textoCliqueAqui}>Clique Aqui</Text>
+        </TouchableOpacity>
+
+          </View>
+
+           
+          
+        </View>
+      
 
       </KeyboardAvoidingView>
 
 
 
-      <View>
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.VoltarCadastro}>
-          <Text style={styles.textoVoltarCadastro}> Ainda não tem conta?</Text>
-        </TouchableOpacity>
+      <View style={styles.AlturaElementosInput}>
+        
       </View>
 
     </LinearGradient >
@@ -180,7 +210,7 @@ const styles = StyleSheet.create({
   },
   containerInputs: {
     width: '75%',
-    height: '54%',
+    height: '44%',
     borderWidth: 1,
     borderRadius: 20,
     borderColor: "white",
@@ -190,15 +220,16 @@ const styles = StyleSheet.create({
   },
   AlturaElementosInput: {
 
-    height: '33.33%'
+    height: '33.33%',
+    
   },
   inpt: {
     width: '100%',
-    height: 65,
+    height: 55,
   },
   inputLabel: {
     width: "100%",
-    height: 40,
+    height: 50,
     fontWeight: 400,
     fontSize: 20,
     alignItems: 'flex-start',
@@ -219,6 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
+    marginTop: 30,
 
   },
 
@@ -240,13 +272,49 @@ const styles = StyleSheet.create({
   VoltarCadastro: {
     paddingTop: '20%',
     width: '100%',
-    height: '5%',
+    height: '15%',
   },
   textoVoltarCadastro: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: 700,
-    color: '#2E7A4D',
+    color: 'black',
     // textDecorationLine: 'underline'
 
-  }
+  },
+  textoCliqueAqui:{
+    fontSize: 17,
+    fontWeight: 700,
+    color: 'red',
+  },
+  viewCadastro: {
+    marginTop: '30%',
+    width: '100%',
+    height: '35%', 
+    position: 'relative',
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    
+  },
+  cadastroText: {
+    width: '70%', 
+    height: '100%',
+    justifyContent: 'center', 
+  },
+  
+  cadastroBotao: {
+    width: '30%', 
+    height: '100%',
+    justifyContent: 'center', 
+    marginLeft: 7,
+  },
+  logo: {
+    height: 100,
+    marginBottom: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+ 
+  
+ 
 });

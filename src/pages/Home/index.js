@@ -300,7 +300,7 @@ const profile = StyleSheet.create({
 export function QrCodeUser() {
 
   const navigation = useNavigation()
-  let logoFromFile = require('../img/logo.png');
+  let logoFromFile = require('../img/logoPreto.png');
 
   return (
     <View style={qrcode.container}>
