@@ -13,6 +13,7 @@ import { Picker } from '@react-native-picker/picker';
 
 
 
+
 const Stack = createStackNavigator();
 const Header = () => (
     <LinearGradient colors={['#CDE4AD', '#97D8AE', '#78D1D2']}>
@@ -40,7 +41,7 @@ export default function Informacoes() {
                     <Stack.Screen name='Alergias' component={Alergias('Doador')} options={{ headerShown: false }} />
                     <Stack.Screen name='Doador' component={Doador('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('Home')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Endereco' component={Endereco('StackDeAcesso')} options={{ headerShown: false }} />
 
                 </Stack.Group>
 
@@ -171,8 +172,8 @@ function Idade(a) {
 
 function Alergias(a) {
     return function ({ navigation }) {
-        const [alergias, setAlergias] = useState(['', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'picada de Insetos', 'Iodo'])
-        const {alergiaSelecionado, setAlergiaSelecionada} = useContext(ContextInfo)
+        const alergias = ['', 'Você possui alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
+        const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
         return (
             <View style={styles.caixa}>
                 <View style={styles.body}>
@@ -180,20 +181,27 @@ function Alergias(a) {
                         <View style={styles.viwInfomativo}>
                             <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
                         </View>
+                        <View style={styles.inputAlergias}>
+                            <Picker
+                                mode="dropdown"
+                                selectedValue={alergiaSelecionado}
+                                onValueChange={(itemValue) =>
+                                    setAlergiaSelecionada(itemValue)
 
-                        <Picker
-                            style={styles.inputAlergias}
-                            selectedValue={alergiaSelecionado}
-                            onValueChange={(itemValue) =>
-                                setAlergiaSelecionada(itemValue)
-                            }>
+                                }>
 
-                            {
-                                alergias.map(al => {
-                                    return <Picker.Item label={al} value={al} />
-                                })
-                            }
-                        </Picker>
+
+                                {alergias
+                                    .filter((value, index) => alergiaSelecionado === 0 ? value : index === 0 ? false : value)
+                                    .map((value, index) => (
+                                        <Picker.Item label={value} value={value} key={index} />
+                                    ))}
+                                {/* alergias.map(al => {
+                                        return <Picker.Item label={al} value={al} />
+                                    }) */}
+
+                            </Picker>
+                        </View>
 
                     </View>
                     <View style={styles.botao}>
@@ -219,8 +227,8 @@ function Alergias(a) {
 
 function Doador(a) {
     return function ({ navigation }) {
-        const [sangue, setSangue] = useState(['', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-        
+        const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+
         const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
         const [inputSangue, setInputSangue] = useState('option1');
@@ -233,19 +241,26 @@ function Doador(a) {
                         <View style={styles.viwInfomativo}>
                             <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
                         </View>
-                        <Picker
-                            style={styles.inputAlergias}
-                            selectedValue={inputTiposanguineo}
-                            onValueChange={(itemValue) =>
-                                setInputTiposanguineo(itemValue)
-                            }>
+                        <View style={styles.inputDoador}>
+                            <Picker
+                                mode="dropdown"
+                                selectedValue={inputTiposanguineo}
+                                onValueChange={(itemValue) =>
+                                    setInputTiposanguineo(itemValue)
+                                }>
 
-                            {
-                                sangue.map(al => {
-                                    return <Picker.Item label={al} value={al} />
-                                })
-                            }
-                        </Picker>
+                                {sangue
+                                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                                    .map((value, index) => (
+                                        <Picker.Item label={value} value={value} key={index} />
+                                    ))}
+
+                                {/* {
+                                    sangue.map(al => {
+                                        return <Picker.Item label={al} value={al} />
+                                    })
+                                } */}
+                            </Picker></View>
 
                         {/* radioButton  doador sangue*/}
 
@@ -342,7 +357,7 @@ function Doador(a) {
 
 function Contatos(a) {
     return function ({ navigation }) {
-        const { inputNtelefone, setInputNtelefone } = useContext(ContextInfo)
+        const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
         const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
         const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
         return (
@@ -355,8 +370,8 @@ function Contatos(a) {
                         <TextInput
                             style={styles.input_Contato}
                             placeholder="N° de Telefone"
-                            value={inputNtelefone}
-                            onChangeText={setInputNtelefone}
+                            value={inputTelefone}
+                            onChangeText={setInputTelefone}
                             returnKeyType="done"
 
                         />
@@ -571,15 +586,19 @@ const styles = StyleSheet.create({
 
     },
     inputAlergias: {
-        alignItems: 'center',
-        fontSize: 35,
-        marginLeft: 5,
-        borderColor:'#000000',
-        borderBottomEndRadius:10
+        borderColor: '#DC143C',
+        borderWidth: 1,
+
+    },
+    inputDoador: {
+        borderColor: '#DC143C',
+        borderWidth: 1,
+        gap: 2
     },
 
     tiposSangue: {
-        marginBottom: 15,
+        marginBottom: 10,
+        marginTop: 10
 
 
     },
@@ -666,19 +685,19 @@ const styles = StyleSheet.create({
         bottom: 35,
         right: 195
     },
-   
+
     esquerda_btoContato: {
         position: 'relative',
         display: 'flex',
-        bottom:30,
-        width:35
+        bottom: 30,
+        width: 35
     },
     direita_btoContato: {
         position: 'relative',
         display: 'flex',
         marginLeft: 290,
-       top:30,
-        width:35
+        top: 30,
+        width: 35
     },
 
     botaoEndereco: {
@@ -691,14 +710,14 @@ const styles = StyleSheet.create({
         position: 'relative',
         display: 'flex',
         marginLeft: 290,
-        width:35
+        width: 35
 
     },
     bto_esquerda_Endereco: {
         position: 'relative',
         display: 'flex',
         bottom: 35,
-        width:35
+        width: 35
 
 
     },
