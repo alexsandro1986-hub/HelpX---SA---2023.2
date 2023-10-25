@@ -6,19 +6,15 @@ import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ContextInfo } from "../ContextInfo/contextinfo";
 import { useContext } from "react";
-import { IconButton } from "react-native-paper";
+import { IconButton, DataTable } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-// import { PieChart } from "react-native-gifted-charts/src/PieChart";
-
-var importGraficoApi
-if(Platform.OS !== 'web'){
-    importGraficoApi = require ("react-native-gifted-charts/src/PieChart");
-
-}
+import { PieChart } from "react-native-gifted-charts/src/PieChart";
+import { Dimensions } from "react-native";
 
 
 
 const Stack = createStackNavigator();
+const telaAltura = Dimensions.get('window').height
 
 export default function StackAdmin() {
   const { logout } = useContext(ContextInfo);
@@ -30,7 +26,7 @@ export default function StackAdmin() {
         name="FeedAdmin"
         component={FeedAdmin}
         options={{
-          title: "Feed ou Home",
+          title: "Admin",
           headerStyle: {
             backgroundColor: "#97D8AE",
             borderColor: "#97D8AE",
@@ -46,9 +42,9 @@ export default function StackAdmin() {
           headerTitleAlign: "center",
           headerRight: () => (
             <IconButton
-              icon="message-plus"
-              size={28}
-              color="#ffffff"
+              icon="door-open"
+              size={30}
+              color="white"
               onPress={() => {
                 navigation.navigate("Inicio");
                 logout();
@@ -72,14 +68,29 @@ export default function StackAdmin() {
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "500",
-            fontSize: 30,
+            fontSize: 20,
           },
           headerTitleAlign: "center",
         }}
       />
       <Stack.Screen name="Usuarios" component={Usuarios} />
       {/* <Stack.Screen name='Suporte' component={Suporte} /> */}
-      <Stack.Screen name="Graficos" component={Graficos} />
+      <Stack.Screen name="Graficos" component={Graficos} options={{
+          title: "Gráficos",
+          headerStyle: {
+            backgroundColor: "#97D8AE",
+            borderColor: "#97D8AE",
+            borderWidth: 2,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "200",
+            fontSize: 20,
+          },
+          headerTitleAlign: "center",
+        }}/>
     </Stack.Navigator>
   );
 }
@@ -139,13 +150,14 @@ const feed = StyleSheet.create({
   cima: {
     height: "50%",
     width: "100%",
+    paddingTop: '20%',
     justifyContent: "center",
     alignContent: "center",
     flexWrap: "wrap",
     gap: 20,
     backgroundColor: "transparent",
-    borderBottomWidth: 2,
-    borderColor: "#97D8AE",
+    // borderBottomWidth: 2,
+    // borderColor: "#97D8AE",
   },
 
   options: {
@@ -187,7 +199,7 @@ const telaRelatorio = StyleSheet.create({
   },
   cima: {
     paddingTop: "37%",
-    height: "100%",
+    flex: 1,
     width: "100%",
     justifyContent: "center",
     alignContent: "center",
@@ -198,6 +210,7 @@ const telaRelatorio = StyleSheet.create({
     borderColor: "#97D8AE",
     flexDirection: "row",
   },
+
 
   options: {
     width: "40%",
@@ -226,6 +239,20 @@ const telaRelatorio = StyleSheet.create({
     fontWeight: "800",
     color: "#3C8F5A",
   },
+  botaoGraficos: {
+    width: "40%",
+    height: "33%",
+    backgroundColor: "#97D8AE",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
 });
 
 function Relatorio() {
@@ -233,7 +260,7 @@ function Relatorio() {
   return (
     <View style={telaRelatorio.container}>
       <ScrollView>
-        <View style={telaRelatorio.cima}>
+        <View style={[telaRelatorio.cima, {height:telaAltura}]}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("Graficos", {
@@ -241,7 +268,7 @@ function Relatorio() {
                 texto: "Faixa Etária",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons
               name="format-list-numbered-rtl"
@@ -258,7 +285,7 @@ function Relatorio() {
                 texto: "Medicamentos",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons name="pill" color={"white"} size={50} />
 
@@ -271,7 +298,7 @@ function Relatorio() {
                 texto: "Comorbidades",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons name="diabetes" color={"white"} size={50} />
 
@@ -284,7 +311,7 @@ function Relatorio() {
                 texto: "Alergias",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons name="allergy" color={"white"} size={50} />
 
@@ -297,7 +324,7 @@ function Relatorio() {
                 texto: "Tipo Sanguíneo",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons
               name="ab-testing"
@@ -314,7 +341,7 @@ function Relatorio() {
                 texto: "Doador de Orgãos",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons
               name="hand-heart"
@@ -331,7 +358,7 @@ function Relatorio() {
                 texto: "Doador de Sangue",
               })
             }
-            style={telaRelatorio.botao}
+            style={telaRelatorio.botaoGraficos}
           >
             <MaterialCommunityIcons
               name="blood-bag"
@@ -407,48 +434,99 @@ function Graficos({ route }) {
       value: value,
       color: coresGraph[Math.floor(Math.random() * (coresGraph.length - 1))],
       text: `${perc}% ${key}`,
+      nome: `${key}`,
+      porcentagem: `${perc}%`
     };
     pieData.push(objGraph);
+    console.log(pieData.length)
   }
 
   return (
     <View style={graph.container}>
-      <LinearGradient colors={["#CDE4AD", "#97D8AE", "#78D1D2"]} style={graph.containerTitulo}>
-        <View >
+      <ScrollView>
+      {/* <LinearGradient colors={["#CDE4AD", "#97D8AE", "#78D1D2"]} > */}
+        <View style={graph.containerTitulo}>
           <Text style={graph.textoTitulo}> {texto} </Text>
         </View>
-      </LinearGradient>
+      {/* </LinearGradient> */}
       {Platform.OS !== 'web'?
-      <View style={graph.containerGraficos}>
+      (<View style={graph.containerGraficos}>
+        <View style={graph.telaGraficos}>
+          <ScrollView horizontal >
         <PieChart
                 donut
                 isThreeD
                 showText
-                innerCircleBorderWidth={10}
+                innerCircleBorderWidth={2}
                 innerCircleBorderColor="lightgreen"
                 textColor="black"
-                radius={200}
-                textSize={20}
+                radius={230}
+                innerRadius={30}
+                textSize={25}
                 showTextBackground
+                textBackgroundColor = 'white'
+                labelsPosition = 'mid'	
+                showValuesAsLabels	
                 textBackgroundRadius={26}
                 data={pieData}
-                initialAngle={290}
-            />
-      <View style={graph.containerTodosDados}>
-     
-        <Text style={graph.textTodosDados}> {amostra} </Text>
-   
-      </View>
-      </View>
-            :
-      <View style={graph.containerTodosDados}>
-       {pieData.map((elementos) => {
-            
-            <Text style={graph.textTodosDados}> Oi {elementos.value} : {elementos.text} </Text>
+                initialAngle={90}
+                style={graph.telaGraficos}
+          
+                />
+                </ScrollView>
+        </View>
+        <View style={graph.containerTodosDados}>
+        <DataTable > 
+      <DataTable.Header style={{fontSize: 20, color: "black"}}> 
+        <DataTable.Title>Elemento</DataTable.Title> 
+        <DataTable.Title>Quantidade</DataTable.Title> 
+        <DataTable.Title>Porcentagem</DataTable.Title> 
+
+      </DataTable.Header> 
+       {pieData.map((elementos, index) => {
+            return(
+              <DataTable.Row key={index} style={graph.textTodosDados}> 
+             <DataTable.Cell > {elementos.nome}  </DataTable.Cell> 
+            <DataTable.Cell >   {elementos.value} </DataTable.Cell> 
+            <DataTable.Cell >   {elementos.porcentagem} </DataTable.Cell> 
+            </DataTable.Row> 
+            )
         })}
-   
+          <DataTable.Row style={graph.textTodosDados}> 
+          <DataTable.Cell > Total </DataTable.Cell> 
+          <DataTable.Cell > {vetorUser.length}  </DataTable.Cell> 
+          <DataTable.Cell >   </DataTable.Cell> 
+          </DataTable.Row> 
+   </DataTable>
       </View>
+      </View>)
+            :
+            (   <View style={graph.containerTodosDados}>
+              <DataTable > 
+            <DataTable.Header style={{fontSize: 20, color: "black"}}> 
+              <DataTable.Title>Elemento</DataTable.Title> 
+              <DataTable.Title>Quantidade</DataTable.Title> 
+              <DataTable.Title>Porcentagem</DataTable.Title> 
+      
+            </DataTable.Header> 
+             {pieData.map((elementos, index) => {
+                  return(
+                    <DataTable.Row key={index} style={graph.textTodosDados}> 
+                   <DataTable.Cell > {elementos.nome}  </DataTable.Cell> 
+                  <DataTable.Cell >   {elementos.value} </DataTable.Cell> 
+                  <DataTable.Cell >   {elementos.porcentagem} </DataTable.Cell> 
+                  </DataTable.Row> 
+                  )
+              })}
+                <DataTable.Row style={graph.textTodosDados}> 
+                <DataTable.Cell > Total </DataTable.Cell> 
+                <DataTable.Cell > {vetorUser.length}  </DataTable.Cell> 
+                <DataTable.Cell >   </DataTable.Cell> 
+                </DataTable.Row> 
+         </DataTable>
+            </View>)
     }
+    </ScrollView>
     </View>
   );
 }
@@ -459,42 +537,50 @@ const graph = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#FFF",
-    padding: "3%",
+
   },
   containerTitulo: {
-    height: "10%",
+    height: "5%",
     width: "100%",
-    borderWidth: 4,
-    borderColor: "#97D8AE",
-    borderRadius: 20,
-    backgroundColor: "#97D8AE",
+    // borderWidth: 4,
+    // borderColor: "#97D8AE",
+    // borderRadius: 20,
+    // backgroundColor: "#97D8AE",
   },
   textoTitulo: {
     fontSize: 30,
     textAlign: "center",
-    fontWeight: "bold",
+    fontWeight: 100,
     alignSelf: "center",
-    color: "white",
+    color: "#97D8AE",
+    textTransform: 'uppercase'
   },
   containerGraficos: {
-    height: "40%",
+    height: "100%",
     width: "100%",
     borderWidth: 2,
     borderColor: "#97D8AE",
     borderRadius: 20,
+  },
+  telaGraficos: {
+    height: "50%",
+    width: "100%",
+  
   },
   containerTodosDados: {
-    height: "40%",
+    height: "80%",
     width: "100%",
     borderWidth: 2,
     borderColor: "#97D8AE",
     borderRadius: 20,
+    color: 'red',
+    paddingBottom: '2%'
   },
   textTodosDados: {
-    fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    alignSelf: "center",
+    fontSize: 40,
+    color: 'red'
+   
+    
 
   }
 });

@@ -130,25 +130,6 @@ function ConfirmarSenha(a) {
 
 
 
-
-export default function Cadastro() {
-  return (
-    
-      
-      <Stack.Navigator>
-        <Stack.Group>
-
-          <Stack.Screen name='Email' component={Email('Senha')} />
-          <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')} />
-
-
-        </Stack.Group>
-      </Stack.Navigator>
-    
-  );
-}
-
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'black',
