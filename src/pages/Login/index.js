@@ -95,7 +95,7 @@ export function Login({ navigation }) {
     if (emailLogin == loginAdm && senhaLogin == senhaAdm){
       setFlagAdm(!flagAdm)
     } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
-      navigation.navigate('Home')
+      navigation.navigate('Informacoes')
     } else {
       navigation.navigate('Cadastro')
     }

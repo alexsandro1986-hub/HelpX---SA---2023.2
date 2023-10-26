@@ -18,7 +18,7 @@ export default function Cadastro() {
 
           <Stack.Screen name='Email' component={Email('Senha')} options={{ headerShown: false }}/>
           <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} options={{ headerShown: false }} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Informacoes')} options={{ headerShown: false }} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Login')} options={{ headerShown: false }} />
           
           
 
