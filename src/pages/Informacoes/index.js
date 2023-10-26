@@ -10,6 +10,8 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+
 
 
 
@@ -41,7 +43,7 @@ export default function Informacoes() {
                     <Stack.Screen name='Alergias' component={Alergias('Doador')} options={{ headerShown: false }} />
                     <Stack.Screen name='Doador' component={Doador('Contatos')} options={{ headerShown: false }} />
                     <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('StackDeAcesso')} options={{ headerShown: false }} />
+                    <Stack.Screen name='Endereco' component={Endereco('Home')} options={{ headerShown: false }} />
 
                 </Stack.Group>
 
@@ -57,6 +59,7 @@ function MyBackButton() {
 
         <TouchableOpacity onPress={() => navigation.goBack()} >
             <Text >
+
                 <Icon
                     name="arrow-left"
                     size={35}
@@ -255,11 +258,6 @@ function Doador(a) {
                                         <Picker.Item label={value} value={value} key={index} />
                                     ))}
 
-                                {/* {
-                                    sangue.map(al => {
-                                        return <Picker.Item label={al} value={al} />
-                                    })
-                                } */}
                             </Picker></View>
 
                         {/* radioButton  doador sangue*/}
@@ -537,7 +535,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#ffffff',
         width: 390,
-        height: 650,
+        height: 850,
         alignItems: 'center',
         borderRadius: 25,
         padding: 20,
