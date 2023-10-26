@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-
+import StackDeAcesso from '../Login';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +18,9 @@ export default function Cadastro() {
 
           <Stack.Screen name='Email' component={Email('Senha')} options={{ headerShown: false }}/>
           <Stack.Screen name='Senha' component={Senha('Confirmar Senha')} options={{ headerShown: false }} />
-          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('StackDeAcesso')} options={{ headerShown: false }} />
+          <Stack.Screen name='Confirmar Senha' component={ConfirmarSenha('Login')} options={{ headerShown: false }} />
+          
+          
 
 
         </Stack.Group>
@@ -28,27 +30,26 @@ export default function Cadastro() {
 }
 
 
-const Header = () => (
 
-  <View style={styles.header}>
-    <View style={styles.containerLogo}>
-    <Image
+
+
+function Email(a) {
+  return function ({ navigation }) {
+    const { inputEmail, setInputEmail } = useContext(ContextInfo)
+    return (
+
+      <View style={styles.body}>
+        <View style={styles.logo}>
+        <Image
           source={require('../img/logoPreto.png')}
 
           style={{ width: 500, height: 400 }}
           resizeMode="contain"
         />
 
-    </View>
-  </View>
-);
-
-function Email(a) {
-  return function ({ navigation }) {
-    const { inputEmail, setInputEmail } = useContext(ContextInfo)
-    return (
-      <View style={styles.body}>
+      </View>
         <View style={styles.container}>
+          
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
             placeholder="Email"
@@ -80,6 +81,15 @@ function Senha(a) {
       <KeyboardAvoidingView
        style={styles.body}
       >
+        <View style={styles.logo}>
+        <Image
+          source={require('../img/logoPreto.png')}
+
+          style={{ width: 500, height: 400 }}
+          resizeMode="contain"
+        />
+
+      </View>
         <View style={styles.container}>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
@@ -107,6 +117,15 @@ function ConfirmarSenha(a) {
     const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
     return (
       <View style={styles.body}>
+        <View style={styles.logo}>
+        <Image
+          source={require('../img/logoPreto.png')}
+
+          style={{ width: 500, height: 400 }}
+          resizeMode="contain"
+        />
+
+      </View>
         <View style={styles.container}>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
@@ -130,12 +149,10 @@ function ConfirmarSenha(a) {
 
 
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'black',
-    height: 200,
 
-  },
+
+const styles = StyleSheet.create({
+ 
   body: {
     flex: 1,
     justifyContent: 'center',
@@ -143,11 +160,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#97d8ae',
 
   },
-  containerLogo: {
+   logo: {
+    height: 100,
+    marginBottom: 90,
     justifyContent: 'center',
     alignItems: 'center',
-
+    
   },
+ 
   container: {
     width: '90%',
     height: '50%',
