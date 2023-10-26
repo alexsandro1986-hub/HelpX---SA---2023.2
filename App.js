@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 import {ContextInfo, ContextInfoProvider } from './src/pages/ContextInfo/contextinfo';
-import Informacoes from './src/pages/informacoes';
+import StackHomePage from './src/pages/Inicio';
 
 const Stack = createStackNavigator();
 
@@ -14,8 +14,8 @@ function MyStack() {
   return (
     <ContextInfoProvider>
     
-     <Informacoes/>
-        {/* <StackHomePage/> */}
+  
+        <StackHomePage/>
         
 
     </ContextInfoProvider>
