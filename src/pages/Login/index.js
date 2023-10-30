@@ -41,7 +41,8 @@ export default function StackDeAcesso() {
         (<>
    
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} options={{
+        <Stack.Screen name='Home' component={Home}  options={{ headerShown: false }} />
+        {/* options={{
                     title: 'Home',
                     headerStyle: {
                         backgroundColor: '#97D8AE',
@@ -65,7 +66,7 @@ export default function StackDeAcesso() {
                           onPress={() =>logout() }
                         />
                       )
-                }}/>
+                }}/> */}
         <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
         <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
         <Stack.Screen name='Chat' component={Chat} />
@@ -85,20 +86,34 @@ export function Login({ navigation }) {
   const [senhaLogin, setSenhaLogin] = useState('');
   const {flagAdm, setFlagAdm, senhaAdm , loginAdm,
     inputSenha,
-    inputEmail,
+    inputEmail, vetorUser
   
   } = useContext(ContextInfo)
 
 
 
   const entrar = () => {
-    if (emailLogin == loginAdm && senhaLogin == senhaAdm){
-      setFlagAdm(!flagAdm)
-    } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
-      navigation.navigate('Informacoes')
-    } else {
-      navigation.navigate('Cadastro')
-    }
+    vetorUser.map((user) => {
+      
+      switch (true){
+        case emailLogin == loginAdm && senhaLogin == senhaAdm:
+          setFlagAdm(!flagAdm)
+          break;
+        case emailLogin == user.email && senhaLogin == user.senha:
+          navigation.navigate('Home')
+          break;
+        case emailLogin == inputEmail && senhaLogin == inputSenha:
+          navigation.navigate('Informacoes')
+          break;
+      }
+  })
+    // if (emailLogin == loginAdm && senhaLogin == senhaAdm){
+    //   setFlagAdm(!flagAdm)
+    // } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
+    //   navigation.navigate('Informacoes')
+    // } else {
+    //   navigation.navigate('Cadastro')
+    // }
 
     // navigation.navigate('Chat', { name: name })
   }

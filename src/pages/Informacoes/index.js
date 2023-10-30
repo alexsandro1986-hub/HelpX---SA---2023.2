@@ -10,11 +10,11 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { Dimensions } from 'react-native';
 
 
-
-
+const telaAltura = Dimensions.get('window').height;
+const telaComprimento = Dimensions.get('window').width;
 
 const Stack = createStackNavigator();
 const Header = () => (
@@ -258,7 +258,8 @@ function Doador(a) {
                                         <Picker.Item label={value} value={value} key={index} />
                                     ))}
 
-                            </Picker></View>
+                            </Picker>
+                            </View>
 
                         {/* radioButton  doador sangue*/}
 
@@ -492,10 +493,7 @@ const Tab = createBottomTabNavigator();
 
 
 const styles = StyleSheet.create({
-    // width: 219px;
-    // height: 55px;
-    // left: 0px;
-    // top: 83px;
+
     header: {
         height: 250,
 
@@ -518,63 +516,30 @@ const styles = StyleSheet.create({
 
     caixa: {
         backgroundColor: "#C7FFCC",
+        flex: 1
     },
 
-    // /* Rectangle 19 */
-
-
-    // width: 219px;
-    // height: 266px;
-    // left: 0px;
-    // top: 146px;
-
-    // background: rgba(255, 255, 255, 0.71);
-    // box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
-    // border-radius: 15px 15px 0px 0px;
     body: {
         position: 'relative',
         backgroundColor: '#ffffff',
-        width: 390,
-        height: 850,
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         borderRadius: 25,
         padding: 20,
     },
 
-    // /* Pedindo informações */
-
-    // position: absolute;
-    // width: 219px;
-    // height: 40px;
-    // left: 0px;
-    // top: 146px;
-
-    // font-family: 'Inter';
-    // font-style: normal;
-    // font-weight: 400;
-    // font-size: 13px;
-    // line-height: 16px;
-    // display: flex;
-    // align-items: center;
-    // text-align: center;
+   
     viwInfomativo: {
         alignItems: 'center',
+        
     },
     txtInfomativo: {
         marginBottom: 70,
         fontSize: 30
     },
 
-    // /* Line 3 */
-
-    // position: absolute;
-    // width: 174px;
-    // height: 0px;
-    // left: 22px;
-    // top: 236px;
-    // border: 1px solid #000000;
-    // color: #000000;
-
+    
     input: {
         position: 'relative',
         fontSize: 30,
@@ -649,15 +614,7 @@ const styles = StyleSheet.create({
         padding: 45,
         display: 'flex'
     },
-    // /* fluent:arrow-left-12-filled */
-
-    // position: absolute;
-    // width: 25px;
-    // height: 25px;
-    // left: 214px;
-    // top: 396px;
-
-    // transform: rotate(-180deg);
+  
     botaoDoador: {
         left: 40,
         top: 25

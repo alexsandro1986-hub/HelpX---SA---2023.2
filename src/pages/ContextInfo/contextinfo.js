@@ -57,8 +57,8 @@ export const ContextInfoProvider = ({ children }) => {
           cep: "12345-678",
           logradouro: "Rua das Flores",
           nCasa: "123",
-          email: "joao@example.com",
-          senha: "senha123",
+          email: "joao.com",
+          senha: "123",
           doadorOrgao: "Não"
         },
         {
