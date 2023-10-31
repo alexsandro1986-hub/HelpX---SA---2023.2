@@ -10,12 +10,14 @@ import StackHomePage from './src/pages/Inicio';
 const Stack = createStackNavigator();
 
 
+
 function MyStack() {
   return (
     <ContextInfoProvider>
     
   
         <StackHomePage/>
+       
         
 
     </ContextInfoProvider>

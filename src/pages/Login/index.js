@@ -107,15 +107,7 @@ export function Login({ navigation }) {
           break;
       }
   })
-    // if (emailLogin == loginAdm && senhaLogin == senhaAdm){
-    //   setFlagAdm(!flagAdm)
-    // } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
-    //   navigation.navigate('Informacoes')
-    // } else {
-    //   navigation.navigate('Cadastro')
-    // }
 
-    // navigation.navigate('Chat', { name: name })
   }
 
   return (
@@ -299,7 +291,7 @@ const styles = StyleSheet.create({
   textoCliqueAqui:{
     fontSize: 17,
     fontWeight: 700,
-    color: 'red',
+    color: 'blue',
   },
   viewCadastro: {
     marginTop: '30%',

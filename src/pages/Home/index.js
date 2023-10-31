@@ -13,7 +13,8 @@ import { ContextInfo } from "../ContextInfo/contextinfo";
 import { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 
-
+import { Picker } from "@react-native-picker/picker";
+import { RadioButton } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,7 +84,13 @@ function StackFeed() {
       <Stack.Screen
         name="QrCodeUser"
         component={QrCodeUser}
-        options={{ headerShown: false }}
+        options={{title: "Meu QRCode",  headerTitleAlign: 'center',headerBackTitle: "Voltar", headerStyle: {
+          backgroundColor: '#97D8AE',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 24}}}
       />
     </Stack.Navigator>
   );
@@ -178,7 +185,29 @@ function Feed() {
           </Text>
         </TouchableOpacity>
 
-        <View style={feed.options}></View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("EditUser")}
+          style={{
+            width: "40%",
+            height: "40%",
+            backgroundColor: "#97D8AE",
+            borderRadius: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 15,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4.65,
+            elevation: 8,
+          }}
+        >
+          <MaterialCommunityIcons name="account-edit" color={"white"} size={50} />
+
+          <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
+            Editar Perfil
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -260,12 +289,7 @@ function Profile() {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={profile.btns}
-        onPress={() => navigation.navigate("EditUser")}
-      >
-        <MaterialCommunityIcons name="account-edit" color={"green"} size={40} />
-      </TouchableOpacity>
+      
     </LinearGradient>
   );
 }
@@ -336,11 +360,7 @@ export function QrCodeUser() {
 
   return (
     <View style={qrcode.container}>
-      <View style={qrcode.viewTxt}>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: "grey" }}>
-          Meu QRCode
-        </Text>
-      </View>
+     
 
       <View style={qrcode.viewQrcode}>
         <QRCode value="google.com" color="black" size={250} />
@@ -375,62 +395,90 @@ const qrcode = StyleSheet.create({
 });
 
 export function EditUser() {
-
-    
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const {
-    inputNome, setInputNome,
-    inputIdade, setInputIdade,
-    inputAlergias, setInputAlergias,
-    inputTelefone, setInputTelefone,
-    inputContatoEmergencia, setInputContatoEmergencia,
-    inputNtelefoneEmergencia, setNtelefoneEmergencia,
-    inputNCep, setInputNcep,
-    inputLogradouro, setInputLogradouro,
-    inputNumeroCasa, setNumeroCasa,
-    inputDoador, setInputDoador,
-    inputSangue, setInputSangue,
-    inputOrgao, setInputOrgao,
-  } = useContext(ContextInfo)
+    inputNome,
+    setInputNome,
+    inputIdade,
+    setInputIdade,
+    inputAlergias,
+    setInputAlergias,
+    inputTelefone,
+    setInputTelefone,
+    inputContatoEmergencia,
+    setInputContatoEmergencia,
+    inputNtelefoneEmergencia,
+    setNtelefoneEmergencia,
+    inputNCep,
+    setInputNcep,
+    inputLogradouro,
+    setInputLogradouro,
+    inputNumeroCasa,
+    setNumeroCasa,
+    inputDoador,
+    setInputDoador,
 
-  
-  
-  const [expandirNome, setExpandirNome] = useState(false)
-  const [expandirContato, setExpandirContato] = useState(false)
-  const [expandirEndereco, setExpandirEndereco] = useState(false)
-  const [expandirSangue, setExpandirSangue] = useState(false)
+  } = useContext(ContextInfo);
 
+  const [expandirNome, setExpandirNome] = useState(false);
+  const [expandirAlergia, setExpandirAlergia] = useState(false);
+  const [expandirContato, setExpandirContato] = useState(false);
+  const [expandirEndereco, setExpandirEndereco] = useState(false);
+  const [expandirSangue, setExpandirSangue] = useState(false);
 
+  const alergias = [
+    "",
+    "Não possuo alergia",
+    "Latex",
+    "Polem",
+    "Alimentos",
+    "Medicamentos",
+    "Poeira",
+    "Mofos",
+    "Pelos de Animais",
+    "Picada de Insetos",
+    "Iodo",
+  ];
+  const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
 
+  const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+  const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-
-
+  const [inputSangue, setInputSangue] = useState('option1');
+  const [inputOrgao, setInputOrgao] = useState('option3');
 
   return (
     <View style={editU.container}>
-
-      <ScrollView style={{ width: '100%', height: '100%', }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 15 }} >
-
-
-
+      <ScrollView style={{ width: "100%", height: "100%" }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 15,
+          }}
+        >
           {/* inputs de nome/idade/alergia */}
 
-          <TouchableOpacity onPress={() => {
-            setExpandirNome(!expandirNome)
-          }} style={[editU.btnExpandir]}>
-
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirNome(!expandirNome);
+            }}
+            style={[editU.btnExpandir]}
+          >
             <View style={editU.btnDescription}>
-              <Text>Nome / Idade / Alergias</Text>
-              <Feather name={expandirNome ? 'chevron-up' : 'chevron-down'}
-                size={25} color="#bbb" />
+              <Text>Nome / Idade </Text>
+              <Feather
+                name={expandirNome ? "chevron-up" : "chevron-down"}
+                size={25}
+                color="#bbb"
+              />
             </View>
-
           </TouchableOpacity>
           {/* ////////////////////////////////// */}
 
           {expandirNome && (
-            <View style={{ width: '100%', padding: 10 }}>
+            <View style={{ width: "100%", padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>Nome</Text>
                 <TextInput
@@ -447,34 +495,74 @@ export function EditUser() {
                   onChangeText={setInputIdade}
                 />
               </View>
-              <View style={editU.viewInput}>
-                <Text>Alergias</Text>
-                <TextInput
-                  style={editU.input}
-                  value={inputAlergias}
-                  onChangeText={setInputAlergias}
-                />
+            </View>
+          )}
+
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirAlergia(!expandirAlergia);
+            }}
+            style={[editU.btnExpandir]}
+          >
+            <View style={editU.btnDescription}>
+              <Text>Alergias </Text>
+              <Feather
+                name={expandirNome ? "chevron-up" : "chevron-down"}
+                size={25}
+                color="#bbb"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {expandirAlergia && (
+            <View style={{ width: "100%", padding: 10 }}>
+              <View style={styles.inputAlergias}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={alergiaSelecionado}
+                  onValueChange={(itemValue) =>
+                    setAlergiaSelecionada(itemValue)
+                  }
+                >
+                  {alergias
+                    .filter((value, index) =>
+                      alergiaSelecionado === 0
+                        ? value
+                        : index === 0
+                        ? false
+                        : value
+                    )
+                    .map((value, index) => (
+                      <Picker.Item label={value} value={value} key={index} />
+                    ))}
+                  {/* alergias.map(al => {
+                                        return <Picker.Item label={al} value={al} />
+                                    }) */}
+                </Picker>
               </View>
             </View>
           )}
 
-
           {/* inputs de telefone/ contato emergencia / telefone emergencia */}
-          <TouchableOpacity onPress={() => {
-            setExpandirContato(!expandirContato)
-          }} style={[editU.btnExpandir]}>
-
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirContato(!expandirContato);
+            }}
+            style={[editU.btnExpandir]}
+          >
             <View style={editU.btnDescription}>
               <Text>Contatos</Text>
-              <Feather name={expandirContato ? 'chevron-up' : 'chevron-down'}
-                size={25} color="#bbb" />
+              <Feather
+                name={expandirContato ? "chevron-up" : "chevron-down"}
+                size={25}
+                color="#bbb"
+              />
             </View>
-
           </TouchableOpacity>
           {/* ////////////////////////////////// */}
 
           {expandirContato && (
-            <View style={{ width: '100%', padding: 10 }}>
+            <View style={{ width: "100%", padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>Telefone</Text>
                 <TextInput
@@ -504,25 +592,26 @@ export function EditUser() {
             </View>
           )}
 
-
-
           {/* inputs de endereço */}
-          <TouchableOpacity onPress={() => {
-            setExpandirEndereco(!expandirEndereco)
-          }} style={[editU.btnExpandir]}>
-
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirEndereco(!expandirEndereco);
+            }}
+            style={[editU.btnExpandir]}
+          >
             <View style={editU.btnDescription}>
               <Text>Endereço</Text>
-              <Feather name={expandirEndereco ? 'chevron-up' : 'chevron-down'}
-                size={25} color="#bbb" />
+              <Feather
+                name={expandirEndereco ? "chevron-up" : "chevron-down"}
+                size={25}
+                color="#bbb"
+              />
             </View>
-
           </TouchableOpacity>
           {/* ////////////////////////////////// */}
 
           {expandirEndereco && (
-            <View style={{ width: '100%', padding: 10 }}>
-
+            <View style={{ width: "100%", padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>CEP</Text>
                 <TextInput
@@ -553,60 +642,113 @@ export function EditUser() {
           )}
 
           {/* inputs de sangue/ dorador sangue/ doador orgao */}
-          <TouchableOpacity onPress={() => {
-            setExpandirSangue(!expandirSangue)
-          }} style={[editU.btnExpandir]}>
-
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirSangue(!expandirSangue);
+            }}
+            style={[editU.btnExpandir]}
+          >
             <View style={editU.btnDescription}>
               <Text>Tipo Sanguíneo / Doador</Text>
-              <Feather name={expandirSangue ? 'chevron-up' : 'chevron-down'}
-                size={25} color="#bbb" />
+              <Feather
+                name={expandirSangue ? "chevron-up" : "chevron-down"}
+                size={25}
+                color="#bbb"
+              />
             </View>
-
           </TouchableOpacity>
           {/* ////////////////////////////////// */}
 
           {expandirSangue && (
-            <View style={{ width: '100%', padding: 10 }}>
+            <View style={{ width: "100%", padding: 10, gap: 10 }}>
+              
 
-              <View style={editU.viewInput}>
-                <Text> Tipo Sanguíneo </Text>
-                <TextInput
-                  style={editU.input}
-                  value={inputDoador}
-                  onChangeText={setInputDoador}
-                />
-              </View>
+              
+              <View style={editU.inputDoador}>
+                            <Picker
 
-              <View style={editU.viewInput}>
-                <Text>É Doador de Sangue?</Text>
-                <TextInput
-                  style={editU.input}
-                  value={inputSangue}
-                  onChangeText={setInputSangue}
-                />
-              </View>
+                                mode="dropdown"
+                                selectedValue={inputTiposanguineo}
+                                onValueChange={(itemValue) =>
+                                    setInputTiposanguineo(itemValue)
+                                }>
+
+                                {sangue
+                                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                                    .map((value, index) => (
+                                        <Picker.Item label={value} value={value} key={index} />
+                                    ))}
+
+                            </Picker>
+                            </View>
+                            <View style={editU.radioButton}>
+                                    <Text>Vôce é doador de sangue</Text>
+                                    <RadioButton.Android
+                                        value="option1"
+                                        status={inputSangue === 'option1' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputSangue('option1')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={editU.radioLabel}>
+                                        Sim
+                                    </Text>
+                                </View>
+                                <View style={editU.radioButton}>
+                                    <RadioButton.Android
+                                        value="option2"
+                                        status={inputSangue === 'option2' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputSangue('option2')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={editU.radioLabel}>
+                                        Não
+                                    </Text>
+                                </View>
+                                 {/* radioButton  doador orgãos*/}
+                        <View style={editU.tiposSangue}>
+                            <View style={editU.radioGroup}>
+                                <View style={editU.radioButton}>
+                                    <Text>Vôce é doador de orgãos</Text>
+                                    <RadioButton.Android
+                                        value="option3"
+                                        status={inputOrgao === 'option3' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputOrgao('option3')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={editU.radioLabel}>
+                                        Sim
+                                    </Text>
+                                </View>
+                                <View style={editU.radioButton}>
+                                    <RadioButton.Android
+                                        value="option4"
+                                        status={inputOrgao === 'option4' ?
+                                            'checked' : 'unchecked'}
+                                        onPress={() => setInputOrgao('option4')}
+                                        color="#007BFF"
+                                    />
+                                    <Text style={editU.radioLabel}>
+                                        Não
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
 
 
-              <View style={editU.viewInput}>
-                <Text>é Doador de Orgão?</Text>
-                <TextInput
-                  style={editU.input}
-                  value={inputOrgao}
-                  onChangeText={setInputOrgao}
-                />
-              </View>
+              
             </View>
           )}
 
-            <TouchableOpacity style={editU.btnSalvar}>
-              <Text style={editU.btnText}>SALVAR</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={editU.btnSalvar}>
+            <Text style={editU.btnText}>SALVAR</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-            
     </View>
-  )
+  );
 }
 
 const editU = StyleSheet.create({
@@ -668,5 +810,29 @@ const editU = StyleSheet.create({
     fontSize: 17,
     fontWeight: "700",
     color: "green",
+  },
+
+  radioButton: {
+
+
+    alignItems: 'center',
+
+},
+radioLabel: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#333',
+},
+ tiposSangue: {
+        marginBottom: 10,
+        marginTop: 10
+
+
+    },
+
+    inputDoador: {
+      borderColor: 'transparent',
+      borderWidth: 1,
+      gap: 2
   },
 });
