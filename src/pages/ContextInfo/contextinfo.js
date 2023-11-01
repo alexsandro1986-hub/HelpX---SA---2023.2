@@ -63,7 +63,7 @@ export const ContextInfoProvider = ({ children }) => {
         },
         {
           id: 2,
-          nome: "Maria Santos",
+          nome: "Andrey",
           idade: 25,
           alergia: "Amendoim",
           tipoSanguineo: "B-",
@@ -74,8 +74,8 @@ export const ContextInfoProvider = ({ children }) => {
           cep: "54321-876",
           logradouro: "Avenida Principal",
           nCasa: "567",
-          email: "maria@example.com",
-          senha: "senha456",
+          email: "andrey",
+          senha: "123",
           doadorOrgao: "Não"
         },
         {

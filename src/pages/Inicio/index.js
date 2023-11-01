@@ -1,12 +1,31 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withRepeat, withSequence, withDelay, withDecay, withBouncing, withSpring } from 'react-native-reanimated'; // Remova a segunda importação de withSpring
-
+import AppIntroSlider from 'react-native-app-intro-slider';
 import Cadastro from '../Cadastro';
 import StackDeAcesso from '../Login';
+import { useState } from 'react';
+
+const slides =[
+  {
+    key:1,
+    title:'Helpx',
+    text:'Seu Passaporte de Informações Médicas'
+  },
+  {
+    key:2,
+    title:'Cadastro',
+    text:'Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.'
+  },
+  {
+    key:3,
+    title:'Pronto',
+    text:'Esteja preparado para qualquer situação!'
+  }
+]
 
 
 
@@ -48,21 +67,38 @@ export function Inicio({ navigation }) {
     navigation.navigate('StackDeAcesso');
   };
 
-  return (
-    <LinearGradient colors={['#CDE4AD', '#97D8AE', '#78D1D2']} style={styles.container}>
-      <View style={styles.inicio}>
-        <Image source={require('../img/logoPreto.png')} style={{ width: 500, height: 400 }} resizeMode="contain" />
+
+  const [showHome, setShowHome] = useState(false)
+
+  function renderSlides({ item }){
+    return(
+      <View style={{flex:1}}>
+
+        <Text>{item.title}</Text>
+
+        <Text>{item.text}</Text>
+
       </View>
-      <View style={styles.inicio}>
-        <TouchableOpacity style={styles.botao} onPress={entrar}>
-          <Animated.View style={[animatedStyle]}>
-            <Image source={require('../img/logo2.png')} style={{ width: 500, height: 500, marginTop: '40%' }} resizeMode="contain" />
-          </Animated.View>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
-  );
-}
+    )
+  }
+
+  if(showHome){
+    navigation.navigate('StackDeAcesso');
+  }else{
+
+    return (
+      <AppIntroSlider
+        renderItem={renderSlides}
+        data={slides}
+        activeDotStyle={{
+          backgroundColor:'#009cff',
+          width:30
+        }}
+        onDone={()=>(navigation.navigate('StackDeAcesso'))}
+       />
+    );
+  }
+  }
 
 const styles = StyleSheet.create({
   container: {

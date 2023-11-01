@@ -78,7 +78,12 @@ function StackFeed() {
       <Stack.Screen
         name="EditUser"
         component={EditUser}
-        options={{ title: "Editar Dados", headerBackTitle: "Voltar" }}
+        options={{ title: "Editar Dados", headerTitleAlign: 'center',headerBackTitle: "Voltar", headerStyle: {
+          backgroundColor: '#97D8AE', },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 24}}}
       />
 
       <Stack.Screen
@@ -253,10 +258,10 @@ function Profile() {
 
         <View
           style={{
-            borderWidth: 2,
             borderColor: "black",
+            borderWidth: 2,
             borderRadius: 10,
-            width: 80,
+            width: 80 ,
             height: 80,
             justifyContent: "center",
             alignItems: "center",

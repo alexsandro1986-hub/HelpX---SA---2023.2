@@ -17,7 +17,7 @@ function MyStack() {
     
   
         <StackHomePage/>
-       
+    
         
 
     </ContextInfoProvider>
@@ -30,6 +30,7 @@ export default function App() {
 
     <NavigationContainer>
       <MyStack />
+     
     </NavigationContainer>
   )
 }
