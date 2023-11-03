@@ -3,7 +3,6 @@ import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Animated, { Easing, useSharedValue, useAnimatedStyle, withRepeat, withSequence, withDelay, withDecay, withBouncing, withSpring } from 'react-native-reanimated'; // Remova a segunda importação de withSpring
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Cadastro from '../Cadastro';
 import StackDeAcesso from '../Login';
@@ -13,20 +12,55 @@ const slides =[
   {
     key:1,
     title:'Helpx',
-    text:'Seu Passaporte de Informações Médicas'
+    text:'Seu Passaporte de Informações Médicas',
+    img: require('../../../assets/id_card.png')
   },
   {
     key:2,
     title:'Cadastro',
-    text:'Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.'
+    text:'Cadastre suas informações pessoais e médicas essenciais e crie seu QR Code de emergência.',
+    img : require('../../../assets/Register.png')
   },
   {
     key:3,
     title:'Pronto',
-    text:'Esteja preparado para qualquer situação!'
+    text:'Esteja preparado para qualquer situação!',
+    img : require('../../../assets/Happy.png')
   }
 ]
 
+function renderSlides({ item }){
+  return(
+    <View style={{flex:1,justifyContent: 'flex-start', alignItems: 'center',}}>
+
+      <Image 
+      source={item.img}
+      style={{width: '90%', height: '73%', resizeMode:'cover' }}
+      />
+
+      <Text
+      style={{
+        paddingTop:25,
+        paddingBottom:10,
+        fontSize:25,
+        fontWeight:'bold',
+        color:'#77D792'
+
+      }}
+      >{item.title}</Text>
+
+      <Text
+        style={{
+          color:'#b5b5b5',
+          paddingHorizontal:25,
+          fontSize: 15
+        }}
+      >{item.text}</Text>
+
+    </View>
+    
+  )
+}
 
 
 const Stack = createStackNavigator();
@@ -44,43 +78,9 @@ export default function StackHomePage() {
 }
 
 export function Inicio({ navigation }) {
-  const translateY = useSharedValue(0);
-
-  // Configuração da animação
-  translateY.value = withRepeat(
-    withSequence(
-      withSpring(-100, { damping: 2, stiffness: 80 }), // Primeiro movimento para cima
-      withSpring(0, { damping: 2, stiffness: 80 }), // Volta para a posição inicial
-    ),
-    -1, // Repete a animação infinitamente
-    false // Não faz o retorno suave
-  );
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: translateY.value }],
-    };
-  });
-
-
-  const entrar = () => {
-    navigation.navigate('StackDeAcesso');
-  };
-
-
+  
   const [showHome, setShowHome] = useState(false)
 
-  function renderSlides({ item }){
-    return(
-      <View style={{flex:1}}>
-
-        <Text>{item.title}</Text>
-
-        <Text>{item.text}</Text>
-
-      </View>
-    )
-  }
 
   if(showHome){
     navigation.navigate('StackDeAcesso');
@@ -91,14 +91,19 @@ export function Inicio({ navigation }) {
         renderItem={renderSlides}
         data={slides}
         activeDotStyle={{
-          backgroundColor:'#009cff',
+          backgroundColor:'green',
           width:30
         }}
+        renderNextButton={()=>{}}
+        renderDoneButton={()=><Text style={{fontSize:20, fontWeight:'bold', color:'#77D792'}}>Acessar!</Text>}
         onDone={()=>(navigation.navigate('StackDeAcesso'))}
        />
     );
   }
   }
+
+
+  
 
 const styles = StyleSheet.create({
   container: {
