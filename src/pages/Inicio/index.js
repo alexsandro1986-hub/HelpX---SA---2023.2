@@ -71,7 +71,6 @@ export default function StackHomePage() {
       <Stack.Group>
         <Stack.Screen name='Inicio' component={Inicio} options={{ headerShown: false }} />
         <Stack.Screen name='StackDeAcesso' component={StackDeAcesso} options={{ headerShown: false }} />
-        <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>
   )

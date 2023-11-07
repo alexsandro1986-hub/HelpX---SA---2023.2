@@ -23,7 +23,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputTiposanguineo, setInputTiposanguineo] = useState('')
     const [inputSangue, setInputSangue] = useState('')
     const [inputOrgao, setInputOrgao] = useState('')
-    
+    const [inputCpf, setInputCpf] = useState('')
     //Cadastro
 
     //ADMIN
@@ -253,6 +253,7 @@ export const ContextInfoProvider = ({ children }) => {
                 //dadosPessoais
                 inputNome, setInputNome,
                 inputIdade, setInputIdade,
+                inputCpf, setInputCpf,
                 inputTelefone, setInputTelefone,
                 alergiaSelecionado, setAlergiaSelecionada,
                 inputLogradouro, setInputLogradouro,

@@ -19,7 +19,7 @@ import { RadioButton } from 'react-native-paper';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home() {
+export default function Home(navigation) {
   return (
     <Tab.Navigator
       initialRouteName="StackFeed"
