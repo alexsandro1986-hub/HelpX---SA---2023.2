@@ -37,14 +37,18 @@ const slides = [
     },
     {
         key: 3,
-        render: <Doador />
+        render: <Comorbidade />
     },
     {
         key: 4,
-        render: <Contatos />
+        render: <Doador />
     },
     {
         key: 5,
+        render: <Contatos />
+    },
+    {
+        key: 6,
         render: <Endereco />
     },
 
@@ -129,7 +133,7 @@ function Nome() {
     return (
         <View style={{ flex: 1, padding: 20 }} >
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Informe abaixo o seu</Text>
+                <Text style={styles.txtInfomativo}>Vamos Começar</Text>
             </View>
             <TextInput
                 style={styles.input}
@@ -203,6 +207,79 @@ function Alergias() {
     );
 }
 
+function Comorbidade() {
+    const { inputComorbidade, setInputComorbidade } = useContext(ContextInfo)
+    const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
+    const [radiusButton, setRadiusButton] = useState(false);
+    return (
+        <View style={{ flex: 1, padding: 20 }} >
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Está tratando alguma doença?</Text>
+            </View>
+
+            <View style={styles.radioGroup}>
+                <View style={styles.radioButton}>
+                    <Text></Text>
+                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+                        <View style={styles.radioLabel}>
+                            <RadioButton.Android
+                                value={true}
+                                status={radiusButton === true ?
+                                    'checked' : 'unchecked'}
+                                onPress={() => setRadiusButton(true)}
+                                color="#007BFF"
+                            />
+                            <Text style={styles.radioText} >
+                                Sim
+                            </Text>
+                        </View>
+
+
+                        <View style={styles.radioLabel}>
+                            <RadioButton.Android
+                                value={false}
+                                status={radiusButton === false ?
+                                    'checked' : 'unchecked'}
+                                onPress={() => setRadiusButton(false)}
+                                color="#007BFF"
+                            />
+                            <Text style={styles.radioText} >
+                                Não
+                            </Text>
+                        </View>
+                    </View>
+
+                </View>
+            </View>
+
+            {radiusButton&&(
+                   <View>
+                   <TextInput
+                       style={styles.input}
+                       placeholder="Doença"
+                       value={inputComorbidade}
+                       onChangeText={setInputComorbidade}
+                       returnKeyType="done"
+                   />
+                   <TextInput
+                       style={styles.input}
+                       placeholder="Remédio"
+                       value={inputMedicamentoComor}
+                       onChangeText={setInputMedicamentoComor}
+                       returnKeyType="done"
+                   />
+               </View>
+              
+          
+            )}
+        </View>
+
+                                   
+        
+    )
+}
+
 
 
 function Doador() {
@@ -218,7 +295,7 @@ function Doador() {
 
         <View style={{ flex: 1, padding: 20 }}>
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Qual o seu tipo sanguíneo</Text>
+                <Text style={styles.txtInfomativo}>Qual o seu tipo sanguíneo?</Text>
             </View>
             <View style={styles.inputDoador}>
                 <Picker
@@ -281,7 +358,7 @@ function Doador() {
             <View style={styles.tiposSangue}>
                 <View style={styles.radioGroup}>
                     <View style={styles.radioButton}>
-                        <Text>Vôce é doador de orgãos</Text>
+                        <Text>Você é doador de orgãos?</Text>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
@@ -329,7 +406,7 @@ function Contatos() {
 
         <View style={{ flex: 1, padding: 20 }}>
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+                <Text style={styles.txtInfomativo}>Informações de Contato</Text>
             </View>
             <TextInput
                 style={styles.input_Contato}
@@ -370,18 +447,18 @@ function Endereco() {
 
         <View style={{ flex: 1, padding: 20 }}>
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+                <Text style={styles.txtInfomativo}>Seu Endereço</Text>
             </View>
             <TextInput
                 style={styles.input_endereco}
-                placeholder="N°-CEP"
+                placeholder="CEP"
                 value={inputNCep}
                 onChangeText={setInputNcep}
                 returnKeyType="done"
             />
             <TextInput
                 style={styles.input_endereco}
-                placeholder="Logradouro"
+                placeholder="Rua"
                 value={inputLogradouro}
                 onChangeText={setInputLogradouro}
                 returnKeyType="done"
@@ -504,8 +581,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
-    radioText:{
-        fontSize:18,
+    radioText: {
+        fontSize: 18,
         color: '#333'
     },
 

@@ -24,36 +24,36 @@ import StackInfo from '../Informacoes';
 const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
-  const {flagAdm, logout} = useContext(ContextInfo)
+  const { flagAdm, logout } = useContext(ContextInfo)
 
   return (
 
     <Stack.Navigator>
-        
-        
+
+
       {
-      flagAdm?
-       ( <>
-      
-        <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
-        <Stack.Screen name='Chat' component={Chat} />
-    
-        </>)
-        :
-        (<>
-   
-        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='Informacoes' component={StackInfo} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home}  options={{ headerShown: false }} />
-        <Stack.Screen name='Cadastro' component={Cadastro}  options={{ headerShown: false }} />
-        
-        <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
-        <Stack.Screen name='Chat' component={Chat} />
-    
-        </>)
+        flagAdm ?
+          (<>
+
+            <Stack.Screen name='StackAdmin' component={StackAdmin} options={{ headerShown: false }} />
+            <Stack.Screen name='Chat' component={Chat} />
+
+          </>)
+          :
+          (<>
+
+            <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name='Informacoes' component={StackInfo} options={{ headerShown: false }} />
+            <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
+
+            <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
+            <Stack.Screen name='Chat' component={Chat} />
+
+          </>)
       }
     </Stack.Navigator>
-    )
+  )
 
 }
 
@@ -63,18 +63,18 @@ export default function StackDeAcesso() {
 export function Login({ navigation }) {
   const [emailLogin, setEmailLogin] = useState('');
   const [senhaLogin, setSenhaLogin] = useState('');
-  const {flagAdm, setFlagAdm, senhaAdm , loginAdm,
+  const { flagAdm, setFlagAdm, senhaAdm, loginAdm,
     inputSenha,
     inputEmail, vetorUser
-  
+
   } = useContext(ContextInfo)
 
 
 
   const entrar = () => {
     vetorUser.map((user) => {
-      
-      switch (true){
+
+      switch (true) {
         case emailLogin == loginAdm && senhaLogin == senhaAdm:
           setFlagAdm(!flagAdm)
           break;
@@ -85,24 +85,21 @@ export function Login({ navigation }) {
           navigation.navigate('Informacoes')
           break;
       }
-  })
+    })
 
   }
 
   return (
 
-    
 
-    <LinearGradient
-      colors={['#CDE4AD', '#97D8AE', '#78D1D2']}
-      //  background: linear-gradient(179.96deg, #CDE4AD 3.67%, #97D8AE 54.83%, #78D1D2 99.97%)
-      style={styles.container}>
 
-        <View style={styles.logo}>
+    <View style={styles.container}>
+
+      <View style={styles.logo}>
         <Image
-          source={require('../img/logoPreto.png')}
+          source={require('../img/logoHelpX.png')}
 
-          style={{ width: 500, height: 400 }}
+          style={{ width: '150%' }}
           resizeMode="contain"
         />
 
@@ -110,78 +107,51 @@ export function Login({ navigation }) {
 
 
 
-      <KeyboardAvoidingView style={styles.containerInputs}>
+      <View style={styles.containerInputs}>
 
         <View style={styles.AlturaElementosInput}>
 
           <Text style={styles.inputLabel}>Email </Text>
 
           <Input
-            style={styles.inpt}
             // placeholder='Email'
             keyboardType='email-address'
             // leftIcon={{ type: 'font-awesome', name: 'envelope' }}
             onChangeText={setEmailLogin}
+            inputContainerStyle={styles.inpt} // Isso remove a borda inferior
           />
         </View>
 
         <View style={styles.AlturaElementosInput}>
           <Text style={styles.inputLabel}> Senha</Text>
           <Input
-            style={styles.inpt}
             // placeholder='Senha'
             secureTextEntry={true}
-            // leftIcon={{ type: 'font-awesome', name: 'lock' }}
             onChangeText={setSenhaLogin}
+            inputContainerStyle={styles.inpt} // Isso remove a borda inferior
           />
 
-         
-        </View>
-        <View>
-          
+
         </View>
         
+
         {/* <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
           <Text style={styles.textoBotao}>Cadastrar</Text>
         </TouchableOpacity> */}
 
-        <View style={styles.AlturaElementosInput}>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={entrar}>
-            <Text style={styles.textoBotao}> Confirmar </Text>
 
-          </TouchableOpacity>
-          
-        </View>
+        <TouchableOpacity
+          style={styles.botao}
+          onPress={entrar}>
+          <Text style={styles.textoBotao}> Confirmar </Text>
 
-        <View style={styles.viewCadastro}>
-          <View style={styles.cadastroText}>
-            <Text style={styles.textoVoltarCadastro}>Ainda não tem uma conta?</Text>
-          </View>
-
-
-          <View style={styles.cadastroBotao}>
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.botaoClique}>
-          <Text style={styles.textoCliqueAqui}>Clique Aqui</Text>
         </TouchableOpacity>
 
-          </View>
-
-           
-          
+        <View style={styles.viewCadastro}>
+          <Text style={styles.textCad} onPress={()=>(navigation.navigate('Cadastro'))}>Nâo possui uma conta?</Text>
         </View>
-      
-
-      </KeyboardAvoidingView>
-
-
-
-      <View style={styles.AlturaElementosInput}>
-        
       </View>
-
-    </LinearGradient >
+    </View>
   );
 }
 
@@ -190,35 +160,39 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "#C7FFCC",
     alignItems: "center",
-    flexDirection: 'column',
-    paddingTop: '20%'
+    justifyContent: 'flex-start',
+    paddingTop: '20%',
+    backgroundColor: '#97D8AE'
+
 
   },
   containerInputs: {
-    width: '75%',
-    height: '44%',
-    borderWidth: 1,
-    borderRadius: 20,
+    width: '98%',
+    height: '60%',
+    borderWidth: 4,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     borderColor: "white",
     backgroundColor: 'white',
-    opacity: 0.71,
+    opacity: 0.8,
+    alignItems: "center",
+    justifyContent: 'flex-start',
+    padding: 10
 
   },
-  AlturaElementosInput: {
 
-    height: '33.33%',
-    
-  },
   inpt: {
-    width: '100%',
-    height: 55,
+    borderBottomWidth: 1,
+    width: '80%',
+    height: 35
   },
+
   inputLabel: {
-    width: "100%",
+
     height: 50,
     fontWeight: 400,
     fontSize: 20,
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     justifyContent: 'center',
     color: 'black',
     paddingLeft: 10,
@@ -226,17 +200,18 @@ const styles = StyleSheet.create({
 
   },
   botao: {
-    width: '80%',
-    height: '50%',
-    backgroundColor: '#78D1D2',
-    borderWidth: 2,
-    borderColor: '#589BAA',
-    // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: '60%',
+    height: 50,
+    backgroundColor: '#97D8AE',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 10,
 
   },
 
@@ -251,56 +226,26 @@ const styles = StyleSheet.create({
     color: 'white'
 
   },
-  icon: {
-    opacity: 0.71,
-    alignSelf: 'center'
-  },
-  VoltarCadastro: {
-    paddingTop: '20%',
+  
+ viewCadastro: {
+    justifyContent:'center',
+    alignItems:'center',
     width: '100%',
     height: '15%',
   },
-  textoVoltarCadastro: {
-    fontSize: 17,
-    fontWeight: 700,
-    color: 'black',
-    // textDecorationLine: 'underline'
-
-  },
-  textoCliqueAqui:{
-    fontSize: 17,
-    fontWeight: 700,
-    color: 'blue',
-  },
-  viewCadastro: {
-    marginTop: '30%',
-    width: '100%',
-    height: '35%', 
-    position: 'relative',
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    
-  },
-  cadastroText: {
-    width: '70%', 
-    height: '100%',
-    justifyContent: 'center', 
-  },
-  
-  cadastroBotao: {
-    width: '30%', 
-    height: '100%',
-    justifyContent: 'center', 
-    marginLeft: 7,
+  textCad:{
+    fontSize:18,
+    fontWeight:'700',
+    color:'#4292ff'
   },
   logo: {
-    height: 100,
-    marginBottom: 90,
+    height: '40%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    
+
   },
- 
-  
- 
+
+
+
 });
