@@ -8,14 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
-import { ScrollView } from 'react-native';
+
 import { Picker } from '@react-native-picker/picker';
 import { Dimensions } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { color } from 'react-native-reanimated';
 
-import Home from '../Home'
+
 
 
 
@@ -25,109 +26,98 @@ const telaComprimento = Dimensions.get('window').width;
 
 
 
-const slides =[
+const slides = [
     {
-      key:1,
-      render: <Nome />
+        key: 1,
+        render: <Nome />
     },
     {
-      key:2,
-      render: <Alergias />
+        key: 2,
+        render: <Alergias />
     },
     {
-      key:3,
-      render: <Doador />
+        key: 3,
+        render: <Doador />
     },
     {
-      key:4,
-      render: <Contatos />
+        key: 4,
+        render: <Contatos />
     },
     {
-      key:5,
-      render: <Endereco />
+        key: 5,
+        render: <Endereco />
     },
-   
-  ]
-  
-  
-  
-  function renderSlides({ item }){
-    return(item.render)
-  }
+
+]
 
 
 
-
-  
-  export  function Informacoes() {
-    
-    const navigation = useNavigation()
-  
-      return (
-        <AppIntroSlider
-          renderItem={renderSlides}
-          data={slides}
-          activeDotStyle={{
-            backgroundColor:'green',
-          }}
-          renderNextButton={()=>{
-            return (
-              <View style={styles.buttonCircle}>
-                <Icon
-                  name="arrow-forward-outline"
-                  color="rgba(255, 255, 255, .9)"
-                  size={25}
-                />
-              </View>
-            );
-          }}
-          showPrevButton={true}
-          renderPrevButton={()=>{
-            return (
-              <View style={styles.buttonCircle}>
-                <Icon
-                  name="arrow-back-outline"
-                  color="rgba(255, 255, 255, .9)"
-                  size={25}
-                />
-              </View>
-            );
-          }}
-          showDoneButton={true}
-          renderDoneButton={()=>{ return(
-            <View style={styles.buttonCircle}>
-              <Icon
-                name="md-checkmark"
-                color="rgba(255, 255, 255, .9)"
-                size={25}
-                
-              />
-            </View>
-          );
-          }
-        }
-        onDone={()=>(navigation.navigate('Home'))}
-         
-         />
-      );
-    }
-    
-  
-
-    
-
-const Stack = createStackNavigator();
-export default function StackInfo() {
-    
-  return (
-    <Stack.Navigator>
-      <Stack.Group >
-        <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
-       </Stack.Group>
-    </Stack.Navigator>
-  )
+function renderSlides({ item }) {
+    return (item.render)
 }
+
+
+
+
+
+export default function Informacoes() {
+
+    const navigation = useNavigation()
+
+    return (
+        <AppIntroSlider
+            renderItem={renderSlides}
+            data={slides}
+            activeDotStyle={{
+                backgroundColor: 'green',
+            }}
+            renderNextButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="arrow-forward-outline"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
+                        />
+                    </View>
+                );
+            }}
+            showPrevButton={true}
+            renderPrevButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="arrow-back-outline"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
+                        />
+                    </View>
+                );
+            }}
+            showDoneButton={true}
+            renderDoneButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="md-checkmark"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
+
+                        />
+                    </View>
+                );
+            }
+            }
+            onDone={() => (navigation.navigate('Home'))}
+
+        />
+    );
+}
+
+
+
+
+
 
 
 function Nome() {
@@ -136,267 +126,280 @@ function Nome() {
     const { inputIdade, setInputIdade } = useContext(ContextInfo)
     const { inputCpf, setInputCpf } = useContext(ContextInfo)
 
-        return (
-                        <View style={{flex:1, padding:20}} >
-                            <View style={styles.viwInfomativo}>
-                                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                            </View>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Nome"
-                                value={inputNome}
-                                onChangeText={setInputNome}
-                                returnKeyType="done"
+    return (
+        <View style={{ flex: 1, padding: 20 }} >
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Informe abaixo o seu</Text>
+            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Nome"
+                value={inputNome}
+                onChangeText={setInputNome}
+                returnKeyType="done"
 
-                            />
-                            <TextInput
-                            style={styles.input}
-                            placeholder="Idade"
-                            value={inputIdade}
-                            onChangeText={setInputIdade}
-                            returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Idade"
+                value={inputIdade}
+                onChangeText={setInputIdade}
+                returnKeyType="done"
 
-                            />
-                            <TextInput
-                            style={styles.input}
-                            placeholder="CPF"
-                            value={inputCpf}
-                            onChangeText={setInputCpf}
-                            returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="CPF"
+                value={inputCpf}
+                onChangeText={setInputCpf}
+                returnKeyType="done"
 
-                            />
-                        </View>
-                       
-                  
-                
-           
-        );
-    }
+            />
+        </View>
+
+
+
+
+    );
+}
 
 
 
 
 function Alergias() {
-    
-        const alergias = ['', 'Você possui alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
-        const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
-        return (
-           
-                    <View  style={{flex:1, padding:20}}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <View style={styles.inputAlergias}>
-                            <Picker
-                                mode="dropdown"
-                                selectedValue={alergiaSelecionado}
-                                onValueChange={(itemValue) =>
-                                    setAlergiaSelecionada(itemValue)
 
-                                }>
+    const alergias = ['', 'Não possuo alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
+    const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
+    return (
+
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Você possui alguma alergia?</Text>
+            </View>
+            <View style={styles.inputAlergias}>
+                <Picker
+                    mode="dropdown"
+                    selectedValue={alergiaSelecionado}
+                    onValueChange={(itemValue) =>
+                        setAlergiaSelecionada(itemValue)
+
+                    }>
 
 
-                                {alergias
-                                    .filter((value, index) => alergiaSelecionado === 0 ? value : index === 0 ? false : value)
-                                    .map((value, index) => (
-                                        <Picker.Item label={value} value={value} key={index} />
-                                    ))}
-                                {/* alergias.map(al => {
+                    {alergias
+                        .filter((value, index) => alergiaSelecionado === 0 ? value : index === 0 ? false : value)
+                        .map((value, index) => (
+                            <Picker.Item label={value} value={value} key={index} />
+                        ))}
+                    {/* alergias.map(al => {
                                         return <Picker.Item label={al} value={al} />
                                     }) */}
 
-                            </Picker>
-                        </View>
+                </Picker>
+            </View>
 
-                    </View>
-                    
-        );
-    }
+        </View>
+
+    );
+}
 
 
 
 function Doador() {
-    
-        const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
 
-        const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
+    const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
 
-        const [inputSangue, setInputSangue] = useState('option1');
-        const [inputOrgao, setInputOrgao] = useState('option3');
+    const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-        return (
-           
-                    <View style={{flex:1, padding:20}}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <View style={styles.inputDoador}>
-                            <Picker
-                                mode="dropdown"
-                                selectedValue={inputTiposanguineo}
-                                onValueChange={(itemValue) =>
-                                    setInputTiposanguineo(itemValue)
-                                }>
+    const [inputSangue, setInputSangue] = useState('option1');
+    const [inputOrgao, setInputOrgao] = useState('option3');
 
-                                {sangue
-                                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
-                                    .map((value, index) => (
-                                        <Picker.Item label={value} value={value} key={index} />
-                                    ))}
+    return (
 
-                            </Picker>
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Qual o seu tipo sanguíneo</Text>
+            </View>
+            <View style={styles.inputDoador}>
+                <Picker
+                    mode="dropdown"
+                    selectedValue={inputTiposanguineo}
+                    onValueChange={(itemValue) =>
+                        setInputTiposanguineo(itemValue)
+                    }>
+
+                    {sangue
+                        .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                        .map((value, index) => (
+                            <Picker.Item label={value} value={value} key={index} />
+                        ))}
+
+                </Picker>
+            </View>
+
+            {/* radioButton  doador sangue*/}
+
+            <View style={styles.tiposSangue}>
+                <View style={styles.radioGroup}>
+                    <View style={styles.radioButton}>
+                        <Text>Você é doador de sangue? </Text>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option1"
+                                    status={inputSangue === 'option1' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputSangue('option1')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText} >
+                                    Sim
+                                </Text>
                             </View>
 
-                        {/* radioButton  doador sangue*/}
 
-                        <View style={styles.tiposSangue}>
-                            <View style={styles.radioGroup}>
-                                <View style={styles.radioButton}>
-                                    <Text>Vôce é doador de sangue</Text>
-                                    <RadioButton.Android
-                                        value="option1"
-                                        status={inputSangue === 'option1' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option1')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton.Android
-                                        value="option2"
-                                        status={inputSangue === 'option2' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option2')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option2"
+                                    status={inputSangue === 'option2' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputSangue('option2')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText} >
+                                    Não
+                                </Text>
                             </View>
                         </View>
-
-                        {/* radioButton  doador orgãos*/}
-                        <View style={styles.tiposSangue}>
-                            <View style={styles.radioGroup}>
-                                <View style={styles.radioButton}>
-                                    <Text>Vôce é doador de orgãos</Text>
-                                    <RadioButton.Android
-                                        value="option3"
-                                        status={inputOrgao === 'option3' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option3')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton.Android
-                                        value="option4"
-                                        status={inputOrgao === 'option4' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option4')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-
 
                     </View>
-        );
-    }
+                </View>
+            </View>
+
+            {/* radioButton  doador orgãos*/}
+            <View style={styles.tiposSangue}>
+                <View style={styles.radioGroup}>
+                    <View style={styles.radioButton}>
+                        <Text>Vôce é doador de orgãos</Text>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option3"
+                                    status={inputOrgao === 'option3' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputOrgao('option3')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText}>
+                                    Sim
+                                </Text>
+                            </View>
+
+
+
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option4"
+                                    status={inputOrgao === 'option4' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputOrgao('option4')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText}>
+                                    Não
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </View>
+    );
+}
 
 
 
 function Contatos() {
-    
-        const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
-        const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
-        const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
-        return (
-           
-                    <View style={{flex:1, padding:20}}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="N° de Telefone"
-                            value={inputTelefone}
-                            onChangeText={setInputTelefone}
-                            returnKeyType="done"
 
-                        />
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="Contato Emergência"
-                            value={inputContatoEmergencia}
-                            onChangeText={setInputContatoEmergencia}
-                            returnKeyType="done"
+    const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
+    const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
+    const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
+    return (
 
-                        />
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="Telefone de Emergência"
-                            value={inputNtelefoneEmergencia}
-                            onChangeText={setNtelefoneEmergencia}
-                            returnKeyType="done"
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+            </View>
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="N° de Telefone"
+                value={inputTelefone}
+                onChangeText={setInputTelefone}
+                returnKeyType="done"
 
-                        />
-                    </View>
+            />
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="Contato Emergência"
+                value={inputContatoEmergencia}
+                onChangeText={setInputContatoEmergencia}
+                returnKeyType="done"
 
-        );
-    }
+            />
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="Telefone de Emergência"
+                value={inputNtelefoneEmergencia}
+                onChangeText={setNtelefoneEmergencia}
+                returnKeyType="done"
+
+            />
+        </View>
+
+    );
+}
 
 
 function Endereco() {
-   
-        const { inputNCep, setInputNcep } = useContext(ContextInfo)
-        const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
-        const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
-        return (
-            
-                    <View style={{flex:1, padding:20}}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="N°-CEP"
-                            value={inputNCep}
-                            onChangeText={setInputNcep}
-                            returnKeyType="done"
-                        />
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="Logradouro"
-                            value={inputLogradouro}
-                            onChangeText={setInputLogradouro}
-                            returnKeyType="done"
-                        />
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="Número"
-                            value={inputNumeroCasa}
-                            onChangeText={setNumeroCasa}
-                            returnKeyType="done"
-                        />
-                    </View>
-                   
-                    
-                
-           
-        );
-    }
+
+    const { inputNCep, setInputNcep } = useContext(ContextInfo)
+    const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
+    const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
+    return (
+
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+            </View>
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="N°-CEP"
+                value={inputNCep}
+                onChangeText={setInputNcep}
+                returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="Logradouro"
+                value={inputLogradouro}
+                onChangeText={setInputLogradouro}
+                returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="Número"
+                value={inputNumeroCasa}
+                onChangeText={setNumeroCasa}
+                returnKeyType="done"
+            />
+        </View>
+
+
+
+
+    );
+}
 
 
 
@@ -429,21 +432,21 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         padding: 20,
     },
 
-   
+
     viwInfomativo: {
         alignItems: 'center',
-        
+
     },
     txtInfomativo: {
         marginBottom: 70,
         fontSize: 30
     },
 
-    
+
     input: {
         position: 'relative',
         fontSize: 30,
@@ -458,8 +461,6 @@ const styles = StyleSheet.create({
 
     },
     inputDoador: {
-        borderColor: '#DC143C',
-        borderWidth: 1,
         gap: 2
     },
 
@@ -489,14 +490,23 @@ const styles = StyleSheet.create({
 
     radioButton: {
 
-
         alignItems: 'center',
+        width: '100%',
 
     },
+
     radioLabel: {
-        marginLeft: 8,
-        fontSize: 16,
-        color: '#333',
+        marginLeft: 15,
+        maxWidth: 70,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+
+    radioText:{
+        fontSize:18,
+        color: '#333'
     },
 
     input_Contato: {
@@ -513,7 +523,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         textAlign: 'center'
     },
-  
+
     buttonCircle: {
         width: 60,
         height: 60,
@@ -521,9 +531,9 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:-10
-        
-      },
+        marginTop: -10
+
+    },
 
 
 
