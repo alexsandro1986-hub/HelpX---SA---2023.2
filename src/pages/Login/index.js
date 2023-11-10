@@ -1,23 +1,20 @@
-import React, { useContext } from 'react';
-import { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
-import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../Home'
 import { StackTratamento } from '../Tratamento';
-import Informacoes from '../Informacoes';
 import StackAdmin from '../Admin'
 import Chat from '../Chat';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { IconButton } from 'react-native-paper';
 import Cadastro from '../Cadastro';
 import StackInfo from '../Informacoes';
-
+import axios from 'axios';
 
 
 
@@ -69,7 +66,18 @@ export function Login({ navigation }) {
 
   } = useContext(ContextInfo)
 
+  useEffect(() => {
+    listarTodosUsuarios();
+  }, [])
 
+  const listarTodosUsuarios = async () =>{
+    try {
+      const response = await axios.get('https://ordinary-saber-lyre.glitch.me/users') 
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const entrar = () => {
     vetorUser.map((user) => {
