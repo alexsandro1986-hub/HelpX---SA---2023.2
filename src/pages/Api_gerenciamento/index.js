@@ -10,6 +10,16 @@ const cadastro = async (emailusuario, senhausuario) => {
       console.log(error)
     }
   }
+
+  const login = async (emailusuario, senhausuario) => {
+  try {
+   const response = await axios.post('https://ordinary-saber-lyre.glitch.me/login', {emailusuario}) 
+      console.log(response.data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+login('handrai@gmail.com', 'avfd')
   
   const editandoUsuario = async(nome) => {
     let oi = {nomeusuario:  'Alana'}
