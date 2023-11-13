@@ -6,7 +6,6 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 
-
 const Stack = createStackNavigator();
 
 export default function Cadastro() {
