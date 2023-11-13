@@ -11,42 +11,55 @@ import { KeyboardAvoidingView } from 'react-native';
 
 export default function Cadastro() {
   const { inputEmail, setInputEmail } = useContext(ContextInfo)
-const { inputSenha, setInputSenha } = useContext(ContextInfo)
-const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
+  const { inputSenha, setInputSenha } = useContext(ContextInfo)
+  const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
   return (
 
     <View style={styles.body}>
       <View style={styles.logo}>
         <Image
-          source={require('../img/logoPreto.png')}
+          source={require('../img/logoHelpX.png')}
 
-          style={{ width: 500, height: 400 }}
+          style={{ width: 600 }}
           resizeMode="contain"
         />
 
       </View>
       <View style={styles.container}>
+        <View style={styles.viewInputs}>
 
-        <TextInput
-          style={[styles.input, { marginBottom: 20 }]}
-          placeholder="Email"
-          onChangeText={setInputEmail}
-          value={inputEmail}
-        />
-        <TextInput
-          style={[styles.input, { marginBottom: 20 }]}
-          placeholder="Senha"
-          onChangeText={setInputSenha}
-          value={inputSenha}
+          <Text style={styles.inputLabel}>E-mail</Text>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="Email"
+            onChangeText={setInputEmail}
+            value={inputEmail}
+          />
+        </View>
 
-        />
-        <TextInput
-          style={[styles.input, { marginBottom: 20 }]}
-          placeholder="ConfirmarSenha"
-          secureTextEntry={true}
-          onChangeText={setInputConfirmaSenha}
-          value={inputConfirmaSenha}
-        />
+        <View style={styles.viewInputs}>
+
+          <Text style={styles.inputLabel}> Senha</Text>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="Senha"
+            onChangeText={setInputSenha}
+            value={inputSenha}
+
+          />
+        </View>
+        <View style={styles.viewInputs}>
+
+          <Text style={styles.inputLabel}>Confirmar Senha</Text>
+          <TextInput
+            style={[styles.input, { marginBottom: 20 }]}
+            placeholder="ConfirmarSenha"
+            secureTextEntry={true}
+            onChangeText={setInputConfirmaSenha}
+            value={inputConfirmaSenha}
+          />
+        </View>
+
         <TouchableOpacity style={styles.botao} onPress={() => {
           console.log('oi', inputEmail)
         }}>
@@ -61,136 +74,6 @@ const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
 
   );
 }
-
-
-
-
-
-function Email(a) {
-  return function ({ navigation }) {
-
-    return (
-
-      <View style={styles.body}>
-        <View style={styles.logo}>
-          <Image
-            source={require('../img/logoPreto.png')}
-
-            style={{ width: 500, height: 400 }}
-            resizeMode="contain"
-          />
-
-        </View>
-        <View style={styles.container}>
-
-          <TextInput
-            style={[styles.input, { marginBottom: 20 }]}
-            placeholder="Email"
-            onChangeText={setInputEmail}
-            value={inputEmail}
-          />
-          <TextInput
-            style={[styles.input, { marginBottom: 20 }]}
-            placeholder="Senha"
-            //secureTextEntry={true}
-            onChangeText={setInputSenha}
-            value={inputSenha}
-
-          />
-          <TouchableOpacity style={styles.botao} onPress={() => {
-            console.log('oi', inputEmail)
-            navigation.navigate(a)
-          }}>
-
-            <Text style={styles.textoBotao}>OK</Text>
-
-
-          </TouchableOpacity>
-        </View>
-
-      </View>
-    );
-  }
-}
-
-function Senha(a) {
-
-  return function ({ navigation }) {
-
-    return (
-
-      <KeyboardAvoidingView
-        style={styles.body}
-      >
-        <View style={styles.logo}>
-          <Image
-            source={require('../img/logoPreto.png')}
-
-            style={{ width: 500, height: 400 }}
-            resizeMode="contain"
-          />
-
-        </View>
-        <View style={styles.container}>
-          <TextInput
-            style={[styles.input, { marginBottom: 20 }]}
-            placeholder="Senha"
-            //secureTextEntry={true}
-            onChangeText={setInputSenha}
-            value={inputSenha}
-
-          />
-          <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
-
-            <Text style={styles.textoBotao}>OK</Text>
-
-
-          </TouchableOpacity>
-        </View>
-
-      </KeyboardAvoidingView>
-    );
-  }
-}
-
-function ConfirmarSenha(a) {
-  return function ({ navigation }) {
-
-    return (
-      <View style={styles.body}>
-        <View style={styles.logo}>
-          <Image
-            source={require('../img/logoPreto.png')}
-
-            style={{ width: 500, height: 400 }}
-            resizeMode="contain"
-          />
-
-        </View>
-        <View style={styles.container}>
-          <TextInput
-            style={[styles.input, { marginBottom: 20 }]}
-            placeholder="ConfirmarSenha"
-            secureTextEntry={true}
-            onChangeText={setInputConfirmaSenha}
-            value={inputConfirmaSenha}
-          />
-          <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(a)}>
-
-            <Text style={styles.textoBotao}>Cadastrar</Text>
-
-
-          </TouchableOpacity>
-        </View>
-
-      </View>
-    );
-  }
-}
-
-
-
-
 
 const styles = StyleSheet.create({
 
@@ -211,11 +94,12 @@ const styles = StyleSheet.create({
 
   container: {
     width: '90%',
-    height: '50%',
+    height: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e0f3e9',
-    borderRadius: 40,
+    backgroundColor: '#fff',
+    opacity: 0.8,
+    borderRadius: 20,
   },
   input: {
 
@@ -233,6 +117,31 @@ const styles = StyleSheet.create({
 
   },
 
+  viewInputs:{
+    width:'100%',
+    height:'25%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
+  inpt: {
+    borderBottomWidth: 1,
+    width: '80%',
+    height: 35
+  },
+
+  inputLabel: {
+
+    height: 50,
+    fontWeight: 400,
+    fontSize: 20,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    color: 'black',
+    paddingLeft: 10,
+    paddingTop: 18,
+
+  },
   botao: {
     backgroundColor: '#78D1D2',
     width: 180,
