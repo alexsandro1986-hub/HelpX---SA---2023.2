@@ -5,14 +5,28 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
+import axios from 'axios';
+import { AxiosInstance } from 'axios';
 
+
+const cadastro = async (email_c, senha_c) => {
+
+  try {
+    const response = await axios.post('https://ordinary-saber-lyre.glitch.me/cadastro', {email: email_c, senha: senha_c}) 
+      console.log(response.data)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 
 export default function Cadastro() {
-  const { inputEmail, setInputEmail } = useContext(ContextInfo)
+const { inputEmail, setInputEmail } = useContext(ContextInfo)
 const { inputSenha, setInputSenha } = useContext(ContextInfo)
 const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
+
+
   return (
 
     <View style={styles.body}>
@@ -48,7 +62,8 @@ const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
           value={inputConfirmaSenha}
         />
         <TouchableOpacity style={styles.botao} onPress={() => {
-          console.log('oi', inputEmail)
+          console.log('oi', inputEmail, inputSenha)
+          cadastro(inputEmail,inputSenha)
         }}>
 
           <Text style={styles.textoBotao}>OK</Text>

@@ -2,18 +2,19 @@ import axios from 'axios';
 
 //Fazer o export
 let baseURL = 'https://ordinary-saber-lyre.glitch.me'
-const cadastro = async (emailusuario, senhausuario) => {
-    try {
-      response = await axios.post('https://ordinary-saber-lyre.glitch.me/users', {emailusuario, senhausuario}) 
-        console.log(response.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
-  const login = async (emailusuario, senhausuario) => {
+const cadastro = async (email, senha) => {
   try {
-   const response = await axios.post('https://ordinary-saber-lyre.glitch.me/login', {emailusuario}) 
+    const response = await axios.post('https://ordinary-saber-lyre.glitch.me/cadastro', {email, senha}) 
+      console.log(response.data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+  const login = async (email_c, senha_c) => {
+  try {
+   const response = await axios.post('https://ordinary-saber-lyre.glitch.me/login', {email}) 
       console.log(response.data)
   } catch (error) {
     console.log(error)
