@@ -57,7 +57,7 @@ export default function StackDeAcesso() {
 
 
 
-export function Login({ navigation }) {
+export function Login() {
   const [emailLogin, setEmailLogin] = useState('');
   const [senhaLogin, setSenhaLogin] = useState('');
   const { flagAdm, setFlagAdm, senhaAdm, loginAdm,
@@ -65,6 +65,8 @@ export function Login({ navigation }) {
     inputEmail, vetorUser
 
   } = useContext(ContextInfo)
+  const navigation = useNavigation()
+
 
   useEffect(() => {
     listarTodosUsuarios();
