@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import StackDeAcesso from '../Login';
+
 
 const Stack = createStackNavigator();
 

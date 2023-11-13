@@ -23,7 +23,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputTiposanguineo, setInputTiposanguineo] = useState('')
     const [inputSangue, setInputSangue] = useState('')
     const [inputOrgao, setInputOrgao] = useState('')
-    
+    const [inputCpf, setInputCpf] = useState('')
     //Cadastro
 
     //ADMIN
@@ -57,13 +57,13 @@ export const ContextInfoProvider = ({ children }) => {
           cep: "12345-678",
           logradouro: "Rua das Flores",
           nCasa: "123",
-          email: "joao@example.com",
-          senha: "senha123",
+          email: "joao.com",
+          senha: "123",
           doadorOrgao: "Não"
         },
         {
           id: 2,
-          nome: "Maria Santos",
+          nome: "Andrey",
           idade: 25,
           alergia: "Amendoim",
           tipoSanguineo: "B-",
@@ -74,8 +74,8 @@ export const ContextInfoProvider = ({ children }) => {
           cep: "54321-876",
           logradouro: "Avenida Principal",
           nCasa: "567",
-          email: "maria@example.com",
-          senha: "senha456",
+          email: "andrey",
+          senha: "123",
           doadorOrgao: "Não"
         },
         {
@@ -253,6 +253,7 @@ export const ContextInfoProvider = ({ children }) => {
                 //dadosPessoais
                 inputNome, setInputNome,
                 inputIdade, setInputIdade,
+                inputCpf, setInputCpf,
                 inputTelefone, setInputTelefone,
                 alergiaSelecionado, setAlergiaSelecionada,
                 inputLogradouro, setInputLogradouro,

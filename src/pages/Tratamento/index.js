@@ -272,7 +272,7 @@ export function AdicionarPost() {
                         value={inputDoenca}
                         onChangeText={setInputDoenca}
                         style={styles.input}
-                        placeholder="Enfermidade"
+                        placeholder="Enfermidade"   
 
                     />
                 </View>

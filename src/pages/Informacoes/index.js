@@ -1,490 +1,406 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
-import { ScrollView } from 'react-native';
+
 import { Picker } from '@react-native-picker/picker';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { Dimensions } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { color } from 'react-native-reanimated';
 
 
 
 
 
-const Stack = createStackNavigator();
-const Header = () => (
-    <LinearGradient colors={['#CDE4AD', '#97D8AE', '#78D1D2']}>
-        <View style={styles.header}>
-            <View style={styles.containerinfromacoes} >
-                <Text style={styles.textoInforma}>INFORMAÇÕES</Text>
-            </View>
-        </View>
-    </LinearGradient>
-);
+
+const telaAltura = Dimensions.get('window').height;
+const telaComprimento = Dimensions.get('window').width;
+
+
+
+const slides = [
+    {
+        key: 1,
+        render: <Nome />
+    },
+    {
+        key: 2,
+        render: <Alergias />
+    },
+    {
+        key: 3,
+        render: <Doador />
+    },
+    {
+        key: 4,
+        render: <Contatos />
+    },
+    {
+        key: 5,
+        render: <Endereco />
+    },
+
+]
+
+
+
+function renderSlides({ item }) {
+    return (item.render)
+}
+
+
+
+
 
 export default function Informacoes() {
 
-
-
-    return (
-        <><Header />
-
-            <Stack.Navigator >
-
-                <Stack.Group >
-
-                    <Stack.Screen name='Nome' component={Nome('Idade')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Idade' component={Idade('Alergias')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Alergias' component={Alergias('Doador')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Doador' component={Doador('Contatos')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Contatos' component={Contatos('Endereco')} options={{ headerShown: false }} />
-                    <Stack.Screen name='Endereco' component={Endereco('Home')} options={{ headerShown: false }} />
-
-                </Stack.Group>
-
-            </Stack.Navigator></>
-
-    );
-}
-
-function MyBackButton() {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     return (
-
-        <TouchableOpacity onPress={() => navigation.goBack()} >
-            <Text >
-
-                <Icon
-                    name="arrow-left"
-                    size={35}
-                    color="black"
-
-                />
-            </Text>
-        </TouchableOpacity>
-    );
-}
-
-function Nome(a) {
-
-
-    return function ({ navigation }) {
-        const { inputNome, setInputNome } = useContext(ContextInfo)
-
-        return (
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <View style={styles.caixa}>
-                    <View style={styles.body}>
-                        <View style={styles.teste}>
-                            <View style={styles.viwInfomativo}>
-                                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                            </View>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Nome"
-                                value={inputNome}
-                                onChangeText={setInputNome}
-                                returnKeyType="done"
-
-                            />
-                        </View>
-                        <View style={styles.botao}>
-                            <TouchableOpacity onPress={() => navigation.navigate(a)
-                            }>
-
-                                <Text style={styles.bto_Direita}>
-
-                                    <Icon
-                                        name="arrow-right"
-                                        size={35}
-                                        color="black"
-
-                                    />
-
-                                </Text>
-
-
-
-                            </TouchableOpacity >
-                            <TouchableOpacity  >
-                                <Text style={styles.esquerda_bto}>
-                                    <Icon
-                                        name="arrow-left"
-                                        size={35}
-                                        color="black"
-
-                                    />
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+        <AppIntroSlider
+            renderItem={renderSlides}
+            data={slides}
+            activeDotStyle={{
+                backgroundColor: 'green',
+            }}
+            renderNextButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="arrow-forward-outline"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
+                        />
                     </View>
-                </View>
-            </TouchableWithoutFeedback>
-        );
-    }
-}
-
-function Idade(a) {
-    return function ({ navigation }) {
-        const { inputIdade, setInputIdade } = useContext(ContextInfo)
-        return (
-            <View style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Idade"
-                            value={inputIdade}
-                            onChangeText={setInputIdade}
-                            returnKeyType="done"
+                );
+            }}
+            showPrevButton={true}
+            renderPrevButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="arrow-back-outline"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
+                        />
+                    </View>
+                );
+            }}
+            showDoneButton={true}
+            renderDoneButton={() => {
+                return (
+                    <View style={styles.buttonCircle}>
+                        <Icon
+                            name="md-checkmark"
+                            color="rgba(255, 255, 255, .9)"
+                            size={25}
 
                         />
                     </View>
-                    <View style={styles.botao}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
+                );
+            }
+            }
+            onDone={() => (navigation.navigate('Home'))}
 
-                            <Text style={styles.bto_Direita}>
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-
-
-
-                        </TouchableOpacity>
-                        <View style={styles.esquerda_bto}><MyBackButton /></View>
-
-                    </View>
-                </View>
-            </View>
-        );
-    }
+        />
+    );
 }
 
-function Alergias(a) {
-    return function ({ navigation }) {
-        const alergias = ['', 'Você possui alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
-        const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
-        return (
-            <View style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <View style={styles.inputAlergias}>
-                            <Picker
-                                mode="dropdown"
-                                selectedValue={alergiaSelecionado}
-                                onValueChange={(itemValue) =>
-                                    setAlergiaSelecionada(itemValue)
-
-                                }>
 
 
-                                {alergias
-                                    .filter((value, index) => alergiaSelecionado === 0 ? value : index === 0 ? false : value)
-                                    .map((value, index) => (
-                                        <Picker.Item label={value} value={value} key={index} />
-                                    ))}
-                                {/* alergias.map(al => {
+
+
+
+
+function Nome() {
+
+    const { inputNome, setInputNome } = useContext(ContextInfo)
+    const { inputIdade, setInputIdade } = useContext(ContextInfo)
+    const { inputCpf, setInputCpf } = useContext(ContextInfo)
+
+    return (
+        <View style={{ flex: 1, padding: 20 }} >
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Informe abaixo o seu</Text>
+            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Nome"
+                value={inputNome}
+                onChangeText={setInputNome}
+                returnKeyType="done"
+
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Idade"
+                value={inputIdade}
+                onChangeText={setInputIdade}
+                returnKeyType="done"
+
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="CPF"
+                value={inputCpf}
+                onChangeText={setInputCpf}
+                returnKeyType="done"
+
+            />
+        </View>
+
+
+
+
+    );
+}
+
+
+
+
+function Alergias() {
+
+    const alergias = ['', 'Não possuo alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
+    const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
+    return (
+
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Você possui alguma alergia?</Text>
+            </View>
+            <View style={styles.inputAlergias}>
+                <Picker
+                    mode="dropdown"
+                    selectedValue={alergiaSelecionado}
+                    onValueChange={(itemValue) =>
+                        setAlergiaSelecionada(itemValue)
+
+                    }>
+
+
+                    {alergias
+                        .filter((value, index) => alergiaSelecionado === 0 ? value : index === 0 ? false : value)
+                        .map((value, index) => (
+                            <Picker.Item label={value} value={value} key={index} />
+                        ))}
+                    {/* alergias.map(al => {
                                         return <Picker.Item label={al} value={al} />
                                     }) */}
 
-                            </Picker>
-                        </View>
+                </Picker>
+            </View>
 
-                    </View>
-                    <View style={styles.botao}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
+        </View>
 
-                            <Text style={styles.bto_Direita}>
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-                        </TouchableOpacity>
-                        <View style={styles.esquerda_bto}><MyBackButton /></View>
-
-                    </View>
-                </View></View>
-        );
-    }
+    );
 }
 
 
-function Doador(a) {
-    return function ({ navigation }) {
-        const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
 
-        const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
+function Doador() {
 
-        const [inputSangue, setInputSangue] = useState('option1');
-        const [inputOrgao, setInputOrgao] = useState('option3');
+    const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
 
-        return (
-            <ScrollView style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <View style={styles.inputDoador}>
-                            <Picker
-                                mode="dropdown"
-                                selectedValue={inputTiposanguineo}
-                                onValueChange={(itemValue) =>
-                                    setInputTiposanguineo(itemValue)
-                                }>
+    const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-                                {sangue
-                                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
-                                    .map((value, index) => (
-                                        <Picker.Item label={value} value={value} key={index} />
-                                    ))}
+    const [inputSangue, setInputSangue] = useState('option1');
+    const [inputOrgao, setInputOrgao] = useState('option3');
 
-                            </Picker></View>
+    return (
 
-                        {/* radioButton  doador sangue*/}
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Qual o seu tipo sanguíneo</Text>
+            </View>
+            <View style={styles.inputDoador}>
+                <Picker
+                    mode="dropdown"
+                    selectedValue={inputTiposanguineo}
+                    onValueChange={(itemValue) =>
+                        setInputTiposanguineo(itemValue)
+                    }>
 
-                        <View style={styles.tiposSangue}>
-                            <View style={styles.radioGroup}>
-                                <View style={styles.radioButton}>
-                                    <Text>Vôce é doador de sangue</Text>
-                                    <RadioButton.Android
-                                        value="option1"
-                                        status={inputSangue === 'option1' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option1')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton.Android
-                                        value="option2"
-                                        status={inputSangue === 'option2' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option2')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
+                    {sangue
+                        .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                        .map((value, index) => (
+                            <Picker.Item label={value} value={value} key={index} />
+                        ))}
+
+                </Picker>
+            </View>
+
+            {/* radioButton  doador sangue*/}
+
+            <View style={styles.tiposSangue}>
+                <View style={styles.radioGroup}>
+                    <View style={styles.radioButton}>
+                        <Text>Você é doador de sangue? </Text>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option1"
+                                    status={inputSangue === 'option1' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputSangue('option1')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText} >
+                                    Sim
+                                </Text>
+                            </View>
+
+
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option2"
+                                    status={inputSangue === 'option2' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputSangue('option2')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText} >
+                                    Não
+                                </Text>
                             </View>
                         </View>
 
-                        {/* radioButton  doador orgãos*/}
-                        <View style={styles.tiposSangue}>
-                            <View style={styles.radioGroup}>
-                                <View style={styles.radioButton}>
-                                    <Text>Vôce é doador de orgãos</Text>
-                                    <RadioButton.Android
-                                        value="option3"
-                                        status={inputOrgao === 'option3' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option3')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={styles.radioButton}>
-                                    <RadioButton.Android
-                                        value="option4"
-                                        status={inputOrgao === 'option4' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option4')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={styles.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-
-
-                    </View>
-
-
-
-
-
-                    <View style={styles.botaoDoador}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
-
-
-                            <Text style={styles.bto_DireitaDoador}>
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-                        </TouchableOpacity>
-                        <View style={styles.bto_EsquerdaDoador}><MyBackButton /></View>
-
-                    </View>
-                </View>
-            </ScrollView >
-        );
-    }
-}
-
-
-function Contatos(a) {
-    return function ({ navigation }) {
-        const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
-        const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
-        const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
-        return (
-            <View style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="N° de Telefone"
-                            value={inputTelefone}
-                            onChangeText={setInputTelefone}
-                            returnKeyType="done"
-
-                        />
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="Contato Emergência"
-                            value={inputContatoEmergencia}
-                            onChangeText={setInputContatoEmergencia}
-                            returnKeyType="done"
-
-                        />
-                        <TextInput
-                            style={styles.input_Contato}
-                            placeholder="Telefone de Emergência"
-                            value={inputNtelefoneEmergencia}
-                            onChangeText={setNtelefoneEmergencia}
-                            returnKeyType="done"
-
-                        />
-                    </View>
-
-                    <View style={styles.botao}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
-
-                            <Text style={styles.direita_btoContato}>
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.goBack('Alergias')} >
-
-                            <Text style={styles.esquerda_btoContato} >
-                                <Icon
-                                    name="arrow-left"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-
-                        </TouchableOpacity>
-                    </View>
-                </View></View>
-        );
-    }
-}
-
-
-function Endereco(a) {
-    return function ({ navigation }) {
-        const { inputNCep, setInputNcep } = useContext(ContextInfo)
-        const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
-        const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
-        return (
-            <View style={styles.caixa}>
-                <View style={styles.body}>
-                    <View style={styles.teste}>
-                        <View style={styles.viwInfomativo}>
-                            <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
-                        </View>
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="N°-CEP"
-                            value={inputNCep}
-                            onChangeText={setInputNcep}
-                            returnKeyType="done"
-                        />
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="Logradouro"
-                            value={inputLogradouro}
-                            onChangeText={setInputLogradouro}
-                            returnKeyType="done"
-                        />
-                        <TextInput
-                            style={styles.input_endereco}
-                            placeholder="Número"
-                            value={inputNumeroCasa}
-                            onChangeText={setNumeroCasa}
-                            returnKeyType="done"
-                        />
-                    </View>
-                    <View style={styles.botaoEndereco}>
-                        <TouchableOpacity onPress={() => navigation.navigate(a)}>
-
-                            <Text style={styles.bto_Direita_Endereco}>
-                                <Icon
-                                    name="arrow-right"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.goBack()} >
-                            <Text style={styles.bto_esquerda_Endereco}>
-                                <Icon
-                                    name="arrow-left"
-                                    size={35}
-                                    color="black"
-
-                                />
-                            </Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
-        );
-    }
+
+            {/* radioButton  doador orgãos*/}
+            <View style={styles.tiposSangue}>
+                <View style={styles.radioGroup}>
+                    <View style={styles.radioButton}>
+                        <Text>Vôce é doador de orgãos</Text>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option3"
+                                    status={inputOrgao === 'option3' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputOrgao('option3')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText}>
+                                    Sim
+                                </Text>
+                            </View>
+
+
+
+                            <View style={styles.radioLabel}>
+                                <RadioButton.Android
+                                    value="option4"
+                                    status={inputOrgao === 'option4' ?
+                                        'checked' : 'unchecked'}
+                                    onPress={() => setInputOrgao('option4')}
+                                    color="#007BFF"
+                                />
+                                <Text style={styles.radioText}>
+                                    Não
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </View>
+    );
 }
+
+
+
+function Contatos() {
+
+    const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
+    const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
+    const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
+    return (
+
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+            </View>
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="N° de Telefone"
+                value={inputTelefone}
+                onChangeText={setInputTelefone}
+                returnKeyType="done"
+
+            />
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="Contato Emergência"
+                value={inputContatoEmergencia}
+                onChangeText={setInputContatoEmergencia}
+                returnKeyType="done"
+
+            />
+            <TextInput
+                style={styles.input_Contato}
+                placeholder="Telefone de Emergência"
+                value={inputNtelefoneEmergencia}
+                onChangeText={setNtelefoneEmergencia}
+                returnKeyType="done"
+
+            />
+        </View>
+
+    );
+}
+
+
+function Endereco() {
+
+    const { inputNCep, setInputNcep } = useContext(ContextInfo)
+    const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
+    const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
+    return (
+
+        <View style={{ flex: 1, padding: 20 }}>
+            <View style={styles.viwInfomativo}>
+                <Text style={styles.txtInfomativo}>Pedindo Informações</Text>
+            </View>
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="N°-CEP"
+                value={inputNCep}
+                onChangeText={setInputNcep}
+                returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="Logradouro"
+                value={inputLogradouro}
+                onChangeText={setInputLogradouro}
+                returnKeyType="done"
+            />
+            <TextInput
+                style={styles.input_endereco}
+                placeholder="Número"
+                value={inputNumeroCasa}
+                onChangeText={setNumeroCasa}
+                returnKeyType="done"
+            />
+        </View>
+
+
+
+
+    );
+}
+
 
 
 
@@ -492,17 +408,14 @@ const Tab = createBottomTabNavigator();
 
 
 const styles = StyleSheet.create({
-    // width: 219px;
-    // height: 55px;
-    // left: 0px;
-    // top: 83px;
+
     header: {
         height: 250,
 
 
 
     },
-    containerinfromacoes: {
+    container: {
         flex: 1,
         alignItems: "center",
 
@@ -514,68 +427,26 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
 
-
-
-    caixa: {
-        backgroundColor: "#C7FFCC",
-        
-    },
-
-    // /* Rectangle 19 */
-
-
-    // width: 219px;
-    // height: 266px;
-    // left: 0px;
-    // top: 146px;
-
-    // background: rgba(255, 255, 255, 0.71);
-    // box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
-    // border-radius: 15px 15px 0px 0px;
     body: {
-        position: 'relative',
-        backgroundColor: '#ffffff',
-        width: 390,
-        height: 850,
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
-        borderRadius: 25,
+        justifyContent: 'center',
         padding: 20,
         marginLeft: 12,
     },
 
-    // /* Pedindo informações */
 
-    // position: absolute;
-    // width: 219px;
-    // height: 40px;
-    // left: 0px;
-    // top: 146px;
-
-    // font-family: 'Inter';
-    // font-style: normal;
-    // font-weight: 400;
-    // font-size: 13px;
-    // line-height: 16px;
-    // display: flex;
-    // align-items: center;
-    // text-align: center;
     viwInfomativo: {
         alignItems: 'center',
+
     },
     txtInfomativo: {
         marginBottom: 70,
         fontSize: 30
     },
 
-    // /* Line 3 */
-
-    // position: absolute;
-    // width: 174px;
-    // height: 0px;
-    // left: 22px;
-    // top: 236px;
-    // border: 1px solid #000000;
-    // color: #000000;
 
     input: {
         position: 'relative',
@@ -591,8 +462,6 @@ const styles = StyleSheet.create({
 
     },
     inputDoador: {
-        borderColor: '#DC143C',
-        borderWidth: 1,
         gap: 2
     },
 
@@ -622,14 +491,23 @@ const styles = StyleSheet.create({
 
     radioButton: {
 
-
         alignItems: 'center',
+        width: '100%',
 
     },
+
     radioLabel: {
-        marginLeft: 8,
-        fontSize: 16,
-        color: '#333',
+        marginLeft: 15,
+        maxWidth: 70,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+
+    radioText:{
+        fontSize:18,
+        color: '#333'
     },
 
     input_Contato: {
@@ -646,84 +524,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         textAlign: 'center'
     },
-    botao: {
-        gap: 25,
-        padding: 45,
-        display: 'flex'
-    },
-    // /* fluent:arrow-left-12-filled */
 
-    // position: absolute;
-    // width: 25px;
-    // height: 25px;
-    // left: 214px;
-    // top: 396px;
+    buttonCircle: {
+        width: 60,
+        height: 60,
+        backgroundColor: 'rgba(0, 0, 0, .2)',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: -10
 
-    // transform: rotate(-180deg);
-    botaoDoador: {
-        left: 40,
-        top: 25
-    },
-
-    bto_Direita: {
-        position: 'relative',
-        display: 'flex',
-        marginBottom: 56,
-        left: 155,
-
-
-    },
-    bto_DireitaDoador: {
-        position: 'relative',
-        display: 'flex',
-        left: 115,
-
-    },
-    bto_EsquerdaDoador: {
-        position: 'relative',
-        display: 'flex',
-        bottom: 35,
-        right: 195
-    },
-
-    esquerda_btoContato: {
-        position: 'relative',
-        display: 'flex',
-        bottom: 30,
-        width: 35
-    },
-    direita_btoContato: {
-        position: 'relative',
-        display: 'flex',
-        marginLeft: 290,
-        top: 30,
-        width: 35
-    },
-
-    botaoEndereco: {
-        position: 'relative',
-        display: 'flex',
-        padding: 45
-
-    },
-    bto_Direita_Endereco: {
-        position: 'relative',
-        display: 'flex',
-        marginLeft: 290,
-        width: 35
-
-    },
-    bto_esquerda_Endereco: {
-        position: 'relative',
-        display: 'flex',
-        bottom: 35,
-        width: 35
-
-
-    },
-    esquerda_bto: {
-        right: 155,
-        bottom: 118
     },
 
 

@@ -15,6 +15,8 @@ import StackAdmin from '../Admin'
 import Chat from '../Chat';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { IconButton } from 'react-native-paper';
+import Cadastro from '../Cadastro';
+import StackInfo from '../Informacoes';
 
 
 
@@ -41,32 +43,10 @@ export default function StackDeAcesso() {
         (<>
    
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} options={{
-                    title: 'Home',
-                    headerStyle: {
-                        backgroundColor: '#97D8AE',
-                        borderColor: '#97D8AE',
-                        borderWidth: 2,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: '500',
-                        fontSize: 30,
-                    },
-                    headerTitleAlign: "center",
-                    headerRight: () => (
-                        <IconButton
-                          icon='door-open'
-                          size={34}
-                          color='#ffffff'
-                          onPress={() =>logout() }
-                        />
-                      )
-                }}/>
-        <Stack.Screen name='Informacoes' component={Informacoes} options={{ headerShown: false }} />
+        <Stack.Screen name='Informacoes' component={StackInfo} options={{ headerShown: false }} />
+        <Stack.Screen name='Home' component={Home}  options={{ headerShown: false }} />
+        <Stack.Screen name='Cadastro' component={Cadastro}  options={{ headerShown: false }} />
+        
         <Stack.Screen name='StackTratamento' component={StackTratamento} options={{ headerShown: false }} />
         <Stack.Screen name='Chat' component={Chat} />
     
@@ -85,22 +65,28 @@ export function Login({ navigation }) {
   const [senhaLogin, setSenhaLogin] = useState('');
   const {flagAdm, setFlagAdm, senhaAdm , loginAdm,
     inputSenha,
-    inputEmail,
+    inputEmail, vetorUser
   
   } = useContext(ContextInfo)
 
 
 
   const entrar = () => {
-    if (emailLogin == loginAdm && senhaLogin == senhaAdm){
-      setFlagAdm(!flagAdm)
-    } else if (emailLogin == inputEmail && senhaLogin == inputSenha) {
-      navigation.navigate('Informacoes')
-    } else {
-      navigation.navigate('Cadastro')
-    }
+    vetorUser.map((user) => {
+      
+      switch (true){
+        case emailLogin == loginAdm && senhaLogin == senhaAdm:
+          setFlagAdm(!flagAdm)
+          break;
+        case emailLogin == user.email && senhaLogin == user.senha:
+          navigation.navigate('Home')
+          break;
+        case emailLogin == inputEmail && senhaLogin == inputSenha:
+          navigation.navigate('Informacoes')
+          break;
+      }
+  })
 
-    // navigation.navigate('Chat', { name: name })
   }
 
   return (
@@ -284,7 +270,7 @@ const styles = StyleSheet.create({
   textoCliqueAqui:{
     fontSize: 17,
     fontWeight: 700,
-    color: 'red',
+    color: 'blue',
   },
   viewCadastro: {
     marginTop: '30%',
