@@ -171,8 +171,32 @@ function Nome() {
 
 
 function Alergias() {
+    const alergias = [
+        '',
+        "Não possuo alergia",
+        "Rinite alérgica",
+        "Asma alérgica",
+        "Alimentos",
+        "Picadas de insetos",
+        "Atópica",
+        "Medicamentos",
+        "Produtos químicos",
+        "Urticária",
+        "Poeira doméstica",
+        "Animais de estimação",
+        "Látex",
+        "Veneno de abelhas e vespas",
+        "Metais",
+        "Plantas",
+        "Fungos",
+        "Produtos de beleza",
+        "Insetos de jardim",
+        "Látex de frutas",
+        "Produtos de limpeza"
+    ]
 
-    const alergias = ['', 'Não possuo alergia', 'Latex', 'Polem', 'Alimentos', 'Medicamentos', 'Poeira', 'Mofos', 'Pelos de Animais', 'Picada de Insetos', 'Iodo']
+
+
     const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
     return (
 
@@ -211,6 +235,34 @@ function Comorbidade() {
     const { inputComorbidade, setInputComorbidade } = useContext(ContextInfo)
     const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
     const [radiusButton, setRadiusButton] = useState(false);
+
+    const comorbidades = [
+        '',
+        "Hipertensão arterial",
+        "Diabetes mellitus",
+        "Obesidade",
+        "Doença cardiovascular",
+        "Doença pulmonar obstrutiva crônica (DPOC)",
+        "Doença renal crônica",
+        "Câncer",
+        "Asma",
+        "Artrite reumatoide",
+        "Depressão",
+        "Doença de Alzheimer",
+        "Doença de Parkinson",
+        "HIV/AIDS",
+        "Doenças autoimunes",
+        "Insuficiência cardíaca",
+        "Doenças hepáticas",
+        "Epilepsia",
+        "Doenças neurológicas",
+        "Doenças gastrointestinais",
+        "Transtornos psiquiátricos"
+    ]
+
+
+
+    const { comorbidadeSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
     return (
         <View style={{ flex: 1, padding: 20 }} >
             <View style={styles.viwInfomativo}>
@@ -253,30 +305,44 @@ function Comorbidade() {
                 </View>
             </View>
 
-            {radiusButton&&(
-                   <View>
-                   <TextInput
-                       style={styles.input}
-                       placeholder="Doença"
-                       value={inputComorbidade}
-                       onChangeText={setInputComorbidade}
-                       returnKeyType="done"
-                   />
-                   <TextInput
-                       style={styles.input}
-                       placeholder="Remédio"
-                       value={inputMedicamentoComor}
-                       onChangeText={setInputMedicamentoComor}
-                       returnKeyType="done"
-                   />
-               </View>
-              
-          
+            {radiusButton && (
+                <View>
+                    <View style={styles.inputAlergias}>
+                        <Picker
+                            mode="dropdown"
+                            selectedValue={comorbidadeSelecionado}
+                            onValueChange={(itemValue) =>
+                                setAlergiaSelecionada(itemValue)
+
+                            }>
+
+
+                            {comorbidades
+                                .filter((value, index) => comorbidadeSelecionado === 0 ? value : index === 0 ? false : value)
+                                .map((value, index) => (
+                                    <Picker.Item label={value} value={value} key={index} />
+                                ))}
+                            {/* alergias.map(al => {
+                                        return <Picker.Item label={al} value={al} />
+                                    }) */}
+
+                        </Picker>
+                    </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Remédio"
+                        value={inputMedicamentoComor}
+                        onChangeText={setInputMedicamentoComor}
+                        returnKeyType="done"
+                    />
+                </View>
+
+
             )}
         </View>
 
-                                   
-        
+
+
     )
 }
 
