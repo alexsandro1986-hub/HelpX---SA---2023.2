@@ -10,8 +10,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState } from "react";
+import { useState, useRef} from "react";
 import Feather from "@expo/vector-icons/Feather";
+import ViewShot from "react-native-view-shot";
+import * as MediaLibrary from 'expo-media-library';
+import { Alert } from 'react-native';
 
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from 'react-native-paper';
@@ -360,18 +363,43 @@ const profile = StyleSheet.create({
 });
 
 export function QrCodeUser() {
-  const navigation = useNavigation();
-  // let logoFromFile = require('../img/logo.png');
+  const viewShotRef = useRef(null);
+
+  const handleSaveAndDownload = async () => {
+    try {
+      if (viewShotRef.current) {
+       
+        const result = await viewShotRef.current.capture();
+
+       
+        if (result) {
+         
+          await MediaLibrary.saveToLibraryAsync(result);
+
+      
+          
+          Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
+          Alert.alert('Concluido', 'Imagem salva com sucesso!');
+        } else {
+          Alert.alert('Erro ao salvar a imagem: captura falhou');
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao salvar a imagem:', error);
+    }
+  };
 
   return (
     <View style={qrcode.container}>
-     
+      <ViewShot ref={viewShotRef}>
+        <View style={qrcode.viewQrcode}>
+          <QRCode value="www.youtube.com" color="black" size={250} />
+        </View>
+      </ViewShot>
 
-      <View style={qrcode.viewQrcode}>
-        <QRCode value="google.com" color="black" size={250} />
-
-        {/* <MaterialCommunityIcons name="qrcode" color={'black'} size={400} /> */}
-      </View>
+      <TouchableOpacity onPress={handleSaveAndDownload} style={qrcode.saveButton}>
+        <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -379,23 +407,28 @@ export function QrCodeUser() {
 const qrcode = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-
-  viewTxt: {
-    width: "100%",
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   viewQrcode: {
     height: 400,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  saveButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 8,
+  },
+
+  buttonText: {
+    fontSize: 16,
+    color: 'white',
   },
 });
 
