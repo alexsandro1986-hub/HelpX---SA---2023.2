@@ -8,7 +8,9 @@ const cadastro = async (nome, email, senha) => {
     const response = await axios.post('https://ordinary-saber-lyre.glitch.me/cadastro', {nome,email, senha}) 
       console.log(response.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
+     
+      console.log(error.response.data)  //Mensagem de erro
     }
   }
   // cadastro('Gisele', 'gisele@gmail.com', 'aaa')
@@ -20,7 +22,9 @@ const cadastro = async (nome, email, senha) => {
      const response = await axios.post('https://ordinary-saber-lyre.glitch.me/login', {email}) 
         console.log(response.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
+     
+      console.log(error.response.data)  //Mensagem de erro
     }
   }
   // login('aa', 'avfd')
@@ -52,7 +56,9 @@ const completar_cadastro = async (dados) => {
     .put('https://ordinary-saber-lyre.glitch.me/users/complete/33eeb71a-3c55-491d-af13-ceaf5812211d', dados) 
       console.log(response.data)
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
+     
+    console.log(error.response.data)  //Mensagem de erro
   }
 }
 
@@ -93,6 +99,8 @@ const editandoUsuario = async(dados) => {
     dados) 
     console.log(response.data)
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
+     
+    console.log(error.response.data)  //Mensagem de erro
   }
 }
