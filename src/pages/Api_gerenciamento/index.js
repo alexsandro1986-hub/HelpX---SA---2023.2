@@ -1,8 +1,3 @@
-import axios from 'axios';
-
-//Fazer o export
-let baseURL = 'https://helpx.glitch.me.glitch.me'
-
 // let tratamento = {
 
 //   enfermidade: 'Gripe' ,   
