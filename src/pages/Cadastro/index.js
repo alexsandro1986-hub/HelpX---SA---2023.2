@@ -3,9 +3,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingViewBase } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
+import axios from 'axios';
 
+const baseURL = 'https://helpx.glitch.me'
 
 
 
@@ -13,6 +15,7 @@ export default function Cadastro() {
   const { inputEmail, setInputEmail } = useContext(ContextInfo)
   const { inputSenha, setInputSenha } = useContext(ContextInfo)
   const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
+  const [texto, setTexto] = useState('')
   return (
 
     <View style={styles.body}>
@@ -48,6 +51,7 @@ export default function Cadastro() {
 
           />
         </View>
+        <Text> {texto} </Text>
         <View style={styles.viewInputs}>
 
           <Text style={styles.inputLabel}>Confirmar Senha</Text>
@@ -60,8 +64,26 @@ export default function Cadastro() {
           />
         </View>
 
-        <TouchableOpacity style={styles.botao} onPress={() => {
-          console.log('oi', inputEmail)
+        <TouchableOpacity style={styles.botao} 
+        onPress={() => {
+          const cadastro = async (email, senha) => {
+            try {
+              const response = await axios.post(`${baseURL}/cadastro`, { email, senha })
+
+              console.log('OK', response.data)
+            } catch (error) {
+              console.log(error)
+              console.log(error.message)
+              console.log(error.response.data)
+              let texto_resposta = error.response.data
+              setTexto(Object.values(texto_resposta))
+
+            }
+          }
+
+          cadastro(inputEmail, inputSenha)
+
+
         }}>
 
           <Text style={styles.textoBotao}>OK</Text>
@@ -117,9 +139,9 @@ const styles = StyleSheet.create({
 
   },
 
-  viewInputs:{
-    width:'100%',
-    height:'25%',
+  viewInputs: {
+    width: '100%',
+    height: '25%',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
