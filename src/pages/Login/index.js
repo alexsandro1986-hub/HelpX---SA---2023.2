@@ -16,7 +16,7 @@ import Cadastro from '../Cadastro';
 import StackInfo from '../Informacoes';
 import axios from 'axios';
 
-
+const baseURL = 'https://helpx.glitch.me'
 
 const Stack = createStackNavigator();
 
@@ -61,10 +61,12 @@ export function Login() {
   const [emailLogin, setEmailLogin] = useState('');
   const [senhaLogin, setSenhaLogin] = useState('');
   const { flagAdm, setFlagAdm, senhaAdm, loginAdm,
-    inputSenha,
-    inputEmail, vetorUser
-
+    inputSenha,inputEmail, 
+    vetorUser,
+    id, setId,
+    userInfo, setUserInfo
   } = useContext(ContextInfo)
+  const [texto, setTexto] = useState('')
   const navigation = useNavigation()
 
 
@@ -72,32 +74,50 @@ export function Login() {
     listarTodosUsuarios();
   }, [])
 
-  const listarTodosUsuarios = async () =>{
+  const listarTodosUsuarios = async () => {
     try {
-      const response = await axios.get('https://ordinary-saber-lyre.glitch.me/users') 
+      const response = await axios.get('https://helpx.glitch.me/users')
       console.log(response.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const entrar = () => {
-    vetorUser.map((user) => {
 
-      switch (true) {
-        case emailLogin == loginAdm && senhaLogin == senhaAdm:
+
+  const entrar = (flagAdm) => {
+    console.log(flagAdm)
+       switch (true) {
+        case flagAdm == true:
           setFlagAdm(!flagAdm)
           break;
-        case emailLogin == user.email && senhaLogin == user.senha:
+        case flagAdm == false:
+          const carregar_infos_user_logged = async () => {
+            try {
+              const response = await axios.get(`${baseURL}/users/logged/${id}`)
+              setUserInfo(response.data)
+              console.log('aaaa', response.data)
+              
+             
+            } catch (error) {
+              console.log(error.message)
+              console.log(error.response.data)
+             
+
+            }
+          }
+         
+          carregar_infos_user_logged()
           navigation.navigate('Home')
           break;
-        case emailLogin == inputEmail && senhaLogin == inputSenha:
+          //Novo usuário - Colher informações
+        case flagAdm == "newUser":
           navigation.navigate('Informacoes')
           break;
       }
-    })
 
-  }
+    }
+  
 
   return (
 
@@ -131,7 +151,7 @@ export function Login() {
             inputContainerStyle={styles.inpt} // Isso remove a borda inferior
           />
         </View>
-
+        <Text> {texto} </Text>
         <View style={styles.AlturaElementosInput}>
           <Text style={styles.inputLabel}> Senha</Text>
           <Input
@@ -143,7 +163,7 @@ export function Login() {
 
 
         </View>
-        
+
 
         {/* <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
           <Text style={styles.textoBotao}>Cadastrar</Text>
@@ -152,18 +172,36 @@ export function Login() {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={entrar}>
+          onPress={() => {
+            const login = async (email, senha) => {
+              try {
+                const response = await axios.post('https://helpx.glitch.me/login', { email, senha })
+                console.log(response.data.id)
+                setId(response.data.id)
+                entrar(response.data.flagAdm)
+              } catch (error) {
+                console.log(error.message)
+                console.log(error.response.data)
+                let texto_resposta = error.response.data
+                setTexto(Object.values(texto_resposta))
+
+              }
+            }
+            login(emailLogin, senhaLogin)
+
+          }}>
           <Text style={styles.textoBotao}> Confirmar </Text>
 
         </TouchableOpacity>
 
         <View style={styles.viewCadastro}>
-          <Text style={styles.textCad} onPress={()=>(navigation.navigate('Cadastro'))}>Nâo possui uma conta?</Text>
+          <Text style={styles.textCad} onPress={() => (navigation.navigate('Cadastro'))}>Nâo possui uma conta?</Text>
         </View>
       </View>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -236,17 +274,17 @@ const styles = StyleSheet.create({
     color: 'white'
 
   },
-  
- viewCadastro: {
-    justifyContent:'center',
-    alignItems:'center',
+
+  viewCadastro: {
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     height: '15%',
   },
-  textCad:{
-    fontSize:18,
-    fontWeight:'700',
-    color:'#4292ff'
+  textCad: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#4292ff'
   },
   logo: {
     height: '40%',
@@ -258,4 +296,4 @@ const styles = StyleSheet.create({
 
 
 
-});
+})

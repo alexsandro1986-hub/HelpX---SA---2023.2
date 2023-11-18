@@ -15,10 +15,11 @@ import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
 import { Alert } from 'react-native';
-
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from 'react-native-paper';
+import axios from "axios";
 
+const baseURL = 'https://helpx.glitch.me'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -364,7 +365,7 @@ const profile = StyleSheet.create({
 
 export function QrCodeUser() {
   const viewShotRef = useRef(null);
-
+  const {id}= useContext(ContextInfo)
   const handleSaveAndDownload = async () => {
     try {
       if (viewShotRef.current) {
@@ -393,7 +394,7 @@ export function QrCodeUser() {
     <View style={qrcode.container}>
       <ViewShot ref={viewShotRef}>
         <View style={qrcode.viewQrcode}>
-          <QRCode value="www.youtube.com" color="black" size={250} />
+          <QRCode value={`${baseURL}/views/users/${id}`} color="black" size={250} />
         </View>
       </ViewShot>
 

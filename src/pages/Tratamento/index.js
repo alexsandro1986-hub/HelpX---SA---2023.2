@@ -7,9 +7,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
+import axios from 'axios';
+import { set } from 'react-native-reanimated';
 
 
-
+const baseURL = 'https://helpx.glitch.me'
 
 
 const Stack = createStackNavigator();
@@ -63,8 +65,9 @@ export function StackTratamento() {
 //  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
     const navigation = useNavigation()
-    const { arrayTratamento } = useContext(RemedioContext)
+    const { arrayTratamento, userInfo } = useContext(RemedioContext)
 
+    console.log(userInfo, userInfo[0].tratamento)
 
 
     return (
@@ -89,12 +92,12 @@ export function Tratamento() {
                 </View>
                 <ScrollView>
 
-                    {arrayTratamento.map((doenca, index) => (
+                    {userInfo[0].tratamento.map((doenca, index) => (
                         //  Criando post. 
                         // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
                         //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
                         <View key={index} >
-                            <PostSanfona enfermidade={doenca.Enfermidade} data={doenca.Data} remedio={doenca.Remedio} indice={doenca.Indice} />
+                            <PostSanfona enfermidade={doenca.enfermidade} data={doenca.periodo} remedio={doenca.droga} indice={doenca.cod_tratamento} />
 
                         </View>
                     ))}
@@ -130,7 +133,7 @@ function PostSanfona(props) {
     const navigation = useNavigation()
     const [expandir, setExpandir] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const { arrayTratamento, setArrayTratamento, setFlagEditando, setIdEdit } = useContext(RemedioContext)
+    const { userInfo, setArrayTratamento, setFlagEditando, setIdEdit, id } = useContext(RemedioContext)
     const aa = 1
     // Pegando posição y do touch do usuário no post para modificar a posição do modal
     const [toquePostY, setToquePostY] = useState(1)
@@ -196,20 +199,17 @@ function PostSanfona(props) {
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
-                                        arrayTratamento.map((elemento) => {
-                                            console.log(elemento.Indice, props.indice)
-                                            console.log(elemento)
-                                            if (elemento.Indice == props.indice) {
+                                        const tratamento_a_editar = userInfo[0].tratamento.find(({ cod_tratamento }) => { cod_tratamento == (props.indice) })
+                                        setInputDoenca(tratamento_a_editar.enfermidade)
+                                        setInputData(tratamento_a_editar.periodo)
+                                        setInputRemedio(tratamento_a_editar.droga)
 
-                                                setIdEdit(props.indice)
-                                                setFlagEditando(true)
-                                                setModalVisible(!modalVisible)
-                                                navigation.navigate('AdicionarPost')
-                                            }
-                                        })
-
-
-                                    }}
+                                        setIdEdit(props.indice)
+                                        setFlagEditando(true)
+                                        setModalVisible(!modalVisible)
+                                        navigation.navigate('AdicionarPost')
+                                    }
+                                    }
                                 >
                                     <Text style={styles.textoModal}> Editar</Text>
                                 </TouchableOpacity>
@@ -217,9 +217,20 @@ function PostSanfona(props) {
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
-                                        setArrayTratamento(
-                                            arrayTratamento.filter(idPosts => idPosts.Indice != props.indice))
-                                        setModalVisible(!modalVisible)
+                                        const deletando_tratamento = async (codigo) => {
+                                            try {
+                                                const response = await axios
+                                                    .delete(`${baseURL}/users/tratamento/${id}`, { codigo })
+
+                                                console.log('Dados', response.data)
+                                            } catch (error) {
+                                                console.log(error.message)
+                                                console.log(error.response.data)
+
+                                            }
+                                        }
+                                        deletando_tratamento(props.indice)
+
                                     }}>
                                     <Text style={styles.textoModal}> Excluir</Text>
                                 </TouchableOpacity>
@@ -255,10 +266,32 @@ function PostSanfona(props) {
 
 export function AdicionarPost() {
     const navigation = useNavigation()
-    const { inputRemedio, setInputRemedio,
-        inputDoenca, setInputDoenca,
-        inputData, setInputData,
-        criandoPost, construindoObj, flagEditando, editandoPost } = useContext(RemedioContext)
+    const { inputRemedio, setInputRemedio, inputDoenca, setInputDoenca,
+        inputData, setInputData, flagEditando, idEdit, userInfo } = useContext(RemedioContext)
+
+    const criando_tratamento = async (enfermidade, periodo, droga) => {
+        try {
+            const response = await axios.post(`${baseURL}/users/tratamento/${id}`, enfermidade, periodo, droga)
+
+            console.log('aaaa', response.data)
+        } catch (error) {
+            console.log(error.message)
+            console.log(error.response.data)
+
+        }
+    }
+    const editando_tratamento = async (enfermidade, periodo, droga,cod_tratamento) => {
+        try {
+            const response = await axios
+                .put(`${baseURL}/users/tratamento/${id}`, enfermidade, periodo, droga, cod_tratamento)
+
+            console.log('aaaa', response.data)
+        } catch (error) {
+            console.log(error.message)
+            console.log(error.response.data)
+
+        }
+    }
 
 
     return (
@@ -272,7 +305,7 @@ export function AdicionarPost() {
                         value={inputDoenca}
                         onChangeText={setInputDoenca}
                         style={styles.input}
-                        placeholder="Enfermidade"   
+                        placeholder="Enfermidade"
 
                     />
                 </View>
@@ -314,10 +347,12 @@ export function AdicionarPost() {
                 <TouchableOpacity onPress={() => {
                     // Os valores dos inputs são transferidos para o context, 
                     // onde o objeto é construido. 
+                    i
                     flagEditando ?
-                        editandoPost(construindoObj(inputDoenca, inputRemedio, inputData))
+
+                        editando_tratamento(inputDoenca, inputRemedio, inputData, idEdit)
                         :
-                        criandoPost(construindoObj(inputDoenca, inputRemedio, inputData))
+                        criando_tratamento(inputDoenca, inputRemedio, inputData)
                     navigation.goBack()
                 }
                 }

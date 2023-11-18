@@ -28,6 +28,9 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputMedicamentoComor,  setInputMedicamentoComor] = useState('')
     //Cadastro
 
+    // Login
+    const [id, setId] = useState()
+    const [userInfo, setUserInfo] = useState()
     //ADMIN
     const [flagAdm, setFlagAdm] = useState(false)
     const senhaAdm = '123'
@@ -219,29 +222,6 @@ export const ContextInfoProvider = ({ children }) => {
       ];
            
 
-      
-    // let idNovo = 11
-    // funticon CriandoObjetoUser () {
-    //   let objUser = { 
-    //     id: idNovo,
-    //     nome: inputNome,
-    //     idade: inputIdade,
-    //     alergia: inputAlergias,
-    //     sangue: ,
-    //     doador: ,
-    //     telefone: inputTelefone,
-    //     contatoEmergencia: inputContatoEmergencia,
-    //     telefoneEmergencia: inputNtelefoneEmergencia,
-    //     cep: inputNCep,
-    //     logradouro: inputLogradouro,
-    //     nCasa: inputNumeroCasa,
-    //     email: inputEmail,
-    //     senha: inputSenha
-    // }
-    //  vetorUser.push (objUser) OU return objUser 
-    // idNovo ++
-    // }
-
 
 
 
@@ -281,7 +261,9 @@ export const ContextInfoProvider = ({ children }) => {
                 flagAdm, setFlagAdm,
                 senhaAdm,
                 loginAdm,
-
+                //Login
+                id, setId,
+                userInfo, setUserInfo,
                 //Logout 
                 logout,
                 // OBJETOS INFOS USUARIOS
