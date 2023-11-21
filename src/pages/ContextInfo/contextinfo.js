@@ -25,7 +25,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputOrgao, setInputOrgao] = useState('')
     const [inputCpf, setInputCpf] = useState('')
     const [inputComorbidade, setInpuComorbidade] = useState('')
-    const [inputMedicamentoComor,  setInputMedicamentoComor] = useState('')
+    const [inputMedicamentoComor,  setInputMedicamentoComor] = useState('')const [inputCpf, setInputCpf] = useState('')
     //Cadastro
 
     // Login

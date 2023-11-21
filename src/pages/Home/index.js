@@ -11,6 +11,7 @@ import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
 import { useState, useRef} from "react";
+import { useState, useRef} from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
@@ -402,6 +403,10 @@ export function QrCodeUser() {
         <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
       </TouchableOpacity>
     </View>
+      <TouchableOpacity onPress={handleSaveAndDownload} style={qrcode.saveButton}>
+        <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -411,10 +416,28 @@ const qrcode = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   viewQrcode: {
     height: 400,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  saveButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 8,
+  },
+
+  buttonText: {
+    fontSize: 16,
+    color: 'white',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
