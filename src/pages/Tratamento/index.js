@@ -10,7 +10,8 @@ import { RemedioContext, RemedioContextProvider } from './remedioContext';
 import axios from 'axios';
 import { set } from 'react-native-reanimated';
 import api from '../Api_gerenciamento';
-
+import { response } from 'express';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const baseURL = 'https://helpx.glitch.me'
 
 
@@ -64,11 +65,37 @@ export function StackTratamento() {
 
 //  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
-    const navigation = useNavigation()
-    const { arrayTratamento, userInfo } = useContext(RemedioContext)
+ const navigation = useNavigation()    
 
-    console.log(userInfo, userInfo[0].tratamento)
+ const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
+  useEffect(() => {
+    pegandoId()
 
+  }, [])
+
+  const pegandoId = async () => {
+    const idzinho = await AsyncStorage.getItem("id")
+    console.log("Entrei aqui na home para pegar o id", idzinho)
+
+    //Carregando dados do usuário
+    try {
+      const response = await api.get(`/users/logged/${idzinho}`)
+      setUserInfo(response.data)
+      console.log(userInfo)
+      console.log('Dados do usuario', response.data)
+      
+     
+    } catch (error) {
+      console.log(error.message)
+      // console.log(error.response.data)
+     
+
+    }
+    return response.data
+  }
+  const Userdados = pegandoId()
+  const arrayTratamento = Userdados[0].tratamento
+  console.log(arrayTratamento)
 
     return (
         <View style={styles.container}>
@@ -133,7 +160,7 @@ function PostSanfona(props) {
     const navigation = useNavigation()
     const [expandir, setExpandir] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const { userInfo, setArrayTratamento, setFlagEditando, setIdEdit, id } = useContext(RemedioContext)
+    const { userInfo, setFlagEditando, setIdEdit, id } = useContext(RemedioContext)
     const aa = 1
     // Pegando posição y do touch do usuário no post para modificar a posição do modal
     const [toquePostY, setToquePostY] = useState(1)
@@ -217,12 +244,12 @@ function PostSanfona(props) {
                                 <TouchableOpacity
                                     style={styles.botaoModal}
                                     onPress={() => {
-                                        const deletando_tratamento = async (codigo) => {
+                                        const deletando_tratamento = async (cod_tratamento) => {
                                             try {
                                                 const response = await api
-                                                    .delete(`/users/tratamento/${id}`, { codigo })
+                                                    .delete(`/users/tratamento/${id}`, { cod_tratamento})
 
-                                                console.log('Dados', response.data)
+                                                console.log('Dados excluidos: ', response.data)
                                             } catch (error) {
                                                 console.log(error.message)
                                                 console.log(error.response.data)
@@ -285,7 +312,7 @@ export function AdicionarPost() {
             const response = await axios
                 .put(`${baseURL}/users/tratamento/${id}`, enfermidade, periodo, droga, cod_tratamento)
 
-            console.log('aaaa', response.data)
+            console.log('Dados editados', response.data)
         } catch (error) {
             console.log(error.message)
             console.log(error.response.data)

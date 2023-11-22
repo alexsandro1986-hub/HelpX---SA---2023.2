@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 
 export default function Home(navigation) {
 
-  const {setId, id, setUserInfo} = useContext(ContextInfo)
+  const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
   useEffect(() => {
     pegandoId()
 
@@ -40,6 +40,7 @@ export default function Home(navigation) {
     try {
       const response = await api.get(`/users/logged/${idzinho}`)
       setUserInfo(response.data)
+      console.log(userInfo)
       console.log('Dados do usuario', response.data)
       
      
