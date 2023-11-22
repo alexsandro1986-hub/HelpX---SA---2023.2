@@ -16,8 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
 import api from '../Api_gerenciamento';
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 
 
 
@@ -185,8 +183,8 @@ function Nome() {
 
 function Alergias() {
     const alergias = [
-        "Nenhuma",
-        "Nenhuma",
+        '',
+        "Não possuo alergia",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
@@ -248,7 +246,7 @@ function Alergias() {
 function Comorbidade() {
     
     const comorbidades = [
-        "Nenhuma",
+        '',
         "Nenhuma",
         "Hipertensão arterial",
         "Diabetes mellitus",
@@ -538,8 +536,8 @@ function Endereco() {
                     console.log(inputSangue)
                     const idz = await AsyncStorage.getItem("id")
                     try {
-                        console.log("Id do storage", idz)
-                        const response = await api.put("/users/complete/c80c35fb-c936-4c66-9e58-2c861a12182d", dados)
+                        const response = await axios
+                            .put(`${baseURL}/users/complete/aa857351-ab7f-485f-84de-898cc112132c`, dados)
                         console.log(response.data)
                     } catch (error) {
                         console.log(error.response)
@@ -613,6 +611,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
+        marginLeft: 12,
     },
 
 
