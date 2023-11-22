@@ -1,3 +1,11 @@
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "https://helpx.glitch.me"
+})
+
+export default api;
+
 // let tratamento = {
 
 //   enfermidade: 'Gripe' ,   

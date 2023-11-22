@@ -10,7 +10,7 @@ import { IconButton, DataTable } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { PieChart } from "react-native-gifted-charts/src/PieChart";
 import { Dimensions } from "react-native";
-
+import axios from "axios";
 
 
 const Stack = createStackNavigator();
