@@ -93,6 +93,9 @@ export default function Home(navigation) {
   );
 }
 
+
+
+
 const styles = StyleSheet.create({
   geral: {
     width: "50%",
@@ -144,6 +147,9 @@ function StackFeed() {
     </Stack.Navigator>
   );
 }
+
+
+
 
 function Feed() {
   const navigation = useNavigation();
@@ -256,7 +262,21 @@ function Feed() {
           <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
             Editar Perfil
           </Text>
+          
         </TouchableOpacity>
+
+        
+
+
+        
+
+
+
+
+
+
+
+
       </View>
     </View>
   );
@@ -273,6 +293,7 @@ const feed = StyleSheet.create({
     backgroundColor: "transparent",
     borderBottomWidth: 2,
     borderColor: "#97D8AE",
+    marginTop: '5%',
   },
 
   options: {
@@ -290,16 +311,26 @@ function Profile() {
   const {userInfo} = useContext(ContextInfo)
   console.log(userInfo)
   return (
+    
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
       style={profile.container}
     >
       <View style={profile.cima}>
-        <View style={{ width: "100%", height: "2%" }}></View>
+        <View style={{ width: "100%", height: "2%" }}>
+          
+        </View>
+        
 
         <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
           Meu Perfil
         </Text>
+
+    
+
+        
+       
+        
 
         <View
           style={{
@@ -314,7 +345,15 @@ function Profile() {
         >
           <MaterialCommunityIcons name="account" color={"black"} size={80} />
         </View>
+
+
+
+        
       </View>
+
+      
+     
+
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
@@ -323,6 +362,7 @@ function Profile() {
       </View>
 
       <View style={profile.infoView}>
+        
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
           <Text style={profile.textInfoUser}>    {userInfo[0].idade}</Text>
@@ -344,6 +384,23 @@ function Profile() {
   );
 }
 
+function sair(navigation) {
+  const goToHome = () => {
+    navigation.popToTop();
+  };
+
+  return (
+    <LinearGradient
+      colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
+      style={profile.container}
+    >
+     
+    </LinearGradient>
+  );
+}
+
+
+
 const profile = StyleSheet.create({
   container: {
     flex: 1,
@@ -358,6 +415,7 @@ const profile = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 30,
+    marginTop: "1%",
   },
 
   viewNameUser: {
@@ -452,10 +510,28 @@ const qrcode = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   viewQrcode: {
     height: 400,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  saveButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 8,
+  },
+
+  buttonText: {
+    fontSize: 16,
+    color: 'white',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -927,7 +1003,18 @@ const editU = StyleSheet.create({
     fontWeight: "700",
     color: "green",
   },
+  logoutButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#FF6347',
+    borderRadius: 5,
+    padding: 10,
+  },
 
+  button: {
+    alignItems: 'center',
+  },
   radioButton: {
 
 
@@ -951,4 +1038,6 @@ const editU = StyleSheet.create({
     borderWidth: 1,
     gap: 2
   },
+ 
 });
+
