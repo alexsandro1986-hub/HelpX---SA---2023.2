@@ -10,84 +10,51 @@ import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
 import { Alert } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from 'react-native-paper';
-import api from "../Api_gerenciamento";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from "axios";
 
 const baseURL = 'https://helpx.glitch.me'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
-export default function Home(navigation) {
-
-  const {setId, id, setUserInfo} = useContext(ContextInfo)
-  useEffect(() => {
-    pegandoId()
-
-  }, [])
-
-  const pegandoId = async () => {
-    const idzinho = await AsyncStorage.getItem("id")
-    console.log("Entrei aqui na home para pegar o id", idzinho)
-
-    try {
-      const response = await api.get(`/users/logged/${idzinho}`)
-      setUserInfo(response.data)
-      console.log('Dados do usuario', response.data)
-      
-     
-    } catch (error) {
-      console.log(error.message)
-      // console.log(error.response.data)
-     
-
-    }
-    return idzinho
-  }
- 
-
- 
-
-
+export default function Home() {
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
-      initialRouteName="StackFeed"
-      screenOptions={{
-        tabBarActiveTintColor: "#9cf0b9",
-      }}
-    >
-      <Tab.Screen
-        name="StackFeed"
-        component={StackFeed}
-        options={{
-          tabBarLabel: "Home",
-          // tabBarLabel: ({ focused }) => <Text style={{ fontSize: 12, color: focused ? colors.primary : colors.gray }}>{item.name}</Text>
-
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={50} />
-          ),
-          headerShown: false,
+        initialRouteName="StackFeed"
+        screenOptions={{
+          tabBarActiveTintColor: "#9cf0b9",
         }}
-      />
+      >
+        <Tab.Screen
+          name="StackFeed"
+          component={StackFeed}
+          options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={50} />
+          ),
+            headerShown: false,
+          }}
+        />
 
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={50} />
+          <MaterialCommunityIcons name="account" color={color} size={50} />
           ),
-          headerShown: false,
-        }}
-      />
+            headerShown: false,
+          }}
+        />
     </Tab.Navigator>
   );
 }
@@ -105,6 +72,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
+
 
 function StackFeed() {
   return (
@@ -146,8 +114,6 @@ function StackFeed() {
     </Stack.Navigator>
   );
 }
-
-
 
 
 function Feed() {
@@ -261,16 +227,8 @@ function Feed() {
           <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
             Editar Perfil
           </Text>
-          
+
         </TouchableOpacity>
-
-        
-
-
-        
-
-
-
 
 
 
@@ -307,29 +265,34 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const {userInfo} = useContext(ContextInfo)
-  console.log(userInfo)
+
+  // Função para sair e voltar para a tela inicial
+  const handleLogout = () => {
+    navigation.popToTop();
+  };
+
+  const sair = () => {
+    navigation.popToTop();
+  };
+
+
   return (
-    
+
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
       style={profile.container}
     >
       <View style={profile.cima}>
         <View style={{ width: "100%", height: "2%" }}>
-          
+
         </View>
-        
+
 
         <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
           Meu Perfil
         </Text>
 
-    
 
-        
-       
-        
 
         <View
           style={{
@@ -347,53 +310,45 @@ function Profile() {
 
 
 
-        
+
       </View>
 
-      
-     
+
+
 
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-           {userInfo[0].nome}
+          Nome Usuario
         </Text>
       </View>
 
       <View style={profile.infoView}>
-        
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>    {userInfo[0].idade}</Text>
+          <Text style={profile.textInfoUser}>21</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>alergia</Text>
-          <Text style={profile.textInfoUser}>Dipirona, fermento</Text>
+          <Text style={profile.textInfoUser}> Dipirona, fermento</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Cont. emergencia</Text>
-          <Text style={profile.textInfoUser}></Text>
+          <Text style={profile.textInfoUser}>48 996760904</Text>
         </View>
       </View>
 
 
-    </LinearGradient>
-  );
-}
+      <View style={styles.sair}>
 
-function sair(navigation) {
-  const goToHome = () => {
-    navigation.popToTop();
-  };
+        <TouchableOpacity style={styles.button} onPress={sair}>
+          <Text style={styles.textButton}>SAIR</Text>
+        </TouchableOpacity>
+      </View>
 
-  return (
-    <LinearGradient
-      colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
-      style={profile.container}
-    >
-     
+
     </LinearGradient>
   );
 }
@@ -414,7 +369,6 @@ const profile = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 30,
-    marginTop: "1%",
   },
 
   viewNameUser: {
@@ -459,24 +413,18 @@ const profile = StyleSheet.create({
     height: "10%",
     width: "20%",
   },
+
 });
 
 export function QrCodeUser() {
-  const viewShotRef = useRef(null);
-  const { id } = useContext(ContextInfo)
+  const viewShotRef = React.useRef(null);
+  const { id } = useContext(ContextInfo);
   const handleSaveAndDownload = async () => {
     try {
       if (viewShotRef.current) {
-
         const result = await viewShotRef.current.capture();
-
-
         if (result) {
-
           await MediaLibrary.saveToLibraryAsync(result);
-
-
-
           Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
           Alert.alert('Concluido', 'Imagem salva com sucesso!');
         } else {
@@ -554,8 +502,6 @@ export function EditUser() {
   const {
     inputNome,
     setInputNome,
-    inputEmail, 
-    setInputEmail,
     inputIdade,
     setInputIdade,
     inputAlergias,
@@ -572,8 +518,9 @@ export function EditUser() {
     setInputLogradouro,
     inputNumeroCasa,
     setNumeroCasa,
-    userInfo,
-    id
+    inputDoador,
+    setInputDoador,
+
   } = useContext(ContextInfo);
 
   const [expandirNome, setExpandirNome] = useState(false);
@@ -581,31 +528,10 @@ export function EditUser() {
   const [expandirContato, setExpandirContato] = useState(false);
   const [expandirEndereco, setExpandirEndereco] = useState(false);
   const [expandirSangue, setExpandirSangue] = useState(false);
-  let EditarInformacoes = {
-      // As informações que não for atualizar não colocar no objeto
-    nome: inputNome,
-    email: inputEmail,
-    sangue: 'B+',
-    idade: Number(inputIdade),
-    cpf: '89-000-222-11',
-    telefoneusuario:  inputTelefone,
-    //   alergia: 'Rinite alérgica',
-    // alergiaesp: "Especificação"
-    //   comorbidade: 'Hipertensão arterial',
-    // comorbidadeesp: "Especificação",
-      logradouro: inputLogradouro,
-    numerocasa: inputNumeroCasa,
-    ncep:  inputNCep,
-    contatoemergencia:  inputContatoEmergencia,
-    emailemergencia: 'albert@gmail.com',
-    telefoneemergencia: inputNtelefoneEmergencia,
-    doadorsangue: inputSangue,
-    doadororgao: inputOrgao
-  }
 
   const alergias = [
     "",
-    "Nenhuma",
+    "Não possuo alergia",
     "Latex",
     "Polem",
     "Alimentos",
@@ -919,21 +845,7 @@ export function EditUser() {
             </View>
           )}
 
-          <TouchableOpacity style={editU.btnSalvar} onPress={() => {
-            const editandoUsuario = async (dados) => {
-              console.log(dados)
-              const idz = await AsyncStorage.getItem("id")
-              try {
-                const response = api
-                  .put(`/users/edit/${idz}`,
-                    dados)
-                console.log(response.data)
-              } catch (error) {
-                console.log(error.response.data)
-              }
-            }
-            editandoUsuario(EditarInformacoes)
-          }}>
+          <TouchableOpacity style={editU.btnSalvar}>
             <Text style={editU.btnText}>SALVAR</Text>
           </TouchableOpacity>
         </View>
@@ -1037,6 +949,8 @@ const editU = StyleSheet.create({
     borderWidth: 1,
     gap: 2
   },
- 
-});
+  sair: {
+    backgroundColor: 'black',
 
+  },
+});
