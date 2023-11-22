@@ -15,7 +15,7 @@ import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
-import axios from 'axios';
+import api from '../Api_gerenciamento';
 
 
 
@@ -184,7 +184,7 @@ function Nome() {
 function Alergias() {
     const alergias = [
         '',
-        "Não possuo alergia",
+        "Nenhuma",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
@@ -203,7 +203,8 @@ function Alergias() {
         "Produtos de beleza",
         "Insetos de jardim",
         "Látex de frutas",
-        "Produtos de limpeza"
+        "Produtos de limpeza",
+        "Outras",
     ]
 
 
@@ -249,6 +250,7 @@ function Comorbidade() {
 
     const comorbidades = [
         '',
+        "Nenhuma",
         "Hipertensão arterial",
         "Diabetes mellitus",
         "Obesidade",
@@ -268,7 +270,8 @@ function Comorbidade() {
         "Epilepsia",
         "Doenças neurológicas",
         "Doenças gastrointestinais",
-        "Transtornos psiquiátricos"
+        "Transtornos psiquiátricos",
+        "Outras",
     ]
 
 
@@ -570,8 +573,9 @@ function Endereco() {
                     console.log('dados', dados)
                     console.log(inputSangue)
                     try {
-                        const response = await axios
-                            .put(`${baseURL}/users/complete/aa857351-ab7f-485f-84de-898cc112132c`, dados)
+                        const idz = await AsyncStorage.getItem("id")
+                        const response = await api
+                            .put(`/users/complete/${idz}`, dados)
                         console.log(response.data)
                     } catch (error) {
                         console.log(error.response.data)

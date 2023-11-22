@@ -846,7 +846,7 @@ export function EditUser() {
           <TouchableOpacity style={editU.btnSalvar} onPress={() => {
             const editandoUsuario = async (dados) => {
               console.log(dados)
-              const idz = pegandoId()
+              const idz = await AsyncStorage.getItem("id")
               try {
                 const response = api
                   .put(`/users/edit/${idz}`,
