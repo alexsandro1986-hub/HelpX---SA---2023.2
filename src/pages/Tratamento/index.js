@@ -7,15 +7,24 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
-import axios from 'axios';
-import { set } from 'react-native-reanimated';
+import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import api from '../Api_gerenciamento';
-import { response } from 'express';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const baseURL = 'https://helpx.glitch.me'
 
 
 const Stack = createStackNavigator();
+
+const userDados = async () => {
+    try {
+        const user = await AsyncStorage.getItem("userInfo")
+        console.log("Dados do usuário na página de tratatamento pegos pelo storage", user)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
 export function StackTratamento() {
     return (
@@ -66,8 +75,9 @@ export function StackTratamento() {
 //  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
  const navigation = useNavigation()    
+ let userDados 
+//  const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
 
- const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
   useEffect(() => {
     pegandoId()
 
@@ -80,22 +90,21 @@ export function Tratamento() {
     //Carregando dados do usuário
     try {
       const response = await api.get(`/users/logged/${idzinho}`)
-      setUserInfo(response.data)
-      console.log(userInfo)
+      await AsyncStorage.setItem("userInfo", response.data);
+
+    
       console.log('Dados do usuario', response.data)
       
-     
+    
     } catch (error) {
       console.log(error.message)
       // console.log(error.response.data)
      
 
     }
-    return response.data
   }
-  const Userdados = pegandoId()
-  const arrayTratamento = Userdados[0].tratamento
-  console.log(arrayTratamento)
+
+  
 
     return (
         <View style={styles.container}>
@@ -119,15 +128,23 @@ export function Tratamento() {
                 </View>
                 <ScrollView>
 
-                    {userInfo[0].tratamento.map((doenca, index) => (
-                        //  Criando post. 
-                        // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
-                        //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
-                        <View key={index} >
-                            <PostSanfona enfermidade={doenca.enfermidade} data={doenca.periodo} remedio={doenca.droga} indice={doenca.cod_tratamento} />
+                    {
 
-                        </View>
-                    ))}
+                        
+                        
+                    // userDados[0].tratamento.map((doenca, index) => (
+                    //     //  Criando post. 
+                    //     // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
+                    //     //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
+                    //     <View key={index} >
+                    //         <PostSanfona enfermidade={doenca.enfermidade} data={doenca.periodo} remedio={doenca.droga} indice={doenca.cod_tratamento} />
+
+                    //     </View>
+                    // ))
+                    
+                    
+                    
+                    }
                 </ScrollView>
 
 
@@ -225,18 +242,18 @@ function PostSanfona(props) {
 
                                 <TouchableOpacity
                                     style={styles.botaoModal}
-                                    onPress={() => {
-                                        const tratamento_a_editar = userInfo[0].tratamento.find(({ cod_tratamento }) => { cod_tratamento == (props.indice) })
-                                        setInputDoenca(tratamento_a_editar.enfermidade)
-                                        setInputData(tratamento_a_editar.periodo)
-                                        setInputRemedio(tratamento_a_editar.droga)
+                                    // onPress={() => {
+                                    //     const tratamento_a_editar = userInfo[0].tratamento.find(({ cod_tratamento }) => { cod_tratamento == (props.indice) })
+                                    //     setInputDoenca(tratamento_a_editar.enfermidade)
+                                    //     setInputData(tratamento_a_editar.periodo)
+                                    //     setInputRemedio(tratamento_a_editar.droga)
 
-                                        setIdEdit(props.indice)
-                                        setFlagEditando(true)
-                                        setModalVisible(!modalVisible)
-                                        navigation.navigate('AdicionarPost')
-                                    }
-                                    }
+                                    //     setIdEdit(props.indice)
+                                    //     setFlagEditando(true)
+                                    //     setModalVisible(!modalVisible)
+                                    //     navigation.navigate('AdicionarPost')
+                                    // }
+                                    // }
                                 >
                                     <Text style={styles.textoModal}> Editar</Text>
                                 </TouchableOpacity>

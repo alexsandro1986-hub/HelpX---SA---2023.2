@@ -10,52 +10,40 @@ import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
-import * as MediaLibrary from 'expo-media-library';
-import { Alert } from 'react-native';
+import * as MediaLibrary from "expo-media-library";
+import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { RadioButton } from 'react-native-paper';
-import api from "../Api_gerenciamento";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { RadioButton } from "react-native-paper";
+import axios from "axios";
 
-const baseURL = 'https://helpx.glitch.me'
+const baseURL = "https://helpx.glitch.me";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
-export default function Home(navigation) {
-
-  const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
+export default function Home() {
+  const navigation = useNavigation();
+  const { setId, id, setUserInfo } = useContext(ContextInfo);
   useEffect(() => {
-    pegandoId()
-
-  }, [])
+    pegandoId();
+  }, []);
 
   const pegandoId = async () => {
-    const idzinho = await AsyncStorage.getItem("id")
-    console.log("Entrei aqui na home para pegar o id", idzinho)
+    const idzinho = await AsyncStorage.getItem("id");
+    console.log("Entrei aqui na home para pegar o id", idzinho);
 
     try {
-      const response = await api.get(`/users/logged/${idzinho}`)
-      setUserInfo(response.data)
-      console.log(userInfo)
-      console.log('Dados do usuario', response.data)
-      
-     
+      const response = await api.get(`/users/logged/${idzinho}`);
+      setUserInfo(response.data);
+      console.log("Dados do usuario", response.data);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
       // console.log(error.response.data)
-     
-
     }
-    return idzinho
-  }
- 
-
- 
-
+    return idzinho;
+  };
 
   return (
     <Tab.Navigator
@@ -69,8 +57,6 @@ export default function Home(navigation) {
         component={StackFeed}
         options={{
           tabBarLabel: "Home",
-          // tabBarLabel: ({ focused }) => <Text style={{ fontSize: 12, color: focused ? colors.primary : colors.gray }}>{item.name}</Text>
-
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={50} />
           ),
@@ -92,9 +78,6 @@ export default function Home(navigation) {
     </Tab.Navigator>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   geral: {
@@ -119,14 +102,17 @@ function StackFeed() {
         name="EditUser"
         component={EditUser}
         options={{
-          title: "Editar Dados", headerTitleAlign: 'center', headerBackTitle: "Voltar", headerStyle: {
-            backgroundColor: '#97D8AE',
+          title: "Editar Dados",
+          headerTitleAlign: "center",
+          headerBackTitle: "Voltar",
+          headerStyle: {
+            backgroundColor: "#97D8AE",
           },
-          headerTintColor: '#fff',
+          headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 24
-          }
+            fontWeight: "bold",
+            fontSize: 24,
+          },
         }}
       />
 
@@ -134,22 +120,22 @@ function StackFeed() {
         name="QrCodeUser"
         component={QrCodeUser}
         options={{
-          title: "Meu QRCode", headerTitleAlign: 'center', headerBackTitle: "Voltar", headerStyle: {
-            backgroundColor: '#97D8AE',
+          title: "Meu QRCode",
+          headerTitleAlign: "center",
+          headerBackTitle: "Voltar",
+          headerStyle: {
+            backgroundColor: "#97D8AE",
           },
-          headerTintColor: '#fff',
+          headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 24
-          }
+            fontWeight: "bold",
+            fontSize: 24,
+          },
         }}
       />
     </Stack.Navigator>
   );
 }
-
-
-
 
 function Feed() {
   const navigation = useNavigation();
@@ -257,26 +243,16 @@ function Feed() {
             elevation: 8,
           }}
         >
-          <MaterialCommunityIcons name="account-edit" color={"white"} size={50} />
+          <MaterialCommunityIcons
+            name="account-edit"
+            color={"white"}
+            size={50}
+          />
 
           <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
             Editar Perfil
           </Text>
-          
         </TouchableOpacity>
-
-        
-
-
-        
-
-
-
-
-
-
-
-
       </View>
     </View>
   );
@@ -293,7 +269,7 @@ const feed = StyleSheet.create({
     backgroundColor: "transparent",
     borderBottomWidth: 2,
     borderColor: "#97D8AE",
-    marginTop: '5%',
+    marginTop: "5%",
   },
 
   options: {
@@ -308,29 +284,28 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const {userInfo} = useContext(ContextInfo)
-  console.log(userInfo)
+  const { userInfo } = useContext(ContextInfo);
+  console.log(userInfo);
+  // Função para sair e voltar para a tela inicial
+  const handleLogout = () => {
+    navigation.popToTop();
+  };
+
+  const sair = () => {
+    navigation.popToTop();
+  };
+
   return (
-    
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
       style={profile.container}
     >
       <View style={profile.cima}>
-        <View style={{ width: "100%", height: "2%" }}>
-          
-        </View>
-        
+        <View style={{ width: "100%", height: "2%" }}></View>
 
         <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
           Meu Perfil
         </Text>
-
-    
-
-        
-       
-        
 
         <View
           style={{
@@ -345,61 +320,39 @@ function Profile() {
         >
           <MaterialCommunityIcons name="account" color={"black"} size={80} />
         </View>
-
-
-
-        
       </View>
-
-      
-     
-
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-           {userInfo[0].nome}
+          {userInfo[0].nome}
         </Text>
       </View>
 
       <View style={profile.infoView}>
-        
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>    {userInfo[0].idade}</Text>
+          <Text style={profile.textInfoUser}>{userInfo[0].idade}</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>alergia</Text>
-          <Text style={profile.textInfoUser}>Dipirona, fermento</Text>
+          <Text style={profile.textInfoUser}> Dipirona, fermento</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Cont. emergencia</Text>
-          <Text style={profile.textInfoUser}></Text>
+          <Text style={profile.textInfoUser}>48 996760904</Text>
         </View>
       </View>
 
-
+      <View style={styles.sair}>
+        <TouchableOpacity style={styles.button} onPress={sair}>
+          <Text style={styles.textButton}>SAIR</Text>
+        </TouchableOpacity>
+      </View>
     </LinearGradient>
   );
 }
-
-function sair(navigation) {
-  const goToHome = () => {
-    navigation.popToTop();
-  };
-
-  return (
-    <LinearGradient
-      colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
-      style={profile.container}
-    >
-     
-    </LinearGradient>
-  );
-}
-
-
 
 const profile = StyleSheet.create({
   container: {
@@ -415,7 +368,6 @@ const profile = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 30,
-    marginTop: "1%",
   },
 
   viewNameUser: {
@@ -463,29 +415,22 @@ const profile = StyleSheet.create({
 });
 
 export function QrCodeUser() {
-  const viewShotRef = useRef(null);
-  const { id } = useContext(ContextInfo)
+  const viewShotRef = React.useRef(null);
+  const { id } = useContext(ContextInfo);
   const handleSaveAndDownload = async () => {
     try {
       if (viewShotRef.current) {
-
         const result = await viewShotRef.current.capture();
-
-
         if (result) {
-
           await MediaLibrary.saveToLibraryAsync(result);
-
-
-
-          Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
-          Alert.alert('Concluido', 'Imagem salva com sucesso!');
+          Alert.alert("Vá para sua galeria", "e imprima o seu qrcode");
+          Alert.alert("Concluido", "Imagem salva com sucesso!");
         } else {
-          Alert.alert('Erro ao salvar a imagem: captura falhou');
+          Alert.alert("Erro ao salvar a imagem: captura falhou");
         }
       }
     } catch (error) {
-      console.error('Erro ao salvar a imagem:', error);
+      console.error("Erro ao salvar a imagem:", error);
     }
   };
 
@@ -493,11 +438,18 @@ export function QrCodeUser() {
     <View style={qrcode.container}>
       <ViewShot ref={viewShotRef}>
         <View style={qrcode.viewQrcode}>
-          <QRCode value={`${baseURL}/views/users/${id}`} color="black" size={250} />
+          <QRCode
+            value={`${baseURL}/views/users/${id}`}
+            color="black"
+            size={250}
+          />
         </View>
       </ViewShot>
 
-      <TouchableOpacity onPress={handleSaveAndDownload} style={qrcode.saveButton}>
+      <TouchableOpacity
+        onPress={handleSaveAndDownload}
+        style={qrcode.saveButton}
+      >
         <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
       </TouchableOpacity>
     </View>
@@ -507,46 +459,46 @@ export function QrCodeUser() {
 const qrcode = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 
   viewQrcode: {
     height: 400,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   saveButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#007BFF',
+    backgroundColor: "#007BFF",
     borderRadius: 8,
   },
 
   buttonText: {
     fontSize: 16,
-    color: 'white',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: "white",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   saveButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#007BFF',
+    backgroundColor: "#007BFF",
     borderRadius: 8,
   },
 
   buttonText: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
   },
 });
 
@@ -555,8 +507,6 @@ export function EditUser() {
   const {
     inputNome,
     setInputNome,
-    inputEmail, 
-    setInputEmail,
     inputIdade,
     setInputIdade,
     inputAlergias,
@@ -573,8 +523,8 @@ export function EditUser() {
     setInputLogradouro,
     inputNumeroCasa,
     setNumeroCasa,
-    userInfo,
-    id
+    inputDoador,
+    setInputDoador,
   } = useContext(ContextInfo);
 
   const [expandirNome, setExpandirNome] = useState(false);
@@ -582,31 +532,10 @@ export function EditUser() {
   const [expandirContato, setExpandirContato] = useState(false);
   const [expandirEndereco, setExpandirEndereco] = useState(false);
   const [expandirSangue, setExpandirSangue] = useState(false);
-  let EditarInformacoes = {
-      // As informações que não for atualizar não colocar no objeto
-    nome: inputNome,
-    email: inputEmail,
-    sangue: 'B+',
-    idade: Number(inputIdade),
-    cpf: '89-000-222-11',
-    telefoneusuario:  inputTelefone,
-    //   alergia: 'Rinite alérgica',
-    // alergiaesp: "Especificação"
-    //   comorbidade: 'Hipertensão arterial',
-    // comorbidadeesp: "Especificação",
-      logradouro: inputLogradouro,
-    numerocasa: inputNumeroCasa,
-    ncep:  inputNCep,
-    contatoemergencia:  inputContatoEmergencia,
-    emailemergencia: 'albert@gmail.com',
-    telefoneemergencia: inputNtelefoneEmergencia,
-    doadorsangue: inputSangue,
-    doadororgao: inputOrgao
-  }
 
   const alergias = [
     "",
-    "Nenhuma",
+    "Não possuo alergia",
     "Latex",
     "Polem",
     "Alimentos",
@@ -619,11 +548,22 @@ export function EditUser() {
   ];
   const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
 
-  const [sangue] = useState(['', 'Tipo sanguineo', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-  const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
+  const [sangue] = useState([
+    "",
+    "Tipo sanguineo",
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-",
+    "O+",
+    "O-",
+  ]);
+  const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo);
 
-  const [inputSangue, setInputSangue] = useState('option1');
-  const [inputOrgao, setInputOrgao] = useState('option3');
+  const [inputSangue, setInputSangue] = useState("option1");
+  const [inputOrgao, setInputOrgao] = useState("option3");
 
   return (
     <View style={editU.container}>
@@ -707,8 +647,8 @@ export function EditUser() {
                       alergiaSelecionado === 0
                         ? value
                         : index === 0
-                          ? false
-                          : value
+                        ? false
+                        : value
                     )
                     .map((value, index) => (
                       <Picker.Item label={value} value={value} key={index} />
@@ -839,50 +779,45 @@ export function EditUser() {
 
           {expandirSangue && (
             <View style={{ width: "100%", padding: 10, gap: 10 }}>
-
-
-
               <View style={editU.inputDoador}>
                 <Picker
-
                   mode="dropdown"
                   selectedValue={inputTiposanguineo}
                   onValueChange={(itemValue) =>
                     setInputTiposanguineo(itemValue)
-                  }>
-
+                  }
+                >
                   {sangue
-                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                    .filter((value, index) =>
+                      inputTiposanguineo === 0
+                        ? value
+                        : index === 0
+                        ? false
+                        : value
+                    )
                     .map((value, index) => (
                       <Picker.Item label={value} value={value} key={index} />
                     ))}
-
                 </Picker>
               </View>
               <View style={editU.radioButton}>
                 <Text>Vôce é doador de sangue</Text>
                 <RadioButton.Android
                   value="option1"
-                  status={inputSangue === 'option1' ?
-                    'checked' : 'unchecked'}
-                  onPress={() => setInputSangue('option1')}
+                  status={inputSangue === "option1" ? "checked" : "unchecked"}
+                  onPress={() => setInputSangue("option1")}
                   color="#007BFF"
                 />
-                <Text style={editU.radioLabel}>
-                  Sim
-                </Text>
+                <Text style={editU.radioLabel}>Sim</Text>
               </View>
               <View style={editU.radioButton}>
                 <RadioButton.Android
                   value="option2"
-                  status={inputSangue === 'option2' ?
-                    'checked' : 'unchecked'}
-                  onPress={() => setInputSangue('option2')}
+                  status={inputSangue === "option2" ? "checked" : "unchecked"}
+                  onPress={() => setInputSangue("option2")}
                   color="#007BFF"
                 />
-                <Text style={editU.radioLabel}>
-                  Não
-                </Text>
+                <Text style={editU.radioLabel}>Não</Text>
               </View>
               {/* radioButton  doador orgãos*/}
               <View style={editU.tiposSangue}>
@@ -891,50 +826,46 @@ export function EditUser() {
                     <Text>Vôce é doador de orgãos</Text>
                     <RadioButton.Android
                       value="option3"
-                      status={inputOrgao === 'option3' ?
-                        'checked' : 'unchecked'}
-                      onPress={() => setInputOrgao('option3')}
+                      status={
+                        inputOrgao === "option3" ? "checked" : "unchecked"
+                      }
+                      onPress={() => setInputOrgao("option3")}
                       color="#007BFF"
                     />
-                    <Text style={editU.radioLabel}>
-                      Sim
-                    </Text>
+                    <Text style={editU.radioLabel}>Sim</Text>
                   </View>
                   <View style={editU.radioButton}>
                     <RadioButton.Android
                       value="option4"
-                      status={inputOrgao === 'option4' ?
-                        'checked' : 'unchecked'}
-                      onPress={() => setInputOrgao('option4')}
+                      status={
+                        inputOrgao === "option4" ? "checked" : "unchecked"
+                      }
+                      onPress={() => setInputOrgao("option4")}
                       color="#007BFF"
                     />
-                    <Text style={editU.radioLabel}>
-                      Não
-                    </Text>
+                    <Text style={editU.radioLabel}>Não</Text>
                   </View>
                 </View>
               </View>
-
-
-
             </View>
           )}
 
-          <TouchableOpacity style={editU.btnSalvar} onPress={() => {
-            const editandoUsuario = async (dados) => {
-              console.log(dados)
-              const idz = await AsyncStorage.getItem("id")
-              try {
-                const response = api
-                  .put(`/users/edit/${idz}`,
-                    dados)
-                console.log(response.data)
-              } catch (error) {
-                console.log(error.response.data)
-              }
-            }
-            editandoUsuario(EditarInformacoes)
-          }}>
+          <TouchableOpacity
+            style={editU.btnSalvar}
+            onPress={() => {
+              const editandoUsuario = async (dados) => {
+                console.log(dados);
+                const idz = await AsyncStorage.getItem("id");
+                try {
+                  const response = api.put(`/users/edit/${idz}`, dados);
+                  console.log(response.data);
+                } catch (error) {
+                  console.log(error.response.data);
+                }
+              };
+              editandoUsuario(EditarInformacoes);
+            }}
+          >
             <Text style={editU.btnText}>SALVAR</Text>
           </TouchableOpacity>
         </View>
@@ -1004,40 +935,36 @@ const editU = StyleSheet.create({
     color: "green",
   },
   logoutButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: '#FF6347',
+    backgroundColor: "#FF6347",
     borderRadius: 5,
     padding: 10,
   },
 
   button: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   radioButton: {
-
-
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   radioLabel: {
     marginLeft: 8,
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   tiposSangue: {
     marginBottom: 10,
-    marginTop: 10
-
-
+    marginTop: 10,
   },
 
   inputDoador: {
-    borderColor: 'transparent',
+    borderColor: "transparent",
     borderWidth: 1,
-    gap: 2
+    gap: 2,
   },
- 
+  sair: {
+    backgroundColor: "black",
+  },
 });
-
