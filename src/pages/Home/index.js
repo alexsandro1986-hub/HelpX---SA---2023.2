@@ -10,7 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef} from "react";
+import { useState, useRef, useEffect} from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
@@ -18,12 +18,57 @@ import { Alert } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from 'react-native-paper';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const baseURL = 'https://helpx.glitch.me'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+
 export default function Home(navigation) {
+
+  const {setId, id, setUserInfo} = useContext(ContextInfo)
+  useEffect(() => {
+    pegandoId()
+
+  }, [])
+
+  const pegandoId = async () => {
+    const idzinho = await AsyncStorage.getItem("id")
+    console.log("Entrei aqui na home para pegar o id", idzinho)
+
+    try {
+      const response = await axios.get(`${baseURL}/users/logged/${idzinho}`)
+      setUserInfo(response.data)
+      console.log('Dados do usuario', response.data)
+      
+     
+    } catch (error) {
+      console.log(error.message)
+      // console.log(error.response.data)
+     
+
+    }
+  }
+ 
+  // }
+  // const carregar_infos_user_logged = async () => {
+  //   try {
+  //     const response = await axios.get(`${baseURL}/users/logged/${id}`)
+  //     setUserInfo(response.data)
+  //     console.log('Dados do usuario', response.data)
+      
+     
+  //   } catch (error) {
+  //     console.log(error.message)
+  //     // console.log(error.response.data)
+     
+
+  //   }
+  // }
+ 
+
+
   return (
     <Tab.Navigator
       initialRouteName="StackFeed"
@@ -247,7 +292,8 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-
+  const {userInfo} = useContext(ContextInfo)
+  console.log(userInfo)
   return (
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
@@ -277,7 +323,7 @@ function Profile() {
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-          Nome Usuario
+           {userInfo[0].nome}
         </Text>
       </View>
 

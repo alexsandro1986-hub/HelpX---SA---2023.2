@@ -9,7 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RemedioContext, RemedioContextProvider } from './remedioContext';
 import axios from 'axios';
 import { set } from 'react-native-reanimated';
-
+import api from '../Api_gerenciamento';
 
 const baseURL = 'https://helpx.glitch.me'
 
@@ -219,8 +219,8 @@ function PostSanfona(props) {
                                     onPress={() => {
                                         const deletando_tratamento = async (codigo) => {
                                             try {
-                                                const response = await axios
-                                                    .delete(`${baseURL}/users/tratamento/${id}`, { codigo })
+                                                const response = await api
+                                                    .delete(`/users/tratamento/${id}`, { codigo })
 
                                                 console.log('Dados', response.data)
                                             } catch (error) {
