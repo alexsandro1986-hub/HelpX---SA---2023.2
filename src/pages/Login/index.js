@@ -85,7 +85,7 @@ export function Login() {
 
 
 
-  const entrar = (flagAdm) => {
+  const entrar = (flagAdm, idzao) => {
     console.log(flagAdm)
        switch (true) {
         case flagAdm == true:
@@ -94,7 +94,8 @@ export function Login() {
         case flagAdm == false:
           const carregar_infos_user_logged = async () => {
             try {
-              const response = await axios.get(`${baseURL}/users/logged/${id}`)
+              console.log(id)
+              const response = await axios.get(`${baseURL}/users/logged/${idzao}`)
               setUserInfo(response.data)
               console.log('aaaa', response.data)
               
@@ -177,8 +178,11 @@ export function Login() {
               try {
                 const response = await axios.post('https://helpx.glitch.me/login', { email, senha })
                 console.log(response.data.id)
-                setId(response.data.id)
-                entrar(response.data.flagAdm)
+                console.log(typeof response.data.id)
+                let idzinho = response.data.id
+                setId(idzinho)
+                console.log("vdsss", id)
+                entrar(response.data.flagAdm, response.data.id)
               } catch (error) {
                 console.log(error.message)
                 console.log(error.response.data)

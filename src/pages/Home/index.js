@@ -10,7 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef} from "react";
+import { useState, useRef } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
@@ -22,6 +22,9 @@ import axios from "axios";
 const baseURL = 'https://helpx.glitch.me'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+
+
 
 export default function Home(navigation) {
   return (
@@ -82,24 +85,31 @@ function StackFeed() {
       <Stack.Screen
         name="EditUser"
         component={EditUser}
-        options={{ title: "Editar Dados", headerTitleAlign: 'center',headerBackTitle: "Voltar", headerStyle: {
-          backgroundColor: '#97D8AE', },
+        options={{
+          title: "Editar Dados", headerTitleAlign: 'center', headerBackTitle: "Voltar", headerStyle: {
+            backgroundColor: '#97D8AE',
+          },
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 24}}}
+            fontSize: 24
+          }
+        }}
       />
 
       <Stack.Screen
         name="QrCodeUser"
         component={QrCodeUser}
-        options={{title: "Meu QRCode",  headerTitleAlign: 'center',headerBackTitle: "Voltar", headerStyle: {
-          backgroundColor: '#97D8AE',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 24}}}
+        options={{
+          title: "Meu QRCode", headerTitleAlign: 'center', headerBackTitle: "Voltar", headerStyle: {
+            backgroundColor: '#97D8AE',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 24
+          }
+        }}
       />
     </Stack.Navigator>
   );
@@ -247,7 +257,7 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-
+  const {userInfo} = useContext(ContextInfo)
   return (
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
@@ -265,7 +275,7 @@ function Profile() {
             borderColor: "black",
             borderWidth: 2,
             borderRadius: 10,
-            width: 80 ,
+            width: 80,
             height: 80,
             justifyContent: "center",
             alignItems: "center",
@@ -277,28 +287,28 @@ function Profile() {
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-          Nome Usuario
+          {userInfo[0].nome}
         </Text>
       </View>
 
       <View style={profile.infoView}>
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>21</Text>
+          <Text style={profile.textInfoUser}> </Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>alergia</Text>
-          <Text style={profile.textInfoUser}> Dipirona, fermento</Text>
+          <Text style={profile.textInfoUser}>Dipirona, fermento</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Cont. emergencia</Text>
-          <Text style={profile.textInfoUser}>48 996760904</Text>
+          <Text style={profile.textInfoUser}></Text>
         </View>
       </View>
 
-      
+
     </LinearGradient>
   );
 }
@@ -365,20 +375,20 @@ const profile = StyleSheet.create({
 
 export function QrCodeUser() {
   const viewShotRef = useRef(null);
-  const {id}= useContext(ContextInfo)
+  const { id } = useContext(ContextInfo)
   const handleSaveAndDownload = async () => {
     try {
       if (viewShotRef.current) {
-       
+
         const result = await viewShotRef.current.capture();
 
-       
+
         if (result) {
-         
+
           await MediaLibrary.saveToLibraryAsync(result);
 
-      
-          
+
+
           Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
           Alert.alert('Concluido', 'Imagem salva com sucesso!');
         } else {
@@ -438,6 +448,8 @@ export function EditUser() {
   const {
     inputNome,
     setInputNome,
+    inputEmail, 
+    setInputEmail,
     inputIdade,
     setInputIdade,
     inputAlergias,
@@ -454,9 +466,8 @@ export function EditUser() {
     setInputLogradouro,
     inputNumeroCasa,
     setNumeroCasa,
-    inputDoador,
-    setInputDoador,
-
+    userInfo,
+    id
   } = useContext(ContextInfo);
 
   const [expandirNome, setExpandirNome] = useState(false);
@@ -464,10 +475,31 @@ export function EditUser() {
   const [expandirContato, setExpandirContato] = useState(false);
   const [expandirEndereco, setExpandirEndereco] = useState(false);
   const [expandirSangue, setExpandirSangue] = useState(false);
+  let EditarInformacoes = {
+      // As informações que não for atualizar não colocar no objeto
+    nome: inputNome,
+    email: inputEmail,
+    sangue: 'B+',
+    idade: Number(inputIdade),
+    cpf: '89-000-222-11',
+    telefoneusuario:  inputTelefone,
+    //   alergia: 'Rinite alérgica',
+    // alergiaesp: "Especificação"
+    //   comorbidade: 'Hipertensão arterial',
+    // comorbidadeesp: "Especificação",
+      logradouro: inputLogradouro,
+    numerocasa: inputNumeroCasa,
+    ncep:  inputNCep,
+    contatoemergencia:  inputContatoEmergencia,
+    emailemergencia: 'albert@gmail.com',
+    telefoneemergencia: inputNtelefoneEmergencia,
+    doadorsangue: inputSangue,
+    doadororgao: inputOrgao
+  }
 
   const alergias = [
     "",
-    "Não possuo alergia",
+    "Nenhuma",
     "Latex",
     "Polem",
     "Alimentos",
@@ -568,8 +600,8 @@ export function EditUser() {
                       alergiaSelecionado === 0
                         ? value
                         : index === 0
-                        ? false
-                        : value
+                          ? false
+                          : value
                     )
                     .map((value, index) => (
                       <Picker.Item label={value} value={value} key={index} />
@@ -700,88 +732,101 @@ export function EditUser() {
 
           {expandirSangue && (
             <View style={{ width: "100%", padding: 10, gap: 10 }}>
-              
 
-              
+
+
               <View style={editU.inputDoador}>
-                            <Picker
+                <Picker
 
-                                mode="dropdown"
-                                selectedValue={inputTiposanguineo}
-                                onValueChange={(itemValue) =>
-                                    setInputTiposanguineo(itemValue)
-                                }>
+                  mode="dropdown"
+                  selectedValue={inputTiposanguineo}
+                  onValueChange={(itemValue) =>
+                    setInputTiposanguineo(itemValue)
+                  }>
 
-                                {sangue
-                                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
-                                    .map((value, index) => (
-                                        <Picker.Item label={value} value={value} key={index} />
-                                    ))}
+                  {sangue
+                    .filter((value, index) => inputTiposanguineo === 0 ? value : index === 0 ? false : value)
+                    .map((value, index) => (
+                      <Picker.Item label={value} value={value} key={index} />
+                    ))}
 
-                            </Picker>
-                            </View>
-                            <View style={editU.radioButton}>
-                                    <Text>Vôce é doador de sangue</Text>
-                                    <RadioButton.Android
-                                        value="option1"
-                                        status={inputSangue === 'option1' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option1')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={editU.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={editU.radioButton}>
-                                    <RadioButton.Android
-                                        value="option2"
-                                        status={inputSangue === 'option2' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputSangue('option2')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={editU.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
-                                 {/* radioButton  doador orgãos*/}
-                        <View style={editU.tiposSangue}>
-                            <View style={editU.radioGroup}>
-                                <View style={editU.radioButton}>
-                                    <Text>Vôce é doador de orgãos</Text>
-                                    <RadioButton.Android
-                                        value="option3"
-                                        status={inputOrgao === 'option3' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option3')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={editU.radioLabel}>
-                                        Sim
-                                    </Text>
-                                </View>
-                                <View style={editU.radioButton}>
-                                    <RadioButton.Android
-                                        value="option4"
-                                        status={inputOrgao === 'option4' ?
-                                            'checked' : 'unchecked'}
-                                        onPress={() => setInputOrgao('option4')}
-                                        color="#007BFF"
-                                    />
-                                    <Text style={editU.radioLabel}>
-                                        Não
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
+                </Picker>
+              </View>
+              <View style={editU.radioButton}>
+                <Text>Vôce é doador de sangue</Text>
+                <RadioButton.Android
+                  value="option1"
+                  status={inputSangue === 'option1' ?
+                    'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('option1')}
+                  color="#007BFF"
+                />
+                <Text style={editU.radioLabel}>
+                  Sim
+                </Text>
+              </View>
+              <View style={editU.radioButton}>
+                <RadioButton.Android
+                  value="option2"
+                  status={inputSangue === 'option2' ?
+                    'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('option2')}
+                  color="#007BFF"
+                />
+                <Text style={editU.radioLabel}>
+                  Não
+                </Text>
+              </View>
+              {/* radioButton  doador orgãos*/}
+              <View style={editU.tiposSangue}>
+                <View style={editU.radioGroup}>
+                  <View style={editU.radioButton}>
+                    <Text>Vôce é doador de orgãos</Text>
+                    <RadioButton.Android
+                      value="option3"
+                      status={inputOrgao === 'option3' ?
+                        'checked' : 'unchecked'}
+                      onPress={() => setInputOrgao('option3')}
+                      color="#007BFF"
+                    />
+                    <Text style={editU.radioLabel}>
+                      Sim
+                    </Text>
+                  </View>
+                  <View style={editU.radioButton}>
+                    <RadioButton.Android
+                      value="option4"
+                      status={inputOrgao === 'option4' ?
+                        'checked' : 'unchecked'}
+                      onPress={() => setInputOrgao('option4')}
+                      color="#007BFF"
+                    />
+                    <Text style={editU.radioLabel}>
+                      Não
+                    </Text>
+                  </View>
+                </View>
+              </View>
 
 
-              
+
             </View>
           )}
 
-          <TouchableOpacity style={editU.btnSalvar}>
+          <TouchableOpacity style={editU.btnSalvar} onPress={() => {
+            const editandoUsuario = async (dados) => {
+              console.log(dados)
+              try {
+                const response = axios
+                  .put(`${baseURL}/users/edit/deed069e-1ada-409a-a7b7-4870a3a9bf85`,
+                    dados)
+                console.log(response.data)
+              } catch (error) {
+                console.log(error.response.data)
+              }
+            }
+            editandoUsuario(EditarInformacoes)
+          }}>
             <Text style={editU.btnText}>SALVAR</Text>
           </TouchableOpacity>
         </View>
@@ -856,22 +901,22 @@ const editU = StyleSheet.create({
 
     alignItems: 'center',
 
-},
-radioLabel: {
+  },
+  radioLabel: {
     marginLeft: 8,
     fontSize: 16,
     color: '#333',
-},
- tiposSangue: {
-        marginBottom: 10,
-        marginTop: 10
+  },
+  tiposSangue: {
+    marginBottom: 10,
+    marginTop: 10
 
 
-    },
+  },
 
-    inputDoador: {
-      borderColor: 'transparent',
-      borderWidth: 1,
-      gap: 2
+  inputDoador: {
+    borderColor: 'transparent',
+    borderWidth: 1,
+    gap: 2
   },
 });
