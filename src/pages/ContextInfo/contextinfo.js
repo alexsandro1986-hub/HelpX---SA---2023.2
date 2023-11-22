@@ -29,8 +29,8 @@ export const ContextInfoProvider = ({ children }) => {
     //Cadastro
 
     // Login
-    const [id, setId] = useState()
-    const [userInfo, setUserInfo] = useState()
+    const [id, setId] = useState('')
+    const [userInfo, setUserInfo] = useState('')
     //ADMIN
     const [flagAdm, setFlagAdm] = useState(false)
     const senhaAdm = '123'
