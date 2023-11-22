@@ -24,7 +24,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputSangue, setInputSangue] = useState('')
     const [inputOrgao, setInputOrgao] = useState('')
     const [inputCpf, setInputCpf] = useState('')
-    const [inputComorbidade, setInpuComorbidade] = useState('')
+    const [inputComor, setInputComor] = useState('')
     const [inputMedicamentoComor,  setInputMedicamentoComor] = useState('')
     //Cadastro
 
@@ -249,7 +249,7 @@ export const ContextInfoProvider = ({ children }) => {
                 inputSangue, setInputSangue,
                 inputOrgao, setInputOrgao,
                 
-                inputComorbidade, setInpuComorbidade,
+                inputComor, setInputComor,
                 inputMedicamentoComor, setInputMedicamentoComor,
               
                 inputNCep, setInputNcep,

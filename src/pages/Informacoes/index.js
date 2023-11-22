@@ -15,7 +15,9 @@ import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
-import axios from 'axios';
+import api from '../Api_gerenciamento';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 
@@ -183,8 +185,8 @@ function Nome() {
 
 function Alergias() {
     const alergias = [
-        '',
-        "Não possuo alergia",
+        "Nenhuma",
+        "Nenhuma",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
@@ -203,7 +205,8 @@ function Alergias() {
         "Produtos de beleza",
         "Insetos de jardim",
         "Látex de frutas",
-        "Produtos de limpeza"
+        "Produtos de limpeza",
+        "Outras",
     ]
 
 
@@ -243,12 +246,10 @@ function Alergias() {
 }
 
 function Comorbidade() {
-    const { inputComorbidade, setInputComorbidade } = useContext(ContextInfo)
-    const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
-    const [radiusButton, setRadiusButton] = useState(false);
-
+    
     const comorbidades = [
-        '',
+        "Nenhuma",
+        "Nenhuma",
         "Hipertensão arterial",
         "Diabetes mellitus",
         "Obesidade",
@@ -268,93 +269,59 @@ function Comorbidade() {
         "Epilepsia",
         "Doenças neurológicas",
         "Doenças gastrointestinais",
-        "Transtornos psiquiátricos"
+        "Transtornos psiquiátricos",
+        "Outras",
     ]
 
+    const { inputComor, setInputComor } = useContext(ContextInfo)
+    const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
 
-
-    const {  setAlergiaSelecionada } = useContext(ContextInfo)
     return (
         <View style={{ flex: 1, padding: 20 }} >
             <View style={styles.viwInfomativo}>
                 <Text style={styles.txtInfomativo}>Está tratando alguma doença?</Text>
             </View>
 
-            <View style={styles.radioGroup}>
-                <View style={styles.radioButton}>
-                    <Text></Text>
-                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+                <View style={styles.inputAlergias}>
+                <Picker
+                    mode="dropdown"
+                    selectedValue={inputComor}
+                    onValueChange={(itemValue) =>
+                        setInputComor(itemValue)
 
-                        <View style={styles.radioLabel}>
-                            <RadioButton.Android
-                                value={true}
-                                status={radiusButton === true ?
-                                    'checked' : 'unchecked'}
-                                onPress={() => setRadiusButton(true)}
-                                color="#007BFF"
-                            />
-                            <Text style={styles.radioText} >
-                                Sim
-                            </Text>
-                        </View>
+                    }>
 
 
-                        <View style={styles.radioLabel}>
-                            <RadioButton.Android
-                                value={false}
-                                status={radiusButton === false ?
-                                    'checked' : 'unchecked'}
-                                onPress={() => setRadiusButton(false)}
-                                color="#007BFF"
-                            />
-                            <Text style={styles.radioText} >
-                                Não
-                            </Text>
-                        </View>
-                    </View>
-
-                </View>
-            </View>
-
-            {radiusButton && (
-                <View>
-                    <View style={styles.inputAlergias}>
-                        <Picker
-                            mode="dropdown"
-                            selectedValue={inputComorbidade}
-                            onValueChange={(itemValue) =>
-                                setInputComorbidade(itemValue)
-
-                            }>
-
-
-                            {comorbidades
-                                .filter((value, index) => inputComorbidade === 0 ? value : index === 0 ? false : value)
-                                .map((value, index) => (
-                                    <Picker.Item label={value} value={value} key={index} />
-                                ))}
-                            {/* alergias.map(al => {
+                        {comorbidades
+                            .filter((value, index) => inputComor === 0 ? value : index === 0 ? false : value)
+                            .map((value, index) => (
+                                <Picker.Item label={value} value={value} key={index} />
+                            ))}
+                        {/* alergias.map(al => {
                                         return <Picker.Item label={al} value={al} />
                                     }) */}
 
-                        </Picker>
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Remédio"
-                        value={inputMedicamentoComor}
-                        onChangeText={setInputMedicamentoComor}
-                        returnKeyType="done"
-                    />
+                    </Picker>
                 </View>
+                {/* <TextInput
+                    style={styles.input}
+                    placeholder="Remédio"
+                    value={inputMedicamentoComor}
+                    onChangeText={setInputMedicamentoComor}
+                    returnKeyType="done"
+                /> */}
+            </View>
 
 
-            )}
+
+
+
         </View>
 
 
 
-    )
+    );
 }
 
 
@@ -365,8 +332,8 @@ function Doador() {
 
     const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-    const {inputSangue, setInputSangue} = useContext(ContextInfo);
-    const {inputOrgao, setInputOrgao} = useContext(ContextInfo);
+    const { inputSangue, setInputSangue } = useContext(ContextInfo);
+    const { inputOrgao, setInputOrgao } = useContext(ContextInfo);
 
     return (
 
@@ -525,9 +492,9 @@ function Endereco() {
     const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
     const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
     const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
-    const { comorbidadeSelecionado } = useContext(ContextInfo)
-    const {inputSangue, setInputSangue} = useContext(ContextInfo);
-    const {inputOrgao, setInputOrgao} = useContext(ContextInfo);
+    const { inputComor } = useContext(ContextInfo)
+    const { inputSangue, setInputSangue } = useContext(ContextInfo);
+    const { inputOrgao, setInputOrgao } = useContext(ContextInfo);
     const { inputNCep, setInputNcep } = useContext(ContextInfo)
     const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
     const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
@@ -569,11 +536,13 @@ function Endereco() {
                 const completar_cadastro = async (dados) => {
                     console.log('dados', dados)
                     console.log(inputSangue)
+                    const idz = await AsyncStorage.getItem("id")
                     try {
-                        const response = await axios
-                            .put(`${baseURL}/users/complete/${id}`, dados)
+                        console.log("Id do storage", idz)
+                        const response = await api.put("/users/complete/c80c35fb-c936-4c66-9e58-2c861a12182d", dados)
                         console.log(response.data)
                     } catch (error) {
+                        console.log(error.response)
                         console.log(error.response.data)
                     }
                 }
@@ -583,7 +552,7 @@ function Endereco() {
                     idade: inputIdade,
                     cpf: inputCpf,
                     alergia: alergiaSelecionado,
-                    comorbidade: comorbidadeSelecionado,
+                    comorbidade: inputComor,
                     medicamento: inputMedicamentoComor,
                     sangue: inputTiposanguineo,
                     doadorsangue: inputSangue,
@@ -595,11 +564,11 @@ function Endereco() {
                     logradouro: inputLogradouro,
                     numerocasa: inputNumeroCasa,
                     emailemergencia: inputIdade,
-                    
+
 
                 }
                 completar_cadastro(CompletandoCadastro)
-                
+
             }}>
                 <Text> VSFFFFFF</Text>
             </TouchableOpacity>

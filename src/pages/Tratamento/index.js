@@ -271,7 +271,7 @@ export function AdicionarPost() {
 
     const criando_tratamento = async (enfermidade, periodo, droga) => {
         try {
-            const response = await axios.post(`${baseURL}/users/tratamento/${id}`, enfermidade, periodo, droga)
+            const response = await api.post(`/users/tratamento/${id}`, enfermidade, periodo, droga)
 
             console.log('aaaa', response.data)
         } catch (error) {

@@ -329,12 +329,12 @@ function Profile() {
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>alergia</Text>
-          <Text style={profile.textInfoUser}>Dipirona, fermento</Text>
+          <Text style={profile.textInfoUser}> {userInfo[0].alergia}</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Cont. emergencia</Text>
-          <Text style={profile.textInfoUser}></Text>
+          <Text style={profile.textInfoUser}> {userInfo[0].telefoneemergencia}</Text>
         </View>
       </View>
 
@@ -846,7 +846,7 @@ export function EditUser() {
           <TouchableOpacity style={editU.btnSalvar} onPress={() => {
             const editandoUsuario = async (dados) => {
               console.log(dados)
-              const idz = pegandoId()
+              const idz = await AsyncStorage.getItem("id")
               try {
                 const response = api
                   .put(`/users/edit/${idz}`,
