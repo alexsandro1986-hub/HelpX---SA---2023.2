@@ -19,7 +19,7 @@ export default function Cadastro() {
   return (
 
     <View style={styles.body}>
-      <View style={styles.logo}>
+      {/* <View style={styles.logo}>
         <Image
           source={require('../img/logoHelpX.png')}
 
@@ -27,11 +27,11 @@ export default function Cadastro() {
           resizeMode="contain"
         />
 
-      </View>
+      </View> */}
       <View style={styles.container}>
         <View style={styles.viewInputs}>
 
-          <Text style={styles.inputLabel}>E-mail</Text>
+          <Text style={styles.inputLabel}>Email</Text>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
             placeholder="Email"

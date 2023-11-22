@@ -11,8 +11,7 @@ import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
 import { useState, useRef} from "react";
-import { useState, useRef} from "react";
-import Feather from "@expo/vector-icons/Feather";
+import { Feather } from '@expo/vector-icons';
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from 'expo-media-library';
 import { Alert } from 'react-native';
@@ -24,7 +23,8 @@ const baseURL = 'https://helpx.glitch.me'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home(navigation) {
+export default function Home() {
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
       initialRouteName="StackFeed"
@@ -60,6 +60,9 @@ export default function Home(navigation) {
     </Tab.Navigator>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   geral: {
@@ -105,6 +108,9 @@ function StackFeed() {
     </Stack.Navigator>
   );
 }
+
+
+
 
 function Feed() {
   const navigation = useNavigation();
@@ -217,7 +223,21 @@ function Feed() {
           <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
             Editar Perfil
           </Text>
+          
         </TouchableOpacity>
+
+        
+
+
+        
+
+
+
+
+
+
+
+
       </View>
     </View>
   );
@@ -234,6 +254,7 @@ const feed = StyleSheet.create({
     backgroundColor: "transparent",
     borderBottomWidth: 2,
     borderColor: "#97D8AE",
+    marginTop: '5%',
   },
 
   options: {
@@ -249,17 +270,37 @@ const feed = StyleSheet.create({
 function Profile() {
   const navigation = useNavigation();
 
+  
+  const handleLogout = () => {        // Função para sair e voltar para a tela inicial
+    navigation.popToTop();            
+  };
+
+  const sair = () => {
+    navigation.popToTop();
+  };
+  
+
   return (
+    
     <LinearGradient
       colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
       style={profile.container}
     >
       <View style={profile.cima}>
-        <View style={{ width: "100%", height: "2%" }}></View>
+        <View style={{ width: "100%", height: "2%" }}>
+          
+        </View>
+        
 
         <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
           Meu Perfil
         </Text>
+
+    
+
+        
+       
+        
 
         <View
           style={{
@@ -274,7 +315,15 @@ function Profile() {
         >
           <MaterialCommunityIcons name="account" color={"black"} size={80} />
         </View>
+
+
+
+        
       </View>
+
+      
+     
+
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
@@ -283,6 +332,7 @@ function Profile() {
       </View>
 
       <View style={profile.infoView}>
+        
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
           <Text style={profile.textInfoUser}>21</Text>
@@ -299,10 +349,35 @@ function Profile() {
         </View>
       </View>
 
+  
+    <View style={styles.sair}>
+
+        <TouchableOpacity style={styles.button} onPress={sair}>
+             <Text>SAIR</Text>
+        </TouchableOpacity>
+    </View>
+
       
     </LinearGradient>
   );
 }
+
+function sair(navigation) {
+  const goToHome = () => {
+    navigation.popToTop();
+  };
+
+  return (
+    <LinearGradient
+      colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
+      style={profile.container}
+    >
+     
+    </LinearGradient>
+  );
+}
+
+
 
 const profile = StyleSheet.create({
   container: {
@@ -318,6 +393,7 @@ const profile = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 30,
+    marginTop: "1%",
   },
 
   viewNameUser: {
@@ -365,21 +441,14 @@ const profile = StyleSheet.create({
 });
 
 export function QrCodeUser() {
-  const viewShotRef = useRef(null);
-  const {id}= useContext(ContextInfo)
+  const viewShotRef = React.useRef(null);
+  const { id } = useContext(ContextInfo);
   const handleSaveAndDownload = async () => {
     try {
       if (viewShotRef.current) {
-       
         const result = await viewShotRef.current.capture();
-
-       
         if (result) {
-         
           await MediaLibrary.saveToLibraryAsync(result);
-
-      
-          
           Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
           Alert.alert('Concluido', 'Imagem salva com sucesso!');
         } else {
@@ -399,10 +468,6 @@ export function QrCodeUser() {
         </View>
       </ViewShot>
 
-      <TouchableOpacity onPress={handleSaveAndDownload} style={qrcode.saveButton}>
-        <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
-      </TouchableOpacity>
-    </View>
       <TouchableOpacity onPress={handleSaveAndDownload} style={qrcode.saveButton}>
         <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
       </TouchableOpacity>
@@ -873,7 +938,18 @@ const editU = StyleSheet.create({
     fontWeight: "700",
     color: "green",
   },
+  logoutButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#FF6347',
+    borderRadius: 5,
+    padding: 10,
+  },
 
+  button: {
+    alignItems: 'center',
+  },
   radioButton: {
 
 
@@ -897,4 +973,6 @@ radioLabel: {
       borderWidth: 1,
       gap: 2
   },
+ 
 });
+
