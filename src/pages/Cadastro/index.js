@@ -6,7 +6,7 @@ import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import axios from 'axios';
-
+import api from '../Api_gerenciamento';
 const baseURL = 'https://helpx.glitch.me'
 
 
@@ -68,9 +68,10 @@ export default function Cadastro() {
         onPress={() => {
           const cadastro = async (email, senha) => {
             try {
-              const response = await axios.post(`${baseURL}/cadastro`, { email, senha })
+              const response = await api.post("/cadastro", { email, senha })
 
               console.log('OK', response.data)
+              navigation.navigate("Login")
             } catch (error) {
               console.log(error)
               console.log(error.message)
