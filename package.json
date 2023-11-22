@@ -19,14 +19,14 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@react-navigation/stack": "^6.3.17",
-    "axios": "^1.6.1",
+    "axios": "^1.6.2",
     "dom-to-image": "^2.6.0",
     "expo": "~48.0.17",
     "expo-constants": "^14.4.2",
     "expo-device": "^5.6.0",
     "expo-font": "^11.6.0",
     "expo-linear-gradient": "~12.1.2",
-    "expo-media-library": "^15.6.0",
+    "expo-media-library": "~15.2.3",
     "expo-status-bar": "~1.6.0",
     "feather-icons": "^4.29.1",
     "firebase": "^9.23.0",
@@ -49,8 +49,7 @@
     "react-native-vector-icons": "^10.0.0",
     "react-native-view-shot": "^3.8.0",
     "react-native-web": "~0.18.10",
-    "yet": "^0.1.0",
-    "expo-media-library": "~15.2.3"
+    "yet": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

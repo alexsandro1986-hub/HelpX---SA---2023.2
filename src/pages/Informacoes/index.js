@@ -15,10 +15,12 @@ import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
+import axios from 'axios';
 
 
 
 
+const baseURL = 'https://helpx.glitch.me'
 
 
 const telaAltura = Dimensions.get('window').height;
@@ -65,8 +67,11 @@ function renderSlides({ item }) {
 
 
 export default function Informacoes() {
-
+    const { inputNome, setInputNome } = useContext(ContextInfo)
+    const { inputIdade, setInputIdade } = useContext(ContextInfo)
+    const { inputCpf, setInputCpf, id } = useContext(ContextInfo)
     const navigation = useNavigation()
+
 
     return (
         <AppIntroSlider
@@ -112,7 +117,13 @@ export default function Informacoes() {
                 );
             }
             }
-            onDone={() => (navigation.navigate('Home'))}
+            onDone={() => {
+
+
+                (navigation.navigate('Home'))
+
+
+            }}
 
         />
     );
@@ -262,7 +273,7 @@ function Comorbidade() {
 
 
 
-    const { comorbidadeSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
+    const {  setAlergiaSelecionada } = useContext(ContextInfo)
     return (
         <View style={{ flex: 1, padding: 20 }} >
             <View style={styles.viwInfomativo}>
@@ -310,15 +321,15 @@ function Comorbidade() {
                     <View style={styles.inputAlergias}>
                         <Picker
                             mode="dropdown"
-                            selectedValue={comorbidadeSelecionado}
+                            selectedValue={inputComorbidade}
                             onValueChange={(itemValue) =>
-                                setAlergiaSelecionada(itemValue)
+                                setInputComorbidade(itemValue)
 
                             }>
 
 
                             {comorbidades
-                                .filter((value, index) => comorbidadeSelecionado === 0 ? value : index === 0 ? false : value)
+                                .filter((value, index) => inputComorbidade === 0 ? value : index === 0 ? false : value)
                                 .map((value, index) => (
                                     <Picker.Item label={value} value={value} key={index} />
                                 ))}
@@ -354,8 +365,8 @@ function Doador() {
 
     const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-    const [inputSangue, setInputSangue] = useState('option1');
-    const [inputOrgao, setInputOrgao] = useState('option3');
+    const [inputSangue, setInputSangue] = useState();
+    const [inputOrgao, setInputOrgao] = useState();
 
     return (
 
@@ -390,10 +401,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="option1"
-                                    status={inputSangue === 'option1' ?
+                                    value="sim"
+                                    status={inputSangue === 'sim' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue('option1')}
+                                    onPress={() => setInputSangue('sim')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -404,10 +415,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="option2"
-                                    status={inputSangue === 'option2' ?
+                                    value="nao"
+                                    status={inputSangue === 'nao' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue('option2')}
+                                    onPress={() => setInputSangue('nao')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -428,10 +439,10 @@ function Doador() {
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="option3"
-                                    status={inputOrgao === 'option3' ?
+                                    value="sim"
+                                    status={inputOrgao === 'sim' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputOrgao('option3')}
+                                    onPress={() => setInputOrgao('sim')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText}>
@@ -443,10 +454,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="option4"
-                                    status={inputOrgao === 'option4' ?
+                                    value="nao"
+                                    status={inputOrgao === 'nao' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputOrgao('option4')}
+                                    onPress={() => setInputOrgao('nao')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText}>
@@ -505,10 +516,25 @@ function Contatos() {
 
 
 function Endereco() {
-
+    const { inputNome, setInputNome } = useContext(ContextInfo)
+    const { inputIdade, setInputIdade } = useContext(ContextInfo)
+    const { inputCpf, setInputCpf } = useContext(ContextInfo)
+    const { inputTelefone, setInputTelefone } = useContext(ContextInfo)
+    const { inputContatoEmergencia, setInputContatoEmergencia } = useContext(ContextInfo)
+    const { inputNtelefoneEmergencia, setNtelefoneEmergencia } = useContext(ContextInfo)
+    const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
+    const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
+    const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
+    const { comorbidadeSelecionado } = useContext(ContextInfo)
+    const [inputSangue, setInputSangue] = useState('option1');
+    const [inputOrgao, setInputOrgao] = useState('option3');
     const { inputNCep, setInputNcep } = useContext(ContextInfo)
     const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
     const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
+
+
+
+
     return (
 
         <View style={{ flex: 1, padding: 20 }}>
@@ -536,6 +562,47 @@ function Endereco() {
                 onChangeText={setNumeroCasa}
                 returnKeyType="done"
             />
+
+
+
+            <TouchableOpacity onPress={() => {
+                const completar_cadastro = async (dados) => {
+                    console.log('dados', dados)
+                    console.log(inputSangue)
+                    try {
+                        const response = await axios
+                            .put(`${baseURL}/users/complete/aa857351-ab7f-485f-84de-898cc112132c`, dados)
+                        console.log(response.data)
+                    } catch (error) {
+                        console.log(error.response.data)
+                    }
+                }
+
+                let CompletandoCadastro = {
+                    nome: inputNome,
+                    idade: inputIdade,
+                    cpf: inputCpf,
+                    alergia: alergiaSelecionado,
+                    comorbidade: comorbidadeSelecionado,
+                    medicamento: inputMedicamentoComor,
+                    sangue: inputTiposanguineo,
+                    doadorsangue: inputSangue,
+                    doadororgao: inputOrgao,
+                    telefoneusuario: inputTelefone,
+                    contatoemergencia: inputContatoEmergencia,
+                    telefoneemergencia: inputNtelefoneEmergencia,
+                    ncep: inputNCep,
+                    logradouro: inputLogradouro,
+                    numerocasa: inputNumeroCasa,
+                    emailemergencia: inputIdade,
+                    
+
+                }
+                completar_cadastro(CompletandoCadastro)
+                
+            }}>
+                <Text> VSFFFFFF</Text>
+            </TouchableOpacity>
         </View>
 
 
