@@ -324,7 +324,7 @@ function Profile() {
       <View style={profile.infoView}>
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>    {userInfo[0].idade}</Text>
+          <Text style={profile.textInfoUser}> {userInfo[0].idade}</Text>
         </View>
 
         <View style={profile.infoUser}>

@@ -365,8 +365,8 @@ function Doador() {
 
     const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo)
 
-    const [inputSangue, setInputSangue] = useState();
-    const [inputOrgao, setInputOrgao] = useState();
+    const {inputSangue, setInputSangue} = useContext(ContextInfo);
+    const {inputOrgao, setInputOrgao} = useContext(ContextInfo);
 
     return (
 
@@ -402,9 +402,9 @@ function Doador() {
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
                                     value="sim"
-                                    status={inputSangue === 'sim' ?
+                                    status={inputSangue === "sim" ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue('sim')}
+                                    onPress={() => setInputSangue("sim")}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -416,9 +416,9 @@ function Doador() {
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
                                     value="nao"
-                                    status={inputSangue === 'nao' ?
+                                    status={inputSangue === "nao" ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue('nao')}
+                                    onPress={() => setInputSangue("nao")}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -526,8 +526,8 @@ function Endereco() {
     const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
     const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
     const { comorbidadeSelecionado } = useContext(ContextInfo)
-    const [inputSangue, setInputSangue] = useState('option1');
-    const [inputOrgao, setInputOrgao] = useState('option3');
+    const {inputSangue, setInputSangue} = useContext(ContextInfo);
+    const {inputOrgao, setInputOrgao} = useContext(ContextInfo);
     const { inputNCep, setInputNcep } = useContext(ContextInfo)
     const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
     const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
@@ -571,7 +571,7 @@ function Endereco() {
                     console.log(inputSangue)
                     try {
                         const response = await axios
-                            .put(`${baseURL}/users/complete/aa857351-ab7f-485f-84de-898cc112132c`, dados)
+                            .put(`${baseURL}/users/complete/${id}`, dados)
                         console.log(response.data)
                     } catch (error) {
                         console.log(error.response.data)
