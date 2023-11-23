@@ -28,6 +28,8 @@ const telaComprimento = Dimensions.get('window').width;
 
 
 
+
+
 const slides = [
     {
         key: 1,
@@ -71,12 +73,14 @@ export default function Informacoes() {
     const { inputIdade, setInputIdade } = useContext(ContextInfo)
     const { inputCpf, setInputCpf, id } = useContext(ContextInfo)
     const navigation = useNavigation()
+    const [renderizarBtnDone, setRenderBtnDone]= useState(false)
 
 
     return (
         <AppIntroSlider
             renderItem={renderSlides}
             data={slides}
+            style={styles.introSlider}
             activeDotStyle={{
                 backgroundColor: 'green',
             }}
@@ -103,7 +107,7 @@ export default function Informacoes() {
                     </View>
                 );
             }}
-            showDoneButton={true}
+            showDoneButton={renderizarBtnDone}
             renderDoneButton={() => {
                 return (
                     <View style={styles.buttonCircle}>
@@ -142,9 +146,10 @@ function Nome() {
     const { inputCpf, setInputCpf } = useContext(ContextInfo)
 
     return (
-        <View style={{ flex: 1, padding: 20 }} >
+        <View style={{ flex: 1, padding: 20, alignContent:'center'}} >
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Vamos Começar</Text>
+                <Text style={[styles.txtInfomativo, { marginBottom: 0 }]}>Vamos começar</Text>
+                <Text style={{marginBottom: 100, marginTop:10, fontSize: 24, fontWeight: '600', color: '#999999'}}>Informe abaixo</Text>
             </View>
             <TextInput
                 style={styles.input}
@@ -212,7 +217,7 @@ function Alergias() {
     const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo)
     return (
 
-        <View style={{ flex: 1, padding: 20 }}>
+        <View style={{ flex: 1, padding: 20, justifyContent:'flex-start', gap:60}}>
             <View style={styles.viwInfomativo}>
                 <Text style={styles.txtInfomativo}>Você possui alguma alergia?</Text>
             </View>
@@ -244,7 +249,7 @@ function Alergias() {
 }
 
 function Comorbidade() {
-    
+
     const comorbidades = [
         'Nenhuma',
         "Nenhuma",
@@ -281,14 +286,14 @@ function Comorbidade() {
             </View>
 
             <View>
-                <View style={styles.inputAlergias}>
-                <Picker
-                    mode="dropdown"
-                    selectedValue={inputComor}
-                    onValueChange={(itemValue) =>
-                        setInputComor(itemValue)
+                <View style={{marginBottom:35}}>
+                    <Picker
+                        mode="dropdown"
+                        selectedValue={inputComor}
+                        onValueChange={(itemValue) =>
+                            setInputComor(itemValue)
 
-                    }>
+                        }>
 
 
                         {comorbidades
@@ -339,7 +344,7 @@ function Doador() {
             <View style={styles.viwInfomativo}>
                 <Text style={styles.txtInfomativo}>Qual o seu tipo sanguíneo?</Text>
             </View>
-            <View style={styles.inputDoador}>
+            <View style={[styles.inputDoador, {marginBottom:35}]}>
                 <Picker
                     mode="dropdown"
                     selectedValue={inputTiposanguineo}
@@ -361,7 +366,7 @@ function Doador() {
             <View style={styles.tiposSangue}>
                 <View style={styles.radioGroup}>
                     <View style={styles.radioButton}>
-                        <Text>Você é doador de sangue? </Text>
+                        <Text style={styles.txtDoador}>Você é doador de sangue? </Text>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
 
                             <View style={styles.radioLabel}>
@@ -400,7 +405,7 @@ function Doador() {
             <View style={styles.tiposSangue}>
                 <View style={styles.radioGroup}>
                     <View style={styles.radioButton}>
-                        <Text>Você é doador de orgãos?</Text>
+                        <Text  style={styles.txtDoador}>Você é doador de orgãos?</Text>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
@@ -448,27 +453,30 @@ function Contatos() {
 
         <View style={{ flex: 1, padding: 20 }}>
             <View style={styles.viwInfomativo}>
-                <Text style={styles.txtInfomativo}>Informações de Contato</Text>
+                <Text style={styles.txtInfomativo}>Informações de contato</Text>
             </View>
             <TextInput
-                style={styles.input_Contato}
-                placeholder="N° de Telefone"
+                style={styles.input}
+                placeholder="Seu numero de Telefone"
                 value={inputTelefone}
                 onChangeText={setInputTelefone}
                 returnKeyType="done"
 
             />
+             <View style={styles.viwInfomativo}>
+                <Text style={[styles.txtInfomativo, {marginBottom:35, marginTop: 20, fontSize:23}]}>Contato de emergência</Text>
+            </View>
             <TextInput
-                style={styles.input_Contato}
-                placeholder="Contato Emergência"
+                style={styles.input}
+                placeholder="Nome"
                 value={inputContatoEmergencia}
                 onChangeText={setInputContatoEmergencia}
                 returnKeyType="done"
 
             />
             <TextInput
-                style={styles.input_Contato}
-                placeholder="Telefone de Emergência"
+                style={styles.input}
+                placeholder="Telefone "
                 value={inputNtelefoneEmergencia}
                 onChangeText={setNtelefoneEmergencia}
                 returnKeyType="done"
@@ -507,21 +515,21 @@ function Endereco() {
                 <Text style={styles.txtInfomativo}>Seu Endereço</Text>
             </View>
             <TextInput
-                style={styles.input_endereco}
+                style={styles.input}
                 placeholder="CEP"
                 value={inputNCep}
                 onChangeText={setInputNcep}
                 returnKeyType="done"
             />
             <TextInput
-                style={styles.input_endereco}
+                style={styles.input}
                 placeholder="Rua"
                 value={inputLogradouro}
                 onChangeText={setInputLogradouro}
                 returnKeyType="done"
             />
             <TextInput
-                style={styles.input_endereco}
+                style={styles.input}
                 placeholder="Número"
                 value={inputNumeroCasa}
                 onChangeText={setNumeroCasa}
@@ -530,45 +538,44 @@ function Endereco() {
 
 
 
-            <TouchableOpacity onPress={() => {
-                const completar_cadastro = async (dados) => {
-                    console.log('dados', dados)
-                    console.log(inputSangue)
-                    const idz = await AsyncStorage.getItem("id")
-                    try {
-                        const response = await api.put(`/users/complete/${idz}`, dados)
-                        console.log(response.data)
-                    } catch (error) {
-                        console.log(error.response)
-                        //console.log(error.response.data)
+            <View style={styles.viewBtnConFirmar}>
+                <TouchableOpacity style={styles.BtnConFirmar} onPress={() => {
+                    const completar_cadastro = async (dados) => {
+                        console.log('dados', dados)
+                        console.log(inputSangue)
+                        const idz = await AsyncStorage.getItem("id")
+                        try {
+                            const response = await api.put(`/users/complete/${idz}`, dados)
+                            console.log(response.data)
+                            setRenderBtnDone(true)
+                        } catch (error) {
+                            console.log(error.response)
+                            //console.log(error.response.data)
+                        }
                     }
-                }
-
-                let CompletandoCadastro = {
-                    nome: inputNome,
-                    idade: inputIdade,
-                    cpf: inputCpf,
-                    alergia: alergiaSelecionado,
-                    comorbidade: inputComor,
-                    medicamento: inputMedicamentoComor,
-                    sangue: inputTiposanguineo,
-                    doadorsangue: inputSangue,
-                    doadororgao: inputOrgao,
-                    telefoneusuario: inputTelefone,
-                    contatoemergencia: inputContatoEmergencia,
-                    telefoneemergencia: inputNtelefoneEmergencia,
-                    ncep: inputNCep,
-                    logradouro: inputLogradouro,
-                    numerocasa: inputNumeroCasa,
-                    emailemergencia: inputIdade,
-
-
-                }
-                completar_cadastro(CompletandoCadastro)
-
-            }}>
-                <Text> VSFFFFFF</Text>
-            </TouchableOpacity>
+                    let CompletandoCadastro = {
+                        nome: inputNome,
+                        idade: inputIdade,
+                        cpf: inputCpf,
+                        alergia: alergiaSelecionado,
+                        comorbidade: inputComor,
+                        medicamento: inputMedicamentoComor,
+                        sangue: inputTiposanguineo,
+                        doadorsangue: inputSangue,
+                        doadororgao: inputOrgao,
+                        telefoneusuario: inputTelefone,
+                        contatoemergencia: inputContatoEmergencia,
+                        telefoneemergencia: inputNtelefoneEmergencia,
+                        ncep: inputNCep,
+                        logradouro: inputLogradouro,
+                        numerocasa: inputNumeroCasa,
+                        emailemergencia: inputIdade,
+                    }
+                    completar_cadastro(CompletandoCadastro)
+                }}>
+                    <Text style={styles.textoBotao}>Confirmar</Text>
+                </TouchableOpacity>
+            </View>
         </View>
 
 
@@ -598,7 +605,7 @@ const styles = StyleSheet.create({
     },
 
     textoInforma: {
-        marginTop: 83,
+        marginTop: 100,
         fontSize: 40,
         color: '#fff',
     },
@@ -609,32 +616,35 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
-        marginLeft: 12,
+
     },
 
 
     viwInfomativo: {
         alignItems: 'center',
 
+
+
     },
     txtInfomativo: {
-        marginBottom: 70,
-        fontSize: 30
+        marginTop: 15,
+        marginBottom: 60,
+        fontSize: 26,
+        fontWeight: '700',
+        color: '#1b9f4a'
     },
 
 
     input: {
         position: 'relative',
-        fontSize: 30,
+        fontSize: 27,
         borderBottomWidth: 1,
-        marginBottom: 100,
-        textAlign: 'center'
+        marginBottom: 50,
+        paddingLeft:15
 
     },
     inputAlergias: {
-        borderColor: '#DC143C',
-        borderWidth: 1,
+      
 
     },
     inputDoador: {
@@ -646,6 +656,11 @@ const styles = StyleSheet.create({
         marginTop: 10
 
 
+    },
+    txtDoador:{
+        fontSize:22,
+        fontWeight:'500',
+        color:'#979595'
     },
     radioGroup: {
         flexDirection: 'column',
@@ -704,13 +719,51 @@ const styles = StyleSheet.create({
     buttonCircle: {
         width: 60,
         height: 60,
-        backgroundColor: 'rgba(0, 0, 0, .2)',
+        backgroundColor: '#97D8AE',
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: -10
 
     },
+
+    introSlider: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
+
+    viewBtnConFirmar:{
+        width:'100%',
+        height:150,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+
+    BtnConFirmar:{
+        width: "60%",
+        height: 60,
+        backgroundColor: "#97D8AE",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        borderRadius: 18,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        marginTop: 10,
+    },
+    
+  textoBotao: {
+    // paddingTop: 5,
+    textAlign: "center",
+    alignItems: "center",
+    color: "#FFFFFF",
+    fontSize: 23,
+    fontWeight: 600,
+    fontStyle: "normal",
+    color: "white",
+  },
 
 
 

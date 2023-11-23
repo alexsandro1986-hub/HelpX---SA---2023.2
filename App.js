@@ -10,15 +10,14 @@ import StackHomePage from './src/pages/Inicio';
 
 const Stack = createStackNavigator();
 
-import Cadastro from './src/pages/Cadastro';
-import { Login } from './src/pages/Login';
+import Informacoes from './src/pages/Informacoes';
 
 function MyStack() {
   return (
     <ContextInfoProvider>
     
-  
-        <StackHomePage/>
+        <Informacoes/>
+        {/* <StackHomePage/> */}
     
         
 
