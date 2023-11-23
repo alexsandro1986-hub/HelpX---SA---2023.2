@@ -10,7 +10,8 @@ import StackHomePage from './src/pages/Inicio';
 
 const Stack = createStackNavigator();
 
-
+import Cadastro from './src/pages/Cadastro';
+import { Login } from './src/pages/Login';
 
 function MyStack() {
   return (

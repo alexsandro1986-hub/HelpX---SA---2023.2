@@ -1,13 +1,12 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingViewBase } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import { useContext, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import axios from 'axios';
+import { useNavigation, NavigationContainer } from "@react-navigation/native";
 import api from '../Api_gerenciamento';
-const baseURL = 'https://helpx.glitch.me'
 
 
 
@@ -16,10 +15,11 @@ export default function Cadastro() {
   const { inputSenha, setInputSenha } = useContext(ContextInfo)
   const { inputConfirmaSenha, setInputConfirmaSenha } = useContext(ContextInfo)
   const [texto, setTexto] = useState('')
+  const navigation = useNavigation();
   return (
 
     <View style={styles.body}>
-      {/* <View style={styles.logo}>
+      <View style={styles.logo}>
         <Image
           source={require('../img/logoHelpX.png')}
 
@@ -27,74 +27,85 @@ export default function Cadastro() {
           resizeMode="contain"
         />
 
-      </View> */}
+      </View>
       <View style={styles.container}>
         <View style={styles.viewInputs}>
 
           <Text style={styles.inputLabel}>Email</Text>
+
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
-            placeholder="Email"
             onChangeText={setInputEmail}
             value={inputEmail}
+            returnKeyType="done"
           />
         </View>
-
+        
         <View style={styles.viewInputs}>
 
-          <Text style={styles.inputLabel}> Senha</Text>
+          <Text style={styles.inputLabel}>Senha</Text>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
-            placeholder="Senha"
             onChangeText={setInputSenha}
             value={inputSenha}
+            returnKeyType="done"
 
           />
         </View>
-        <Text> {texto} </Text>
+
         <View style={styles.viewInputs}>
 
           <Text style={styles.inputLabel}>Confirmar Senha</Text>
           <TextInput
             style={[styles.input, { marginBottom: 20 }]}
-            placeholder="ConfirmarSenha"
             secureTextEntry={true}
             onChangeText={setInputConfirmaSenha}
             value={inputConfirmaSenha}
           />
         </View>
 
-        <TouchableOpacity style={styles.botao} 
-        onPress={() => {
-          const cadastro = async (email, senha) => {
-            try {
-              const response = await api.post("/cadastro", { email, senha })
+        <Text style={styles.msgError}> {texto} </Text>
 
-              console.log('OK', response.data)
-              navigation.navigate("Login")
-            } catch (error) {
-              console.log(error)
-              console.log(error.message)
-              console.log(error.response.data)
-              let texto_resposta = error.response.data
-              setTexto(Object.values(texto_resposta))
+        <TouchableOpacity style={styles.botao}
+          onPress={() => {
+            const cadastro = async (email, senha) => {
+              try {
+                const response = await api.post("/cadastro", { email, senha })
 
+                console.log('OK', response.data)
+                Alert.alert('Tudo pronto!', 'Faça login para continuar.');
+                navigation.navigate("Login")
+              } catch (error) {
+                console.log(error)
+                console.log(error.message)
+                console.log(error.response.data)
+                let texto_resposta = error.response.data
+                setTexto(Object.values(texto_resposta))
+
+              }
             }
-          }
 
-          cadastro(inputEmail, inputSenha)
+            cadastro(inputEmail, inputSenha)
 
 
-        }}>
+          }}>
 
-          <Text style={styles.textoBotao}>OK</Text>
+          <Text style={styles.textoBotao}>Cadastrar</Text>
 
 
         </TouchableOpacity>
+
+        <View style={styles.viewCadastro}>
+          <Text
+            style={styles.textCad}
+            onPress={() => navigation.navigate("Login")}
+          >
+            Já pussui uma conta ?
+          </Text>
+        </View>
       </View>
 
     </View>
-
   );
 }
 
@@ -108,77 +119,95 @@ const styles = StyleSheet.create({
 
   },
   logo: {
-    height: 100,
-    marginBottom: 90,
+    height: "40%",
     justifyContent: 'center',
     alignItems: 'center',
 
   },
 
   container: {
-    width: '90%',
-    height: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    width: "98%",
+    height: "60%",
+    borderWidth: 4,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderColor: "white",
+    backgroundColor: "white",
     opacity: 0.8,
-    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: 'flex-start',
+    padding: 7,
+
   },
   input: {
 
     fontSize: 15,
-    width: '80%',
-
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingLeft: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-
-    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderColor:'green',
+    width: "80%",
+    height: 30,
 
   },
 
   viewInputs: {
     width: '100%',
-    height: '25%',
+    height: '23%',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
-  inpt: {
-    borderBottomWidth: 1,
-    width: '80%',
-    height: 35
-  },
-
   inputLabel: {
-
     height: 50,
+    width: '80%',
     fontWeight: 400,
     fontSize: 20,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    color: 'black',
-    paddingLeft: 10,
+    color: "#5b5b5b",
+    paddingLeft: 5,
     paddingTop: 18,
 
   },
   botao: {
-    backgroundColor: '#78D1D2',
-    width: 180,
+    width: "60%",
     height: 50,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#97D8AE",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    borderRadius: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 10,
 
 
   },
   textoBotao: {
-    color: 'white',
-    // fontFamily: 'Helvetica',
-    fontWeight: 'bold',
+    // paddingTop: 5,
+    textAlign: "center",
+    alignItems: "center",
+    color: "#FFFFFF",
+    fontSize: 23,
+    fontWeight: 500,
+    fontStyle: "normal",
+    color: "white",
   },
+  viewCadastro: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "15%",
+  },
+  textCad: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#4292ff",
+  },
+
+  msgError:{
+    fontSize:16,
+    fontWeight:'500',
+    color:'red'
+  }
 });
 
