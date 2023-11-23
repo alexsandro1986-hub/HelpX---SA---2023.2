@@ -10,7 +10,8 @@ import { IconButton, DataTable } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { PieChart } from "react-native-gifted-charts/src/PieChart";
 import { Dimensions } from "react-native";
-import axios from "axios";
+import api from "../Api_gerenciamento";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Stack = createStackNavigator();
@@ -378,6 +379,16 @@ function Graficos({ route }) {
   const navigation = useNavigation();
   const { tipo, texto } = route.params;
   const { vetorUser } = useContext(ContextInfo);
+  let todosUsuarios = []
+  const listarTodosUsuarios = async () => {
+    try {
+      const response = await api.get("/users");
+      console.log(response.data);
+      todosUsuarios.push(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   let amostra = [];
   const pieData = [];
   // const data = [] //Dados do Grafico (valores)
@@ -407,6 +418,14 @@ function Graficos({ route }) {
     "#008000",
     "#000080",
   ];
+    
+    todosUsuarios.map((infos) => {
+    console.log("Tipo", tipo);
+    console.log("Todos", infos);
+    // let i = Object.keys(infos).indexOf(tipo);
+    // amostra.push(Object.values(infos)[i]);
+    // console.log("1", amostra);
+  });
 
   vetorUser.map((infos) => {
     console.log(tipo);
