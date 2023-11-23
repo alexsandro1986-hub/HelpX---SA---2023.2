@@ -72,15 +72,7 @@ export function Login() {
   const {
     flagAdm,
     setFlagAdm,
-    senhaAdm,
-    loginAdm,
-    inputSenha,
-    inputEmail,
-    vetorUser,
-    id,
-    setId,
-    userInfo,
-    setUserInfo,
+
   } = useContext(ContextInfo);
   const [texto, setTexto] = useState("");
   const navigation = useNavigation();
@@ -102,7 +94,8 @@ export function Login() {
     console.log(flagAdm);
     switch (true) {
       case flagAdm == true:
-        setFlagAdm(!flagAdm);
+        console.log("Oi, admin")
+        setFlagAdm(true);
         break;
       case flagAdm == false:
         navigation.navigate("Home");
