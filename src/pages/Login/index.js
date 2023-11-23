@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
-  const { flagAdm} = useContext(ContextInfo);
+  const { flagAdm } = useContext(ContextInfo);
 
   return (
     <Stack.Navigator>
@@ -118,7 +118,7 @@ export function Login() {
     <View style={styles.container}>
       <View style={styles.logo}>
         <Image
-          // source={require("../img/logoHelpX.png")}
+          source={require("../img/logoHelpX.png")}
           style={{ width: "150%" }}
           resizeMode="contain"
         />
@@ -136,7 +136,7 @@ export function Login() {
             inputContainerStyle={styles.inpt} // Isso remove a borda inferior
           />
         </View>
-        <Text> {texto} </Text>
+
         <View style={styles.AlturaElementosInput}>
           <Text style={styles.inputLabel}> Senha</Text>
           <Input
@@ -150,7 +150,7 @@ export function Login() {
         {/* <TouchableOpacity style={styles.botao} onPress={Cadastrar}>
           <Text style={styles.textoBotao}>Cadastrar</Text>
         </TouchableOpacity> */}
-
+       <Text style={styles.msgError}> {texto} </Text>
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {
@@ -225,17 +225,18 @@ const styles = StyleSheet.create({
 
   inpt: {
     borderBottomWidth: 1,
+    borderColor: 'green',
     width: "80%",
     height: 35,
   },
 
   inputLabel: {
     height: 50,
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: 20,
     alignItems: "flex-end",
     justifyContent: "center",
-    color: "black",
+    color: "#5b5b5b",
     paddingLeft: 10,
     paddingTop: 18,
   },
@@ -252,6 +253,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     marginTop: 10,
+
+
   },
 
   textoBotao: {
@@ -270,10 +273,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "15%",
+    marginTop: 10
   },
   textCad: {
     fontSize: 18,
-    fontWeight: "700",
+    fontWeight: "500",
     color: "#4292ff",
   },
   logo: {
@@ -282,4 +286,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  msgError:{
+    fontSize:16,
+    fontWeight:'500',
+    color:'red'
+  }
 });
