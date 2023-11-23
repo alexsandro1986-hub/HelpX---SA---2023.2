@@ -183,8 +183,8 @@ function Nome() {
 
 function Alergias() {
     const alergias = [
-        '',
-        "Não possuo alergia",
+        'Nenhuma',
+        "Nenhuma",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
@@ -246,7 +246,7 @@ function Alergias() {
 function Comorbidade() {
     
     const comorbidades = [
-        '',
+        'Nenhuma',
         "Nenhuma",
         "Hipertensão arterial",
         "Diabetes mellitus",

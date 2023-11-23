@@ -289,16 +289,18 @@ function Profile() {
   console.log("Dados do usuario no profile", userDados[0][0].nome);
   
   // Função para sair e voltar para a tela inicial
-
-  const sair = async () => {
+ const limparStorage = async () => {
+  await AsyncStorage.setItem("id", "");
+ }
+  const sair = () => {
     if (flagAdm) {
       setFlagAdm(!flagAdm);
-    } 
+    }   
+        limparStorage()
         setInputEmail("");
         setInputSenha("");
-        await AsyncStorage.setItem("id", "");
         navigation.popToTop();
-      
+
       
     }
 
