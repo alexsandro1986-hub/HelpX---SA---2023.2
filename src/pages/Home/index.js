@@ -8,9 +8,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import QRCode from "react-native-qrcode-svg";
-import { useContext } from "react";
 import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from "expo-media-library";
@@ -37,7 +36,7 @@ export default function Home() {
 
     try {
       const response = await api.get(`/users/logged/${idzinho}`);
-      let userDados = response.data;
+      userDados.push (response.data);
       console.log("Dados do usuario", response.data);
     } catch (error) {
       console.log(error.message);
@@ -285,16 +284,24 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const { userDados } = useContext(ContextInfo);
+  const {userDados, flagAdm, setFlagAdm, setInputEmail, setInputSenha}  = useContext(ContextInfo);
   console.log("Dados do usuario no profile", userDados);
+  console.log("Dados do usuario no profile", userDados[0][0].nome);
+  
   // Função para sair e voltar para a tela inicial
-  const handleLogout = () => {
-    navigation.popToTop();
-  };
 
-  const sair = () => {
-    navigation.popToTop();
-  };
+  const sair = async () => {
+    if (flagAdm) {
+      setFlagAdm(!flagAdm);
+    } 
+        setInputEmail("");
+        setInputSenha("");
+        await AsyncStorage.setItem("id", "");
+        navigation.popToTop();
+      
+      
+    }
+
 
   return (
     <LinearGradient
@@ -325,24 +332,26 @@ function Profile() {
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-          {userDados[0].nome}
+          {userDados[0][0].nome}
         </Text>
       </View>
 
       <View style={profile.infoView}>
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>{userDados[0].idade}</Text>
+          <Text style={profile.textInfoUser}>{userDados[0][0].idade}</Text>
         </View>
 
         <View style={profile.infoUser}>
-          <Text style={profile.textInfo}>alergia</Text>
-          <Text style={profile.textInfoUser}>Dipirona, fermento</Text>
+          <Text style={profile.textInfo}>Alergia</Text>
+          <Text style={profile.textInfoUser}>{userDados[0][0].possuialergias[0].alergias.alergias}</Text>
         </View>
 
         <View style={profile.infoUser}>
-          <Text style={profile.textInfo}>Cont. emergencia</Text>
-          <Text style={profile.textInfoUser}></Text>
+          <Text style={profile.textInfo}>Cont. Emergência</Text>
+          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].nomecontatoemergencia}</Text>
+          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].emailcontatoemergencia}</Text>
+          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].telefoneemergencia}</Text>
         </View>
       </View>
 

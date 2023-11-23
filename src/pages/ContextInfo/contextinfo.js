@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import React from 'react';
 import { NavigationHelpersContext } from '@react-navigation/native';
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ContextInfo = React.createContext()
 
@@ -30,23 +31,28 @@ export const ContextInfoProvider = ({ children }) => {
 
     // Login
     const [id, setId] = useState('')
-    let userDados
-    //ADMIN
+    let userDados = []
     const [flagAdm, setFlagAdm] = useState(false)
     const senhaAdm = '123'
     const loginAdm = 'adm'
 
     // LOGOUT
 
-    const logout = () => {
-        if (flagAdm){
-            setFlagAdm(!flagAdm)
+    // const logout = (async) => {
+    //     if (flagAdm){
+    //         setFlagAdm(!flagAdm)
            
-        }
-        setInputEmail('')
-        setInputSenha('')
+    //     }
+    //     setInputEmail('')
+    //     setInputSenha('')
+    //     try {
+    //       await AsyncStorage.setItem("id", "");
+    //     } catch (error) {
+    //       // Error saving data
+    //       console.log("Erro ao salvar ");
+    //     }
        
-    }
+    // }
     //Objeto Info User
     const vetorUser = [
         {
@@ -264,8 +270,7 @@ export const ContextInfoProvider = ({ children }) => {
                 //Login
                 id, setId,
                 userDados,
-                //Logout 
-                logout,
+                
                 // OBJETOS INFOS USUARIOS
                 vetorUser,
 

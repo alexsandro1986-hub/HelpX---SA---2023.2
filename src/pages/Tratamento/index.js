@@ -75,12 +75,11 @@ export function StackTratamento() {
 //  ================== TRATAMENTO FEED (POSTS) =========================
 export function Tratamento() {
  const navigation = useNavigation()    
- let userDados 
-//  const {setId, id, setUserInfo, userInfo} = useContext(ContextInfo)
+ let {userDados} = useContext(ContextInfo)
 
   useEffect(() => {
     pegandoId()
-
+    console.log("Dados do usuário no tratamento", userDados)
   }, [])
 
   const pegandoId = async () => {

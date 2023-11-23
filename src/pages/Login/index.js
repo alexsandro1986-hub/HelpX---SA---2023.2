@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createStackNavigator();
 
 export default function StackDeAcesso() {
-  const { flagAdm, logout } = useContext(ContextInfo);
+  const { flagAdm} = useContext(ContextInfo);
 
   return (
     <Stack.Navigator>
@@ -116,17 +116,13 @@ export function Login() {
 
   return (
     <View style={styles.container}>
-
-      {/* <View style={styles.logo}>
+      <View style={styles.logo}>
         <Image
-          source={require("../img/logoHelpX.png")}
+          // source={require("../img/logoHelpX.png")}
           style={{ width: "150%" }}
           resizeMode="contain"
         />
-
-      </View> */}
-
-
+      </View>
 
       <View style={styles.containerInputs}>
         <View style={styles.AlturaElementosInput}>
@@ -223,11 +219,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     opacity: 0.8,
     alignItems: "center",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     padding: 10,
-    marginTop: '35%',
-    borderRadius: '17%',
-
   },
 
   inpt: {
