@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
 import api from '../Api_gerenciamento';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -183,8 +183,8 @@ function Nome() {
 
 function Alergias() {
     const alergias = [
-        'Nenhuma',
-        "Nenhuma",
+        '',
+        "Não possuo alergia",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
@@ -302,13 +302,13 @@ function Comorbidade() {
 
                     </Picker>
                 </View>
-                {/* <TextInput
+                <TextInput
                     style={styles.input}
                     placeholder="Remédio"
                     value={inputMedicamentoComor}
                     onChangeText={setInputMedicamentoComor}
                     returnKeyType="done"
-                /> */}
+                />
             </View>
 
 
@@ -536,12 +536,11 @@ function Endereco() {
                     console.log(inputSangue)
                     const idz = await AsyncStorage.getItem("id")
                     try {
-                        const response = await axios
-                            .put(`${baseURL}/users/complete/aa857351-ab7f-485f-84de-898cc112132c`, dados)
+                        const response = await api.put(`/users/complete/${idz}`, dados)
                         console.log(response.data)
                     } catch (error) {
                         console.log(error.response)
-                        console.log(error.response.data)
+                        //console.log(error.response.data)
                     }
                 }
 
