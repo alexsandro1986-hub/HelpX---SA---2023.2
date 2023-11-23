@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 
 export default function Home() {
   const navigation = useNavigation();
-  const { setId, id, userDados } = useContext(ContextInfo);
+  const { setId, id, userDados, idGuardado } = useContext(ContextInfo);
   useEffect(() => {
     pegandoId();
   }, []);
@@ -33,7 +33,7 @@ export default function Home() {
   const pegandoId = async () => {
     const idzinho = await AsyncStorage.getItem("id");
     console.log("Entrei aqui na home para pegar o id", idzinho);
-
+    idGuardado.push(idzinho)
     try {
       const response = await api.get(`/users/logged/${idzinho}`);
       userDados.push (response.data);
@@ -428,8 +428,9 @@ const profile = StyleSheet.create({
 
 export function QrCodeUser() {
   const viewShotRef = React.useRef(null);
-  const { id } = useContext(ContextInfo);
+  const {idGuardado} = useContext(ContextInfo)
   const handleSaveAndDownload = async () => {
+    
     try {
       if (viewShotRef.current) {
         const result = await viewShotRef.current.capture();
@@ -451,7 +452,7 @@ export function QrCodeUser() {
       <ViewShot ref={viewShotRef}>
         <View style={qrcode.viewQrcode}>
           <QRCode
-            value={`${baseURL}/views/users/${id}`}
+            value={`${baseURL}/views/users/${idGuardado}`}
             color="black"
             size={250}
           />

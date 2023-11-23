@@ -32,6 +32,7 @@ export const ContextInfoProvider = ({ children }) => {
     // Login
     const [id, setId] = useState('')
     let userDados = []
+    let idGuardado = []
     const [flagAdm, setFlagAdm] = useState(false)
     const senhaAdm = '123'
     const loginAdm = 'adm'
@@ -270,7 +271,7 @@ export const ContextInfoProvider = ({ children }) => {
                 //Login
                 id, setId,
                 userDados,
-                
+                idGuardado,
                 // OBJETOS INFOS USUARIOS
                 vetorUser,
 

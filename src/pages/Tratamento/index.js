@@ -262,6 +262,7 @@ function PostSanfona(props) {
                                     onPress={() => {
                                         const deletando_tratamento = async (cod_tratamento) => {
                                             try {
+                                                const id = await AsyncStorage.getItem("id")
                                                 const response = await api
                                                     .delete(`/users/tratamento/${id}`, { cod_tratamento})
 
@@ -314,6 +315,7 @@ export function AdicionarPost() {
 
     const criando_tratamento = async (enfermidade, periodo, droga) => {
         try {
+            const id = await AsyncStorage.getItem("id")
             const response = await api.post(`/users/tratamento/${id}`, enfermidade, periodo, droga)
 
             console.log('aaaa', response.data)
@@ -325,8 +327,8 @@ export function AdicionarPost() {
     }
     const editando_tratamento = async (enfermidade, periodo, droga,cod_tratamento) => {
         try {
-            const response = await axios
-                .put(`${baseURL}/users/tratamento/${id}`, enfermidade, periodo, droga, cod_tratamento)
+            const id = await AsyncStorage.getItem("id")
+            const response = await api.put(`/users/tratamento/${id}`, enfermidade, periodo, droga, cod_tratamento)
 
             console.log('Dados editados', response.data)
         } catch (error) {
