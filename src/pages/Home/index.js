@@ -17,7 +17,8 @@ import * as MediaLibrary from "expo-media-library";
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
-import axios from "axios";
+import api from "../Api_gerenciamento";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const baseURL = "https://helpx.glitch.me";
 const Tab = createBottomTabNavigator();
@@ -25,7 +26,7 @@ const Stack = createStackNavigator();
 
 export default function Home() {
   const navigation = useNavigation();
-  const { setId, id, setUserInfo } = useContext(ContextInfo);
+  const { setId, id, userDados } = useContext(ContextInfo);
   useEffect(() => {
     pegandoId();
   }, []);
@@ -36,7 +37,7 @@ export default function Home() {
 
     try {
       const response = await api.get(`/users/logged/${idzinho}`);
-      setUserInfo(response.data);
+      let userDados = response.data;
       console.log("Dados do usuario", response.data);
     } catch (error) {
       console.log(error.message);
@@ -284,8 +285,8 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const { userInfo } = useContext(ContextInfo);
-  console.log(userInfo);
+  const { userDados } = useContext(ContextInfo);
+  console.log("Dados do usuario no profile", userDados);
   // Função para sair e voltar para a tela inicial
   const handleLogout = () => {
     navigation.popToTop();
@@ -324,14 +325,14 @@ function Profile() {
 
       <View style={profile.viewNameUser}>
         <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-          {userInfo[0].nome}
+          {userDados[0].nome}
         </Text>
       </View>
 
       <View style={profile.infoView}>
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>{userInfo[0].idade}</Text>
+          <Text style={profile.textInfoUser}>{userDados[0].idade}</Text>
         </View>
 
         <View style={profile.infoUser}>
@@ -483,7 +484,7 @@ const qrcode = StyleSheet.create({
 
   buttonText: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -534,17 +535,28 @@ export function EditUser() {
   const [expandirSangue, setExpandirSangue] = useState(false);
 
   const alergias = [
-    "",
-    "Não possuo alergia",
-    "Latex",
-    "Polem",
+    "Nenhuma",
+    "Nenhuma",
+    "Rinite alérgica",
+    "Asma alérgica",
     "Alimentos",
+    "Picadas de insetos",
+    "Atópica",
     "Medicamentos",
-    "Poeira",
-    "Mofos",
-    "Pelos de Animais",
-    "Picada de Insetos",
-    "Iodo",
+    "Produtos químicos",
+    "Urticária",
+    "Poeira doméstica",
+    "Animais de estimação",
+    "Látex",
+    "Veneno de abelhas e vespas",
+    "Metais",
+    "Plantas",
+    "Fungos",
+    "Produtos de beleza",
+    "Insetos de jardim",
+    "Látex de frutas",
+    "Produtos de limpeza",
+    "Outras",
   ];
   const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
 
@@ -850,21 +862,22 @@ export function EditUser() {
             </View>
           )}
 
-          <TouchableOpacity style={editU.btnSalvar} onPress={() => {
-            const editandoUsuario = async (dados) => {
-              console.log(dados)
-              const idz = pegandoId()
-              try {
-                const response = api
-                  .put(`/users/edit/${idz}`,
-                    dados)
-                console.log(response.data)
-              } catch (error) {
-                console.log(error.response.data)
-              }
-            }
-            editandoUsuario(EditarInformacoes)
-          }}>
+          <TouchableOpacity
+            style={editU.btnSalvar}
+            onPress={() => {
+              const editandoUsuario = async (dados) => {
+                console.log(dados);
+                const idz = pegandoId();
+                try {
+                  const response = api.put(`/users/edit/${idz}`, dados);
+                  console.log(response.data);
+                } catch (error) {
+                  console.log(error.response.data);
+                }
+              };
+              editandoUsuario(EditarInformacoes);
+            }}
+          >
             <Text style={editU.btnText}>SALVAR</Text>
           </TouchableOpacity>
         </View>

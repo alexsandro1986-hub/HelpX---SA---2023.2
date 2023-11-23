@@ -132,15 +132,15 @@ export function Tratamento() {
 
                         
                         
-                    // userDados[0].tratamento.map((doenca, index) => (
-                    //     //  Criando post. 
-                    //     // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
-                    //     //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
-                    //     <View key={index} >
-                    //         <PostSanfona enfermidade={doenca.enfermidade} data={doenca.periodo} remedio={doenca.droga} indice={doenca.cod_tratamento} />
+                    userDados[0].tratamento.map((doenca, index) => (
+                        //  Criando post. 
+                        // Uso de props para envio dos values para o componente PostSanfona onde tem o modal.
+                        //  Através do map, é acessado os values dos objeto, que foi criado na pagina de context
+                        <View key={index} >
+                            <PostSanfona enfermidade={doenca.enfermidade} data={doenca.periodo} remedio={doenca.droga} indice={doenca.cod_tratamento} />
 
-                    //     </View>
-                    // ))
+                        </View>
+                    ))
                     
                     
                     

@@ -183,8 +183,8 @@ function Nome() {
 
 function Alergias() {
     const alergias = [
-        '',
-        "Não possuo alergia",
+        'Nenhuma',
+        "Nenhuma",
         "Rinite alérgica",
         "Asma alérgica",
         "Alimentos",
