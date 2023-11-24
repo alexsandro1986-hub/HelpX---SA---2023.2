@@ -520,6 +520,7 @@ export function EditUser() {
   const {
     inputNome,
     setInputNome,
+    inputEmail, setInputEmail,
     inputIdade,
     setInputIdade,
     inputAlergias,
@@ -588,6 +589,29 @@ export function EditUser() {
 
   const [inputSangue, setInputSangue] = useState("option1");
   const [inputOrgao, setInputOrgao] = useState("option3");
+  let EditarInformacoes = {
+      //<<<<< Olá, faltar colocar o resto do inputs"
+    nome: inputNome,
+    email: inputEmail,
+    sangue: 'B+',
+    idade: Number(inputIdade),
+    cpf: '89-000-222-11',
+    telefoneusuario:  inputTelefone,
+    alergia: 'Rinite alérgica',
+    alergia_especificacao: "Nenhuma",
+    comorbidade: 'Hipertensão arterial',
+    comorbidade_especificacao: "Nenhuma",
+    logradouro: inputLogradouro,
+    numerocasa: Number(inputNumeroCasa),
+    ncep:  Number(inputNCep),
+    contatoemergencia:  inputContatoEmergencia,
+    emailemergencia: 'albert@gmail.com',
+    telefoneemergencia: inputNtelefoneEmergencia,
+    doadorsangue: inputSangue,
+    doadororgao: inputOrgao,
+    medicamento: "Nenhum"
+  }
+
 
   return (
     <View style={editU.container}>
@@ -606,7 +630,7 @@ export function EditUser() {
             onPress={() => {
               setExpandirNome(!expandirNome);
             }}
-            style={[editU.btnExpandir]}
+            style={editU.btnExpandir}
           >
             <View style={editU.btnDescription}>
               <Text>Nome / Idade </Text>
@@ -644,7 +668,7 @@ export function EditUser() {
             onPress={() => {
               setExpandirAlergia(!expandirAlergia);
             }}
-            style={[editU.btnExpandir]}
+            style={editU.btnExpandir}
           >
             <View style={editU.btnDescription}>
               <Text>Alergias </Text>
@@ -878,11 +902,11 @@ export function EditUser() {
             style={editU.btnSalvar}
             onPress={() => {
               const editandoUsuario = async (dados) => {
-                console.log(dados);
-                const idz = pegandoId();
+                console.log("Dados enviados ao backend", dados);
+                const idz =  await AsyncStorage.getItem("id");
                 try {
                   const response = api.put(`/users/edit/${idz}`, dados);
-                  console.log(response.data);
+                  console.log("Dados editados com sucesso: ", response.data);
                 } catch (error) {
                   console.log(error.response.data);
                 }
