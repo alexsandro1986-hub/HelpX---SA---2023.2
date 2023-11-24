@@ -1,25 +1,32 @@
-import * as React from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import QRCode from "react-native-qrcode-svg";
-import { ContextInfo } from "../ContextInfo/contextinfo";
-import { useState, useRef, useContext, useEffect } from "react";
-import Feather from "@expo/vector-icons/Feather";
-import ViewShot from "react-native-view-shot";
-import * as MediaLibrary from "expo-media-library";
-import { Alert } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { RadioButton } from "react-native-paper";
-import api from "../Api_gerenciamento";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as React from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Modal,
+} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import QRCode from 'react-native-qrcode-svg';
+import { ContextInfo } from '../ContextInfo/contextinfo';
+import { useState, useRef, useContext, useEffect } from 'react';
+import Feather from '@expo/vector-icons/Feather';
+import ViewShot from 'react-native-view-shot';
+import * as MediaLibrary from 'expo-media-library';
+import { Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { RadioButton } from 'react-native-paper';
+import api from '../Api_gerenciamento';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseURL = "https://helpx.glitch.me";
+const baseURL = 'https://helpx.glitch.me';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -28,35 +35,33 @@ export default function Home() {
   const { setId, id, userDados, idGuardado } = useContext(ContextInfo);
   useEffect(() => {
     pegandoId();
-  }, []);
+  });
 
   const pegandoId = async () => {
-    const idzinho = await AsyncStorage.getItem("id");
-    console.log("Entrei aqui na home para pegar o id", idzinho);
-    idGuardado.push(idzinho)
+    const idzinho = await AsyncStorage.getItem('id');
+    console.log('Entrei aqui na home para pegar o id', idzinho);
+    idGuardado.push(idzinho);
     try {
       const response = await api.get(`/users/logged/${idzinho}`);
-      userDados.push (response.data);
-      console.log("Dados do usuario", response.data);
+      userDados.push(...response.data);
+      console.log('Dados do usuario na home', userDados, typeof userDados);
     } catch (error) {
       console.log(error.message);
       // console.log(error.response.data)
     }
-    return idzinho;
   };
 
   return (
     <Tab.Navigator
       initialRouteName="StackFeed"
       screenOptions={{
-        tabBarActiveTintColor: "#9cf0b9",
-      }}
-    >
+        tabBarActiveTintColor: '#9cf0b9',
+      }}>
       <Tab.Screen
         name="StackFeed"
         component={StackFeed}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={50} />
           ),
@@ -68,7 +73,7 @@ export default function Home() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={50} />
           ),
@@ -81,11 +86,11 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   geral: {
-    width: "50%",
-    height: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    width: '50%',
+    height: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 10,
   },
 });
@@ -102,15 +107,15 @@ function StackFeed() {
         name="EditUser"
         component={EditUser}
         options={{
-          title: "Editar Dados",
-          headerTitleAlign: "center",
-          headerBackTitle: "Voltar",
+          title: 'Editar Dados',
+          headerTitleAlign: 'center',
+          headerBackTitle: 'Voltar',
           headerStyle: {
-            backgroundColor: "#97D8AE",
+            backgroundColor: '#97D8AE',
           },
-          headerTintColor: "#fff",
+          headerTintColor: '#fff',
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: 'bold',
             fontSize: 24,
           },
         }}
@@ -120,15 +125,15 @@ function StackFeed() {
         name="QrCodeUser"
         component={QrCodeUser}
         options={{
-          title: "Meu QRCode",
-          headerTitleAlign: "center",
-          headerBackTitle: "Voltar",
+          title: 'Meu QRCode',
+          headerTitleAlign: 'center',
+          headerBackTitle: 'Voltar',
           headerStyle: {
-            backgroundColor: "#97D8AE",
+            backgroundColor: '#97D8AE',
           },
-          headerTintColor: "#fff",
+          headerTintColor: '#fff',
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: 'bold',
             fontSize: 24,
           },
         }}
@@ -144,112 +149,107 @@ function Feed() {
     <View
       style={{
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        backgroundColor: "#FFF",
-      }}
-    >
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+      }}>
       <View style={feed.cima}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("StackTratamento")}
+          onPress={() => navigation.navigate('StackTratamento')}
           style={{
-            width: "40%",
-            height: "40%",
-            backgroundColor: "#97D8AE",
+            width: '40%',
+            height: '40%',
+            backgroundColor: '#97D8AE',
             borderRadius: 10,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             gap: 15,
-            shadowColor: "#000",
+            shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 4.65,
             elevation: 8,
-          }}
-        >
-          <MaterialCommunityIcons name="pill" color={"white"} size={50} />
+          }}>
+          <MaterialCommunityIcons name="pill" color={'white'} size={50} />
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
             Tratamento
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Chat", { name: { inputNome } })}
+          onPress={() => navigation.navigate('Chat', { name: { inputNome } })}
           style={{
-            width: "40%",
-            height: "40%",
-            backgroundColor: "#97D8AE",
+            width: '40%',
+            height: '40%',
+            backgroundColor: '#97D8AE',
             borderRadius: 10,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             gap: 15,
-            shadowColor: "#000",
+            shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 4.65,
             elevation: 8,
-          }}
-        >
+          }}>
           <MaterialCommunityIcons
             name="comment-account"
-            color={"white"}
+            color={'white'}
             size={50}
           />
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
             Suporte
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("QrCodeUser")}
+          onPress={() => navigation.navigate('QrCodeUser')}
           style={{
-            width: "40%",
-            height: "40%",
-            backgroundColor: "#97D8AE",
+            width: '40%',
+            height: '40%',
+            backgroundColor: '#97D8AE',
             borderRadius: 10,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             gap: 15,
-            shadowColor: "#000",
+            shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 4.65,
             elevation: 8,
-          }}
-        >
-          <MaterialCommunityIcons name="qrcode" color={"white"} size={50} />
+          }}>
+          <MaterialCommunityIcons name="qrcode" color={'white'} size={50} />
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
             QR Code
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("EditUser")}
+          onPress={() => navigation.navigate('EditUser')}
           style={{
-            width: "40%",
-            height: "40%",
-            backgroundColor: "#97D8AE",
+            width: '40%',
+            height: '40%',
+            backgroundColor: '#97D8AE',
             borderRadius: 10,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             gap: 15,
-            shadowColor: "#000",
+            shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 4.65,
             elevation: 8,
-          }}
-        >
+          }}>
           <MaterialCommunityIcons
             name="account-edit"
-            color={"white"}
+            color={'white'}
             size={50}
           />
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#3C8F5A" }}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: '#3C8F5A' }}>
             Editar Perfil
           </Text>
         </TouchableOpacity>
@@ -260,103 +260,146 @@ function Feed() {
 
 const feed = StyleSheet.create({
   cima: {
-    height: "50%",
-    width: "100%",
-    justifyContent: "center",
-    alignContent: "center",
-    flexWrap: "wrap",
+    height: '50%',
+    width: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexWrap: 'wrap',
     gap: 20,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderBottomWidth: 2,
-    borderColor: "#97D8AE",
-    marginTop: "5%",
+    borderColor: '#97D8AE',
+    marginTop: '5%',
   },
 
   options: {
-    width: "40%",
-    height: "40%",
-    backgroundColor: "#cdcdcd",
+    width: '40%',
+    height: '40%',
+    backgroundColor: '#cdcdcd',
     borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
 function Profile() {
   const navigation = useNavigation();
-  const {userDados, flagAdm, setFlagAdm, setInputEmail, setInputSenha}  = useContext(ContextInfo);
-  console.log("Dados do usuario no profile", userDados);
-  console.log("Dados do usuario no profile", userDados[0][0].nome);
-  
+  const { userDados, flagAdm, setFlagAdm, setInputEmail, setInputSenha } =
+    useContext(ContextInfo);
+
+  const [modalVisible, setModalVisible] = useState(false); // MUDA VISIBILIDADE DO MODAL
+
   // Função para sair e voltar para a tela inicial
- const limparStorage = async () => {
-  await AsyncStorage.setItem("id", "");
- }
+  const limparStorage = async () => {
+    await AsyncStorage.setItem('id', '');
+  };
   const sair = () => {
     if (flagAdm) {
       setFlagAdm(!flagAdm);
-    }   
-        limparStorage()
-        setInputEmail("");
-        setInputSenha("");
-        navigation.popToTop();
-
-      
     }
+    limparStorage();
+    setInputEmail('');
+    setInputSenha('');
+    navigation.popToTop();
+  };
 
+  const excluir_conta = async () => {
+    try {
+      const idz = await AsyncStorage.getItem('id');
+      const response = await api.delete(`users/delete/${idz}`);
+
+      console.log('Conta excluída com sucesso', response.data);
+      sair();
+    } catch (error) {
+      console.log(error);
+      console.log('Erro ao tentar excluir conta ');
+    }
+  };
 
   return (
     <LinearGradient
-      colors={["#CDE4AD", "#97D8AE", "#ffffff", "#ffffff"]}
-      style={profile.container}
-    >
+      colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
+      style={profile.container}>
       <View style={profile.cima}>
-        <View style={{ width: "100%", height: "2%" }}></View>
+        <View style={{ width: '100%', height: '2%' }}></View>
 
-        <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
+        <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}>
           Meu Perfil
         </Text>
 
         <View
           style={{
-            borderColor: "black",
+            borderColor: 'black',
             borderWidth: 2,
             borderRadius: 10,
             width: 80,
             height: 80,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <MaterialCommunityIcons name="account" color={"black"} size={80} />
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <MaterialCommunityIcons name="account" color={'black'} size={80} />
         </View>
       </View>
 
       <View style={profile.viewNameUser}>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
-          {userDados[0][0].nome}
+        <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
+          {userDados[0].nome}
         </Text>
       </View>
 
       <View style={profile.infoView}>
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>{userDados[0][0].idade}</Text>
+          <Text style={profile.textInfoUser}>{userDados.idade}</Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Alergia</Text>
-          <Text style={profile.textInfoUser}>{userDados[0][0].possuialergias[0].alergias.alergias}</Text>
+          <Text style={profile.textInfoUser}>
+            {userDados[0].possuialergias[0].alergias.alergias}
+          </Text>
         </View>
 
         <View style={profile.infoUser}>
           <Text style={profile.textInfo}>Cont. Emergência</Text>
-          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].nomecontatoemergencia}</Text>
-          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].emailcontatoemergencia}</Text>
-          <Text style={profile.textInfoUser}>{userDados[0][0].contatoemergencia[0].telefoneemergencia}</Text>
+          <Text style={profile.textInfoUser}>
+            {userDados[0].contatoemergencia[0].nomecontatoemergencia}
+          </Text>
+          <Text style={profile.textInfoUser}>
+            {userDados[0].contatoemergencia[0].emailcontatoemergencia}
+          </Text>
+          <Text style={profile.textInfoUser}>
+            {userDados[0].contatoemergencia[0].telefoneemergencia}
+          </Text>
         </View>
       </View>
 
+      <View style={styles.sair}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setModalVisible(true);
+           
+          }}>
+          <Text style={styles.textButton}>Excluir conta</Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          >
+          <View style={styles.modalPosicao}>
+          <View>
+            <TouchableOpacity style={styles.button} onPress={excluir_conta}>
+              <Text style={styles.textButton}>Sim</Text>
+            </TouchableOpacity>
+             <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)} >
+              <Text style={styles.textButton}>Não</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
       <View style={styles.sair}>
         <TouchableOpacity style={styles.button} onPress={sair}>
           <Text style={styles.textButton}>SAIR</Text>
@@ -367,34 +410,41 @@ function Profile() {
 }
 
 const profile = StyleSheet.create({
+  modalPosicao: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+ 
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     gap: 15,
   },
 
   cima: {
-    width: "100%",
-    height: "25%",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    width: '100%',
+    height: '25%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     gap: 30,
   },
 
   viewNameUser: {
-    width: "100%",
-    height: "5%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   infoView: {
-    width: "60%",
-    height: "45%",
-    backgroundColor: "white",
+    width: '60%',
+    height: '45%',
+    backgroundColor: 'white',
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
@@ -403,47 +453,46 @@ const profile = StyleSheet.create({
 
   infoUser: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: 5,
   },
 
   textInfo: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "grey",
+    fontWeight: 'bold',
+    color: 'grey',
   },
 
   textInfoUser: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "grey",
+    fontWeight: 'bold',
+    color: 'grey',
   },
 
   btnQrCode: {
-    height: "10%",
-    width: "20%",
+    height: '10%',
+    width: '20%',
   },
 });
 
 export function QrCodeUser() {
   const viewShotRef = React.useRef(null);
-  const {idGuardado} = useContext(ContextInfo)
+  const { idGuardado } = useContext(ContextInfo);
   const handleSaveAndDownload = async () => {
-    
     try {
       if (viewShotRef.current) {
         const result = await viewShotRef.current.capture();
         if (result) {
           await MediaLibrary.saveToLibraryAsync(result);
-          Alert.alert("Vá para sua galeria", "e imprima o seu qrcode");
-          Alert.alert("Concluido", "Imagem salva com sucesso!");
+          Alert.alert('Vá para sua galeria', 'e imprima o seu qrcode');
+          Alert.alert('Concluido', 'Imagem salva com sucesso!');
         } else {
-          Alert.alert("Erro ao salvar a imagem: captura falhou");
+          Alert.alert('Erro ao salvar a imagem: captura falhou');
         }
       }
     } catch (error) {
-      console.error("Erro ao salvar a imagem:", error);
+      console.error('Erro ao salvar a imagem:', error);
     }
   };
 
@@ -461,8 +510,7 @@ export function QrCodeUser() {
 
       <TouchableOpacity
         onPress={handleSaveAndDownload}
-        style={qrcode.saveButton}
-      >
+        style={qrcode.saveButton}>
         <Text style={qrcode.buttonText}>Baixe o seu QR Code</Text>
       </TouchableOpacity>
     </View>
@@ -472,46 +520,46 @@ export function QrCodeUser() {
 const qrcode = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   viewQrcode: {
     height: 400,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   saveButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 8,
   },
 
   buttonText: {
     fontSize: 16,
-    color: "white",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    color: 'white',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   saveButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 8,
   },
 
   buttonText: {
     fontSize: 16,
-    color: "white",
+    color: 'white',
   },
 });
 
@@ -520,7 +568,8 @@ export function EditUser() {
   const {
     inputNome,
     setInputNome,
-    inputEmail, setInputEmail,
+    inputEmail,
+    setInputEmail,
     inputIdade,
     setInputIdade,
     inputAlergias,
@@ -548,94 +597,91 @@ export function EditUser() {
   const [expandirSangue, setExpandirSangue] = useState(false);
 
   const alergias = [
-    "Nenhuma",
-    "Nenhuma",
-    "Rinite alérgica",
-    "Asma alérgica",
-    "Alimentos",
-    "Picadas de insetos",
-    "Atópica",
-    "Medicamentos",
-    "Produtos químicos",
-    "Urticária",
-    "Poeira doméstica",
-    "Animais de estimação",
-    "Látex",
-    "Veneno de abelhas e vespas",
-    "Metais",
-    "Plantas",
-    "Fungos",
-    "Produtos de beleza",
-    "Insetos de jardim",
-    "Látex de frutas",
-    "Produtos de limpeza",
-    "Outras",
+    'Nenhuma',
+    'Nenhuma',
+    'Rinite alérgica',
+    'Asma alérgica',
+    'Alimentos',
+    'Picadas de insetos',
+    'Atópica',
+    'Medicamentos',
+    'Produtos químicos',
+    'Urticária',
+    'Poeira doméstica',
+    'Animais de estimação',
+    'Látex',
+    'Veneno de abelhas e vespas',
+    'Metais',
+    'Plantas',
+    'Fungos',
+    'Produtos de beleza',
+    'Insetos de jardim',
+    'Látex de frutas',
+    'Produtos de limpeza',
+    'Outras',
   ];
   const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
 
   const [sangue] = useState([
-    "",
-    "Tipo sanguineo",
-    "A+",
-    "A-",
-    "B+",
-    "B-",
-    "AB+",
-    "AB-",
-    "O+",
-    "O-",
+    '',
+    'Tipo sanguineo',
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-',
   ]);
   const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo);
 
-  const [inputSangue, setInputSangue] = useState("option1");
-  const [inputOrgao, setInputOrgao] = useState("option3");
+  const [inputSangue, setInputSangue] = useState('option1');
+  const [inputOrgao, setInputOrgao] = useState('option3');
   let EditarInformacoes = {
-      //<<<<< Olá, faltar colocar o resto do inputs"
+    //<<<<< Olá, faltar colocar o resto do inputs"
     nome: inputNome,
     email: inputEmail,
     sangue: 'B+',
     idade: Number(inputIdade),
     cpf: '89-000-222-11',
-    telefoneusuario:  inputTelefone,
+    telefoneusuario: inputTelefone,
     alergia: 'Rinite alérgica',
-    alergia_especificacao: "Nenhuma",
+    alergia_especificacao: 'Nenhuma',
     comorbidade: 'Hipertensão arterial',
-    comorbidade_especificacao: "Nenhuma",
+    comorbidade_especificacao: 'Nenhuma',
     logradouro: inputLogradouro,
     numerocasa: Number(inputNumeroCasa),
-    ncep:  Number(inputNCep),
-    contatoemergencia:  inputContatoEmergencia,
+    ncep: Number(inputNCep),
+    contatoemergencia: inputContatoEmergencia,
     emailemergencia: 'albert@gmail.com',
     telefoneemergencia: inputNtelefoneEmergencia,
     doadorsangue: inputSangue,
     doadororgao: inputOrgao,
-    medicamento: "Nenhum"
-  }
-
+    medicamento: 'Nenhum',
+  };
 
   return (
     <View style={editU.container}>
-      <ScrollView style={{ width: "100%", height: "100%" }}>
+      <ScrollView style={{ width: '100%', height: '100%' }}>
         <View
           style={{
             flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             paddingTop: 15,
-          }}
-        >
+          }}>
           {/* inputs de nome/idade/alergia */}
 
           <TouchableOpacity
             onPress={() => {
               setExpandirNome(!expandirNome);
             }}
-            style={editU.btnExpandir}
-          >
+            style={editU.btnExpandir}>
             <View style={editU.btnDescription}>
               <Text>Nome / Idade </Text>
               <Feather
-                name={expandirNome ? "chevron-up" : "chevron-down"}
+                name={expandirNome ? 'chevron-up' : 'chevron-down'}
                 size={25}
                 color="#bbb"
               />
@@ -644,7 +690,7 @@ export function EditUser() {
           {/* ////////////////////////////////// */}
 
           {expandirNome && (
-            <View style={{ width: "100%", padding: 10 }}>
+            <View style={{ width: '100%', padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>Nome</Text>
                 <TextInput
@@ -668,12 +714,11 @@ export function EditUser() {
             onPress={() => {
               setExpandirAlergia(!expandirAlergia);
             }}
-            style={editU.btnExpandir}
-          >
+            style={editU.btnExpandir}>
             <View style={editU.btnDescription}>
               <Text>Alergias </Text>
               <Feather
-                name={expandirNome ? "chevron-up" : "chevron-down"}
+                name={expandirNome ? 'chevron-up' : 'chevron-down'}
                 size={25}
                 color="#bbb"
               />
@@ -681,15 +726,14 @@ export function EditUser() {
           </TouchableOpacity>
 
           {expandirAlergia && (
-            <View style={{ width: "100%", padding: 10 }}>
+            <View style={{ width: '100%', padding: 10 }}>
               <View style={styles.inputAlergias}>
                 <Picker
                   mode="dropdown"
                   selectedValue={alergiaSelecionado}
                   onValueChange={(itemValue) =>
                     setAlergiaSelecionada(itemValue)
-                  }
-                >
+                  }>
                   {alergias
                     .filter((value, index) =>
                       alergiaSelecionado === 0
@@ -714,12 +758,11 @@ export function EditUser() {
             onPress={() => {
               setExpandirContato(!expandirContato);
             }}
-            style={[editU.btnExpandir]}
-          >
+            style={[editU.btnExpandir]}>
             <View style={editU.btnDescription}>
               <Text>Contatos</Text>
               <Feather
-                name={expandirContato ? "chevron-up" : "chevron-down"}
+                name={expandirContato ? 'chevron-up' : 'chevron-down'}
                 size={25}
                 color="#bbb"
               />
@@ -728,7 +771,7 @@ export function EditUser() {
           {/* ////////////////////////////////// */}
 
           {expandirContato && (
-            <View style={{ width: "100%", padding: 10 }}>
+            <View style={{ width: '100%', padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>Telefone</Text>
                 <TextInput
@@ -763,12 +806,11 @@ export function EditUser() {
             onPress={() => {
               setExpandirEndereco(!expandirEndereco);
             }}
-            style={[editU.btnExpandir]}
-          >
+            style={[editU.btnExpandir]}>
             <View style={editU.btnDescription}>
               <Text>Endereço</Text>
               <Feather
-                name={expandirEndereco ? "chevron-up" : "chevron-down"}
+                name={expandirEndereco ? 'chevron-up' : 'chevron-down'}
                 size={25}
                 color="#bbb"
               />
@@ -777,7 +819,7 @@ export function EditUser() {
           {/* ////////////////////////////////// */}
 
           {expandirEndereco && (
-            <View style={{ width: "100%", padding: 10 }}>
+            <View style={{ width: '100%', padding: 10 }}>
               <View style={editU.viewInput}>
                 <Text>CEP</Text>
                 <TextInput
@@ -812,12 +854,11 @@ export function EditUser() {
             onPress={() => {
               setExpandirSangue(!expandirSangue);
             }}
-            style={[editU.btnExpandir]}
-          >
+            style={[editU.btnExpandir]}>
             <View style={editU.btnDescription}>
               <Text>Tipo Sanguíneo / Doador</Text>
               <Feather
-                name={expandirSangue ? "chevron-up" : "chevron-down"}
+                name={expandirSangue ? 'chevron-up' : 'chevron-down'}
                 size={25}
                 color="#bbb"
               />
@@ -826,15 +867,14 @@ export function EditUser() {
           {/* ////////////////////////////////// */}
 
           {expandirSangue && (
-            <View style={{ width: "100%", padding: 10, gap: 10 }}>
+            <View style={{ width: '100%', padding: 10, gap: 10 }}>
               <View style={editU.inputDoador}>
                 <Picker
                   mode="dropdown"
                   selectedValue={inputTiposanguineo}
                   onValueChange={(itemValue) =>
                     setInputTiposanguineo(itemValue)
-                  }
-                >
+                  }>
                   {sangue
                     .filter((value, index) =>
                       inputTiposanguineo === 0
@@ -852,8 +892,8 @@ export function EditUser() {
                 <Text>Vôce é doador de sangue</Text>
                 <RadioButton.Android
                   value="option1"
-                  status={inputSangue === "option1" ? "checked" : "unchecked"}
-                  onPress={() => setInputSangue("option1")}
+                  status={inputSangue === 'option1' ? 'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('option1')}
                   color="#007BFF"
                 />
                 <Text style={editU.radioLabel}>Sim</Text>
@@ -861,8 +901,8 @@ export function EditUser() {
               <View style={editU.radioButton}>
                 <RadioButton.Android
                   value="option2"
-                  status={inputSangue === "option2" ? "checked" : "unchecked"}
-                  onPress={() => setInputSangue("option2")}
+                  status={inputSangue === 'option2' ? 'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('option2')}
                   color="#007BFF"
                 />
                 <Text style={editU.radioLabel}>Não</Text>
@@ -875,9 +915,9 @@ export function EditUser() {
                     <RadioButton.Android
                       value="option3"
                       status={
-                        inputOrgao === "option3" ? "checked" : "unchecked"
+                        inputOrgao === 'option3' ? 'checked' : 'unchecked'
                       }
-                      onPress={() => setInputOrgao("option3")}
+                      onPress={() => setInputOrgao('option3')}
                       color="#007BFF"
                     />
                     <Text style={editU.radioLabel}>Sim</Text>
@@ -886,9 +926,9 @@ export function EditUser() {
                     <RadioButton.Android
                       value="option4"
                       status={
-                        inputOrgao === "option4" ? "checked" : "unchecked"
+                        inputOrgao === 'option4' ? 'checked' : 'unchecked'
                       }
-                      onPress={() => setInputOrgao("option4")}
+                      onPress={() => setInputOrgao('option4')}
                       color="#007BFF"
                     />
                     <Text style={editU.radioLabel}>Não</Text>
@@ -902,18 +942,17 @@ export function EditUser() {
             style={editU.btnSalvar}
             onPress={() => {
               const editandoUsuario = async (dados) => {
-                console.log("Dados enviados ao backend", dados);
-                const idz =  await AsyncStorage.getItem("id");
+                console.log('Dados enviados ao backend', dados);
+                const idz = await AsyncStorage.getItem('id');
                 try {
                   const response = api.put(`/users/edit/${idz}`, dados);
-                  console.log("Dados editados com sucesso: ", response.data);
+                  console.log('Dados editados com sucesso: ', response.data);
                 } catch (error) {
                   console.log(error.response.data);
                 }
               };
               editandoUsuario(EditarInformacoes);
-            }}
-          >
+            }}>
             <Text style={editU.btnText}>SALVAR</Text>
           </TouchableOpacity>
         </View>
@@ -925,42 +964,42 @@ export function EditUser() {
 const editU = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   btnExpandir: {
-    width: "100%",
+    width: '100%',
     height: 60,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: "#97D8AE",
+    borderBottomColor: '#97D8AE',
   },
 
   btnDescription: {
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingRight: 15,
     paddingLeft: 15,
   },
 
   viewInput: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "flex-start",
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     margin: 20,
   },
 
   input: {
-    width: "90%",
+    width: '90%',
     height: 40,
-    borderBottomColor: "#97D8AE",
+    borderBottomColor: '#97D8AE',
     borderBottomWidth: 1,
     paddingLeft: 10,
     paddingTop: 10,
@@ -970,37 +1009,37 @@ const editU = StyleSheet.create({
     width: 130,
     height: 45,
     borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 25,
     borderWidth: 2,
-    borderColor: "#97D8AE",
+    borderColor: '#97D8AE',
   },
 
   btnText: {
     fontSize: 17,
-    fontWeight: "700",
-    color: "green",
+    fontWeight: '700',
+    color: 'green',
   },
   logoutButton: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: "#FF6347",
+    backgroundColor: '#FF6347',
     borderRadius: 5,
     padding: 10,
   },
 
   button: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   radioButton: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   radioLabel: {
     marginLeft: 8,
     fontSize: 16,
-    color: "#333",
+    color: '#333',
   },
   tiposSangue: {
     marginBottom: 10,
@@ -1008,11 +1047,11 @@ const editU = StyleSheet.create({
   },
 
   inputDoador: {
-    borderColor: "transparent",
+    borderColor: 'transparent',
     borderWidth: 1,
     gap: 2,
   },
   sair: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
   },
 });
