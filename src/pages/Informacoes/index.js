@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, TabRouter } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -17,6 +17,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import { color } from 'react-native-reanimated';
 import api from '../Api_gerenciamento';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { render } from 'react-dom';
 
 
 
@@ -73,7 +74,12 @@ export default function Informacoes() {
     const { inputIdade, setInputIdade } = useContext(ContextInfo)
     const { inputCpf, setInputCpf, id } = useContext(ContextInfo)
     const navigation = useNavigation()
-    const [renderizarBtnDone, setRenderBtnDone]= useState(false)
+    const {renderBtn, setRenderBtn} = useContext(ContextInfo)
+    
+
+   
+ 
+
 
 
     return (
@@ -92,7 +98,10 @@ export default function Informacoes() {
                             color="rgba(255, 255, 255, .9)"
                             size={25}
                         />
+
                     </View>
+
+                   
                 );
             }}
             showPrevButton={true}
@@ -107,7 +116,7 @@ export default function Informacoes() {
                     </View>
                 );
             }}
-            showDoneButton={renderizarBtnDone}
+            showDoneButton={renderBtn}
             renderDoneButton={() => {
                 return (
                     <View style={styles.buttonCircle}>
@@ -476,7 +485,7 @@ function Contatos() {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Telefone "
+                placeholder="Telefone para Emergência "
                 value={inputNtelefoneEmergencia}
                 onChangeText={setNtelefoneEmergencia}
                 returnKeyType="done"
@@ -504,6 +513,9 @@ function Endereco() {
     const { inputNCep, setInputNcep } = useContext(ContextInfo)
     const { inputLogradouro, setInputLogradouro } = useContext(ContextInfo)
     const { inputNumeroCasa, setNumeroCasa } = useContext(ContextInfo)
+
+    
+    const {renderBtn, setRenderBtn} = useContext(ContextInfo)
 
 
 
@@ -547,9 +559,10 @@ function Endereco() {
                         try {
                             const response = await api.put(`/users/complete/${idz}`, dados)
                             console.log(response.data)
-                            setRenderBtnDone(true)
+                            setRenderBtn(true)
+                            
                         } catch (error) {
-                            console.log(error.response)
+                            console.log(error.response.data)
                             //console.log(error.response.data)
                         }
                     }

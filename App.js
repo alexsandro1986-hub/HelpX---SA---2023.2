@@ -16,15 +16,15 @@ function MyStack() {
   return (
     <ContextInfoProvider>
     
-        <Informacoes/>
-        {/* <StackHomePage/> */}
+       
+        <StackHomePage/>
     
         
 
     </ContextInfoProvider>
 
   )
-    S
+    
 }
 
 export default function App() {

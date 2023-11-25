@@ -38,6 +38,14 @@ export const ContextInfoProvider = ({ children }) => {
     const senhaAdm = '123'
     const loginAdm = 'adm'
 
+    //info user render done button
+    const[renderBtn, setRenderBtn] = useState(false)
+
+
+
+
+
+
     // LOGOUT
 
     // const logout = (async) => {
@@ -263,6 +271,7 @@ export const ContextInfoProvider = ({ children }) => {
                 inputNCep, setInputNcep,
                 inputLogradouro, setInputLogradouro,
                 inputNumeroCasa, setNumeroCasa,
+                renderBtn,setRenderBtn,
 
 
                 //Admin 
