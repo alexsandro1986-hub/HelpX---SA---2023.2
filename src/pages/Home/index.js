@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   Modal,
+  Alert,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,11 +17,10 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import QRCode from 'react-native-qrcode-svg';
 import { ContextInfo } from '../ContextInfo/contextinfo';
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext, useEffect, Suspense } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import ViewShot from 'react-native-view-shot';
 import * as MediaLibrary from 'expo-media-library';
-import { Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { RadioButton } from 'react-native-paper';
 import api from '../Api_gerenciamento';
@@ -33,23 +33,23 @@ const Stack = createStackNavigator();
 export default function Home() {
   const navigation = useNavigation();
   const { setId, id, userDados, idGuardado } = useContext(ContextInfo);
-  useEffect(() => {
-    pegandoId();
-  });
+  // useEffect(() => {
+  //   pegandoId();
+  // },[]);
 
-  const pegandoId = async () => {
-    const idzinho = await AsyncStorage.getItem('id');
-    console.log('Entrei aqui na home para pegar o id', idzinho);
-    idGuardado.push(idzinho);
-    try {
-      const response = await api.get(`/users/logged/${idzinho}`);
-      userDados.push(...response.data);
-      console.log('Dados do usuario na home', userDados, typeof userDados);
-    } catch (error) {
-      console.log(error.message);
-      // console.log(error.response.data)
-    }
-  };
+  // const pegandoId = async () => {
+  //   const idzinho = await AsyncStorage.getItem('id');
+  //   console.log('Entrei aqui na home para pegar o id', idzinho);
+  //   idGuardado.push(idzinho);
+  //   try {
+  //     const response = await api.get(`/users/logged/${idzinho}`);
+  //     userDados.push(response.data);
+  //     console.log('Dados do usuario na home', userDados, typeof userDados);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     // console.log(error.response.data)
+  //   }
+  // }; pegandoId()
 
   return (
     <Tab.Navigator
@@ -284,10 +284,29 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const { userDados, flagAdm, setFlagAdm, setInputEmail, setInputSenha } =
+  const { flagAdm, setFlagAdm, setInputEmail, setInputSenha } =
     useContext(ContextInfo);
-
   const [modalVisible, setModalVisible] = useState(false); // MUDA VISIBILIDADE DO MODAL
+  const userDadosRef = useRef(userDados);
+  const [userDados, setUserDados] = useState(null);
+
+  useEffect(() => {
+    const pegandoId = async () => {
+      const idzinho = await AsyncStorage.getItem('id');
+      console.log('Entrei aqui na home para pegar o id', idzinho);
+      // idGuardado.push(idzinho);
+      try {
+        const response = await api.get(`/users/logged/${idzinho}`);
+        userDadosRef.current = response.data; // Utilizando o useRef
+        setUserDados(response.data);
+        console.log('Dados do usuario na home', response.data);
+      } catch (error) {
+        console.log(error.message);
+        // console.log(error.response.data)
+      }
+    };
+    pegandoId();
+  }, []);
 
   // Função para sair e voltar para a tela inicial
   const limparStorage = async () => {
@@ -316,96 +335,151 @@ function Profile() {
     }
   };
 
+  const renderizarInfoUsuario = () => {
+    const usuario = userDadosRef.current;
+    console.log('uuu', usuario);
+    return (
+      <View style={{ width: '100%', height: '100%' }}>
+        <View style={profile.viewNameUser}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
+            {usuario[0].nome}
+          </Text>
+        </View>
+        <View style={profile.infoView}>
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Idade</Text>
+            <Text style={profile.textInfoUser}>{usuario[0].idade}</Text>
+          </View>
+
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Tipo Sanguíneo</Text>
+            <Text style={profile.textInfoUser}>{usuario[0].tiposanguineo}</Text>
+          </View>
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Alergia</Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].possuialergias[0].alergias.alergias}
+            </Text>
+          </View>
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Comorbidade</Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].possuicomorbidade[0].comorbidade.comorbidade}
+            </Text>
+          </View>
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Medicamentos</Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].medicamentos[0].medicamento}
+            </Text>
+          </View>
+
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Cont. Emergência</Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].contatoemergencia[0].nomecontatoemergencia}
+            </Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].contatoemergencia[0].emailcontatoemergencia}
+            </Text>
+            <Text style={profile.textInfoUser}>
+              {usuario[0].contatoemergencia[0].telefoneemergencia}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <LinearGradient
-      colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
-      style={profile.container}>
-      <View style={profile.cima}>
-        <View style={{ width: '100%', height: '2%' }}></View>
+    <>
+      {userDados && (
+        <LinearGradient
+          colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
+          style={profile.container}>
+          <View style={profile.cima}>
+            <View style={{ width: '100%', height: '2%' }}></View>
 
-        <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}>
-          Meu Perfil
-        </Text>
-
-        <View
-          style={{
-            borderColor: 'black',
-            borderWidth: 2,
-            borderRadius: 10,
-            width: 80,
-            height: 80,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MaterialCommunityIcons name="account" color={'black'} size={80} />
-        </View>
-      </View>
-
-      <View style={profile.viewNameUser}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
-          {userDados[0].nome}
-        </Text>
-      </View>
-
-      <View style={profile.infoView}>
-        <View style={profile.infoUser}>
-          <Text style={profile.textInfo}>Idade</Text>
-          <Text style={profile.textInfoUser}>{userDados.idade}</Text>
-        </View>
-
-        <View style={profile.infoUser}>
-          <Text style={profile.textInfo}>Alergia</Text>
-          <Text style={profile.textInfoUser}>
-            {userDados[0].possuialergias[0].alergias.alergias}
-          </Text>
-        </View>
-
-        <View style={profile.infoUser}>
-          <Text style={profile.textInfo}>Cont. Emergência</Text>
-          <Text style={profile.textInfoUser}>
-            {userDados[0].contatoemergencia[0].nomecontatoemergencia}
-          </Text>
-          <Text style={profile.textInfoUser}>
-            {userDados[0].contatoemergencia[0].emailcontatoemergencia}
-          </Text>
-          <Text style={profile.textInfoUser}>
-            {userDados[0].contatoemergencia[0].telefoneemergencia}
-          </Text>
-        </View>
-      </View>
-
-      <View style={styles.sair}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setModalVisible(true);
-           
-          }}>
-          <Text style={styles.textButton}>Excluir conta</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          >
-          <View style={styles.modalPosicao}>
-          <View>
-            <TouchableOpacity style={styles.button} onPress={excluir_conta}>
-              <Text style={styles.textButton}>Sim</Text>
-            </TouchableOpacity>
-             <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)} >
-              <Text style={styles.textButton}>Não</Text>
-            </TouchableOpacity>
+            <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}>
+              Meu Perfil
+            </Text>
+            <View
+              style={{
+                borderColor: 'black',
+                borderWidth: 2,
+                borderRadius: 10,
+                width: 80,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <MaterialCommunityIcons
+                name="account"
+                color={'black'}
+                size={80}
+              />
             </View>
           </View>
-        </Modal>
-      </View>
-      <View style={styles.sair}>
-        <TouchableOpacity style={styles.button} onPress={sair}>
-          <Text style={styles.textButton}>SAIR</Text>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+
+          <View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                setModalVisible(true);
+              }}>
+              <Text style={styles.textButton}>Excluir conta</Text>
+            </TouchableOpacity>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}>
+              <View style={profile.modalPosicao}>
+                <View style={profile.modalzinho}>
+                  <Text style={profile.textoModal}>
+                    {' '}
+                    Deseja excluir sua conta?
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
+                    }}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={excluir_conta}>
+                      <Text
+                        style={
+                          ([profile.textoModal], { color: 'red', fontSize: 25 })
+                        }>
+                        Sim
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => setModalVisible(!modalVisible)}>
+                      <Text
+                        style={
+                          ([profile.textoModal],
+                          { color: 'blue', fontSize: 25 })
+                        }>
+                        Não
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
+          <View style={styles.sair}>
+            <TouchableOpacity style={styles.button} onPress={sair}>
+              <Text style={styles.textButton}>SAIR</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View>{renderizarInfoUsuario()}</View>
+        </LinearGradient>
+      )}
+    </>
   );
 }
 
@@ -416,7 +490,25 @@ const profile = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
- 
+  textoModal: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  modalzinho: {
+    borderWidth: 2,
+    borderColor: 'black',
+    width: '100%',
+    borderRadius: 10,
+    backgroundColor: '#97D8AE',
+    opacity: 0.9,
+    height: '40%',
+    justifyContent: 'space-evenly',
+  },
+
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -440,8 +532,8 @@ const profile = StyleSheet.create({
   },
 
   infoView: {
-    width: '60%',
-    height: '45%',
+    width: '100%',
+    height: '55%',
     backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#000',
@@ -455,7 +547,7 @@ const profile = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 5,
+    gap: 2,
   },
 
   textInfo: {
@@ -946,7 +1038,9 @@ export function EditUser() {
                 const idz = await AsyncStorage.getItem('id');
                 try {
                   const response = api.put(`/users/edit/${idz}`, dados);
-                  console.log('Dados editados com sucesso: ', response.data);
+                  console.log(response.data);
+                  // Alert.alert('Dados editados');
+                  navigation.navigate("Feed")
                 } catch (error) {
                   console.log(error.response.data);
                 }
