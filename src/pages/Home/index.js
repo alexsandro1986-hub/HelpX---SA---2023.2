@@ -284,7 +284,7 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const { flagAdm, setFlagAdm, setInputEmail, setInputSenha, idGuardado} =
+  const { flagAdm, setFlagAdm, setInputEmail, setInputSenha, idGuardado } =
     useContext(ContextInfo);
   const [modalVisible, setModalVisible] = useState(false); // MUDA VISIBILIDADE DO MODAL
   const userDadosRef = useRef(userDados);
@@ -294,7 +294,7 @@ function Profile() {
     const pegandoId = async () => {
       const idzinho = await AsyncStorage.getItem('id');
       console.log('Entrei aqui na home para pegar o id', idzinho);
-       idGuardado.push(idzinho);
+      idGuardado.push(idzinho);
       try {
         const response = await api.get(`/users/logged/${idzinho}`);
         userDadosRef.current = response.data; // Utilizando o useRef
@@ -339,9 +339,9 @@ function Profile() {
     const usuario = userDadosRef.current;
     console.log('uuu', usuario);
     return (
-      <View style={{ width: '100%', height: '100%' }}>
+      <View style={profile.containerInfos}>
         <View style={profile.viewNameUser}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'green', }}>
             {usuario[0].nome}
           </Text>
         </View>
@@ -352,25 +352,9 @@ function Profile() {
           </View>
 
           <View style={profile.infoUser}>
-            <Text style={profile.textInfo}>Tipo Sanguíneo</Text>
-            <Text style={profile.textInfoUser}>{usuario[0].tiposanguineo}</Text>
-          </View>
-          <View style={profile.infoUser}>
             <Text style={profile.textInfo}>Alergia</Text>
             <Text style={profile.textInfoUser}>
               {usuario[0].possuialergias[0].alergias.alergias}
-            </Text>
-          </View>
-          <View style={profile.infoUser}>
-            <Text style={profile.textInfo}>Comorbidade</Text>
-            <Text style={profile.textInfoUser}>
-              {usuario[0].possuicomorbidade[0].comorbidade.comorbidade}
-            </Text>
-          </View>
-          <View style={profile.infoUser}>
-            <Text style={profile.textInfo}>Medicamentos</Text>
-            <Text style={profile.textInfoUser}>
-              {usuario[0].medicamentos[0].medicamento}
             </Text>
           </View>
 
@@ -379,9 +363,7 @@ function Profile() {
             <Text style={profile.textInfoUser}>
               {usuario[0].contatoemergencia[0].nomecontatoemergencia}
             </Text>
-            <Text style={profile.textInfoUser}>
-              {usuario[0].contatoemergencia[0].emailcontatoemergencia}
-            </Text>
+
             <Text style={profile.textInfoUser}>
               {usuario[0].contatoemergencia[0].telefoneemergencia}
             </Text>
@@ -394,13 +376,12 @@ function Profile() {
   return (
     <>
       {userDados && (
-        <LinearGradient
-          colors={['#CDE4AD', '#97D8AE', '#ffffff', '#ffffff']}
-          style={profile.container}>
+        <View style={profile.container}>
+          
           <View style={profile.cima}>
             <View style={{ width: '100%', height: '2%' }}></View>
 
-            <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 25, color: 'green', fontWeight: 'bold' }}>
               Meu Perfil
             </Text>
             <View
@@ -423,11 +404,11 @@ function Profile() {
 
           <View>
             <TouchableOpacity
-              style={styles.button}
+              style={{ width: 90, backgroundColor: 'gray', height: 35, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}
               onPress={() => {
                 setModalVisible(true);
               }}>
-              <Text style={styles.textButton}>Excluir conta</Text>
+              <Text style={{fontSize:13, color: 'white', fontWeight: 'bold' }}>Excluir conta</Text>
             </TouchableOpacity>
             <Modal
               animationType="slide"
@@ -435,6 +416,11 @@ function Profile() {
               visible={modalVisible}>
               <View style={profile.modalPosicao}>
                 <View style={profile.modalzinho}>
+                  <MaterialCommunityIcons
+                    name="alert"
+                    color={'orange'}
+                    size={80}
+                  />
                   <Text style={profile.textoModal}>
                     {' '}
                     Deseja excluir sua conta?
@@ -443,26 +429,42 @@ function Profile() {
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-evenly',
+                      gap: 60
                     }}>
                     <TouchableOpacity
-                      style={styles.button}
+                      style={{
+                        height: 40,
+                        width: 120,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#d22d2d',
+                        borderRadius: 8
+                      }}
                       onPress={excluir_conta}>
                       <Text
                         style={
-                          ([profile.textoModal], { color: 'red', fontSize: 25 })
+                          ([profile.textoModal], { color: 'white', fontSize: 22, fontWeight: 'bold' })
                         }>
-                        Sim
+                        Excluir
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={styles.button}
+                      style={{
+                        height: 40,
+                        width: 120,
+                        borderWidth: 2,
+                        borderColor: '#97D8AE',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8
+                      }}
                       onPress={() => setModalVisible(!modalVisible)}>
                       <Text
                         style={
                           ([profile.textoModal],
-                          { color: 'blue', fontSize: 25 })
+                            { color: 'green', fontSize: 25 })
                         }>
-                        Não
+                        Cancelar
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -472,12 +474,12 @@ function Profile() {
           </View>
           <View style={styles.sair}>
             <TouchableOpacity style={styles.button} onPress={sair}>
-              <Text style={styles.textButton}>SAIR</Text>
+              <Text style={{fontSize:22, fontWeight:'700', color:'gray'}}>sair</Text>
             </TouchableOpacity>
           </View>
 
           <View>{renderizarInfoUsuario()}</View>
-        </LinearGradient>
+        </View>
       )}
     </>
   );
@@ -499,14 +501,17 @@ const profile = StyleSheet.create({
     textAlign: 'center',
   },
   modalzinho: {
-    borderWidth: 2,
-    borderColor: 'black',
     width: '100%',
     borderRadius: 10,
-    backgroundColor: '#97D8AE',
-    opacity: 0.9,
+    backgroundColor: '#fff',
     height: '40%',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
+    shadowColor: 'grey',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 7,
+    elevation: 3,
   },
 
   container: {
@@ -514,6 +519,15 @@ const profile = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     gap: 15,
+    backgroundColor: '#fff'
+  },
+  containerInfos: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 5,
+
   },
 
   cima: {
@@ -526,25 +540,30 @@ const profile = StyleSheet.create({
 
   viewNameUser: {
     width: '100%',
-    height: '5%',
+    height: '7%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+
+  },
+
+  infoView: {
+    width: 250,
+    height: '45%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    shadowColor: '#97D8AE',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 7,
+    elevation: 3,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  infoView: {
-    width: '100%',
-    height: '55%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-
   infoUser: {
-    flex: 1,
+    height: '30%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 2,
@@ -553,7 +572,7 @@ const profile = StyleSheet.create({
   textInfo: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'grey',
+    color: 'green',
   },
 
   textInfoUser: {
@@ -562,10 +581,15 @@ const profile = StyleSheet.create({
     color: 'grey',
   },
 
-  btnQrCode: {
-    height: '10%',
-    width: '20%',
+  button: {
+    height: 40,
+    width: 120,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
+
 });
 
 export function QrCodeUser() {
@@ -831,8 +855,8 @@ export function EditUser() {
                       alergiaSelecionado === 0
                         ? value
                         : index === 0
-                        ? false
-                        : value
+                          ? false
+                          : value
                     )
                     .map((value, index) => (
                       <Picker.Item label={value} value={value} key={index} />
@@ -972,8 +996,8 @@ export function EditUser() {
                       inputTiposanguineo === 0
                         ? value
                         : index === 0
-                        ? false
-                        : value
+                          ? false
+                          : value
                     )
                     .map((value, index) => (
                       <Picker.Item label={value} value={value} key={index} />

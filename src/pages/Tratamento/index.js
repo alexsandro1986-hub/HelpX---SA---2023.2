@@ -410,6 +410,7 @@ const styles = StyleSheet.create({
     width: 430,
     height: 800,
     gap: 11,
+    backgroundColor:'#fff'
   },
   containerCorpo: {
     width: '100%',
