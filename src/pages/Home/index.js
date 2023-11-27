@@ -284,7 +284,7 @@ const feed = StyleSheet.create({
 
 function Profile() {
   const navigation = useNavigation();
-  const { flagAdm, setFlagAdm, setInputEmail, setInputSenha } =
+  const { flagAdm, setFlagAdm, setInputEmail, setInputSenha, idGuardado} =
     useContext(ContextInfo);
   const [modalVisible, setModalVisible] = useState(false); // MUDA VISIBILIDADE DO MODAL
   const userDadosRef = useRef(userDados);
@@ -294,7 +294,7 @@ function Profile() {
     const pegandoId = async () => {
       const idzinho = await AsyncStorage.getItem('id');
       console.log('Entrei aqui na home para pegar o id', idzinho);
-      // idGuardado.push(idzinho);
+       idGuardado.push(idzinho);
       try {
         const response = await api.get(`/users/logged/${idzinho}`);
         userDadosRef.current = response.data; // Utilizando o useRef
