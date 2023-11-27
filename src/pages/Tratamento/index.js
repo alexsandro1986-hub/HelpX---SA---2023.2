@@ -382,11 +382,11 @@ export function AdicionarPost() {
             flagEditando
               ? editando_tratamento(
                   inputDoenca,
-                  inputRemedio,
                   inputData,
+                  inputRemedio,
                   idEdit
                 )
-              : criando_tratamento(inputDoenca, inputRemedio, inputData);
+              : criando_tratamento(inputDoenca, inputData, inputRemedio);
             navigation.goBack();
           }}>
           <LinearGradient
@@ -407,8 +407,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#C7FFCC",
     alignItems: 'center',
     flexDirection: 'column',
-    width: 430,
-    height: 800,
+    flex:1,
     gap: 11,
     backgroundColor:'#fff'
   },

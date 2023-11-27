@@ -17,7 +17,19 @@ const Stack = createStackNavigator();
 const telaAltura = Dimensions.get('window').height
 
 export default function StackAdmin() {
-  const { logout } = useContext(ContextInfo);
+   // Função para sair e voltar para a tela inicial
+   const limparStorage = async () => {
+    await AsyncStorage.setItem('id', '');
+  };
+  const sair = () => {
+    if (flagAdm) {
+      setFlagAdm(!flagAdm);
+    }
+    limparStorage();
+    setInputEmail('');
+    setInputSenha('');
+    navigation.popToTop();
+  };
   const navigation = useNavigation();
 
   return (
@@ -47,7 +59,7 @@ export default function StackAdmin() {
               color="white"
               onPress={() => {
                 navigation.navigate("Inicio");
-                logout();
+                sair();
               }}
             />
           ),
