@@ -19,7 +19,7 @@ import { RemedioContext, RemedioContextProvider } from './remedioContext';
 import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
 import api from '../Api_gerenciamento';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const baseURL = 'https://helpx.glitch.me';
+
 
 const Stack = createStackNavigator();
 

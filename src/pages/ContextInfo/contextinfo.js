@@ -7,11 +7,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const ContextInfo = React.createContext()
 
 export const ContextInfoProvider = ({ children }) => {
-    //Erick
     const [inputEmail, setInputEmail] = useState('')
     const [inputSenha, setInputSenha] = useState('')
     const [inputConfirmaSenha, setInputConfirmaSenha] = useState('')
-    //Alex
+
     const [inputNome, setInputNome] = useState('')
     const [inputIdade, setInputIdade] = useState('')
     const [alergiaSelecionado, setAlergiaSelecionada] = useState('')
@@ -27,9 +26,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputCpf, setInputCpf] = useState('')
     const [inputComor, setInputComor] = useState('')
     const [inputMedicamentoComor,  setInputMedicamentoComor] = useState('')
-    //Cadastro
 
-    // Login
     const [id, setId] = useState('')
     let userDados = []
     let idGuardado = []
@@ -41,29 +38,6 @@ export const ContextInfoProvider = ({ children }) => {
     //info user render done button
     const[renderBtn, setRenderBtn] = useState(false)
 
-
-
-
-
-
-    // LOGOUT
-
-    // const logout = (async) => {
-    //     if (flagAdm){
-    //         setFlagAdm(!flagAdm)
-           
-    //     }
-    //     setInputEmail('')
-    //     setInputSenha('')
-    //     try {
-    //       await AsyncStorage.setItem("id", "");
-    //     } catch (error) {
-    //       // Error saving data
-    //       console.log("Erro ao salvar ");
-    //     }
-       
-    // }
-    //Objeto Info User
     const vetorUser = [
         {
           id: 1,
@@ -237,9 +211,6 @@ export const ContextInfoProvider = ({ children }) => {
         }
       ];
            
-
-
-
 
     return (
         <ContextInfo.Provider

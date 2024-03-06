@@ -26,30 +26,13 @@ import { RadioButton } from 'react-native-paper';
 import api from '../Api_gerenciamento';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseURL = 'https://helpx.glitch.me';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function Home() {
   const navigation = useNavigation();
   const { setId, id, userDados, idGuardado } = useContext(ContextInfo);
-  // useEffect(() => {
-  //   pegandoId();
-  // },[]);
-
-  // const pegandoId = async () => {
-  //   const idzinho = await AsyncStorage.getItem('id');
-  //   console.log('Entrei aqui na home para pegar o id', idzinho);
-  //   idGuardado.push(idzinho);
-  //   try {
-  //     const response = await api.get(`/users/logged/${idzinho}`);
-  //     userDados.push(response.data);
-  //     console.log('Dados do usuario na home', userDados, typeof userDados);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     // console.log(error.response.data)
-  //   }
-  // }; pegandoId()
 
   return (
     <Tab.Navigator

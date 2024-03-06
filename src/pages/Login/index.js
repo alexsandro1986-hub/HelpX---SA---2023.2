@@ -91,7 +91,7 @@ export function Login() {
   };
 
   const entrar = (flagAdm) => {
-    console.log(flagAdm);
+
     switch (true) {
       case flagAdm == true:
         console.log("Oi, admin")
@@ -149,22 +149,21 @@ export function Login() {
           onPress={() => {
             const login = async (email, senha) => {
               try {
-                const response = await api.post("/login", {
+                const response = await api.post("/users/login", {
                   email,
                   senha,
                 });
-                console.log("Resposta axios id", response.data.id);
-
+                console.log("Resposta axios id", response.data.cod_usuario);
                 const guardandoId = async (idUser) => {
-                  console.log("Entrei aqui para guardar o id", idUser);
                   try {
-                    await AsyncStorage.setItem("id", idUser);
+                  await AsyncStorage.setItem("id", idUser);
+                  console.log("Entrei aqui para guardar o id", idUser);
                   } catch (error) {
                     // Error saving data
                     console.log("Erro ao salvar ");
                   }
                 };
-                guardandoId(response.data.id);
+                guardandoId(response.data.cod_usuario);
 
                 entrar(response.data.flagAdm);
               } catch (error) {
