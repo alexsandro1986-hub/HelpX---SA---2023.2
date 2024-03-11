@@ -153,7 +153,7 @@ export function Login() {
                   email,
                   senha,
                 });
-                console.log("Resposta axios id", response.data.cod_usuario);
+                // console.log("Resposta axios id", response.data.user.cod_usuario);
                 const guardandoId = async (idUser) => {
                   try {
                   await AsyncStorage.setItem("id", idUser);
@@ -163,7 +163,7 @@ export function Login() {
                     console.log("Erro ao salvar ");
                   }
                 };
-                guardandoId(response.data.cod_usuario);
+                guardandoId(response.data.user.cod_usuario);
 
                 entrar(response.data.flagAdm);
               } catch (error) {

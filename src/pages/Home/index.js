@@ -320,35 +320,44 @@ function Profile() {
 
   const renderizarInfoUsuario = () => {
     const usuario = userDadosRef.current;
-    console.log('uuu', usuario);
+
     return (
       <View style={profile.containerInfos}>
         <View style={profile.viewNameUser}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'green', }}>
-            {usuario[0].nome}
+            {usuario.nome}
           </Text>
         </View>
         <View style={profile.infoView}>
           <View style={profile.infoUser}>
             <Text style={profile.textInfo}>Idade</Text>
-            <Text style={profile.textInfoUser}>{usuario[0].idade}</Text>
+            <Text style={profile.textInfoUser}>{usuario.idade}</Text>
           </View>
 
           <View style={profile.infoUser}>
             <Text style={profile.textInfo}>Alergia</Text>
             <Text style={profile.textInfoUser}>
-              {usuario[0].possuialergias[0].alergias.alergias}
+              {usuario.alergia[0].alergias}
+            </Text>
+          </View>
+          <View style={profile.infoUser}>
+            <Text style={profile.textInfo}>Comorbidade</Text>
+            <Text style={profile.textInfoUser}>
+              {usuario.comorbidade[0].comorbidade}
             </Text>
           </View>
 
           <View style={profile.infoUser}>
             <Text style={profile.textInfo}>Cont. Emergência</Text>
             <Text style={profile.textInfoUser}>
-              {usuario[0].contatoemergencia[0].nomecontatoemergencia}
+              {usuario.contatoemergencia.nomecontatoemergencia}
+            </Text>
+            <Text style={profile.textInfoUser}>
+              {usuario.contatoemergencia.emailcontatoemergencia}
             </Text>
 
             <Text style={profile.textInfoUser}>
-              {usuario[0].contatoemergencia[0].telefoneemergencia}
+              {usuario.contatoemergencia.telefoneemergencia}
             </Text>
           </View>
         </View>
@@ -737,26 +746,26 @@ export function EditUser() {
 
   const [inputSangue, setInputSangue] = useState('option1');
   const [inputOrgao, setInputOrgao] = useState('option3');
+  
   let EditarInformacoes = {
-    //<<<<< Olá, faltar colocar o resto do inputs"
     nome: inputNome,
     email: inputEmail,
-    sangue: 'B+',
+    tipoSanguineo: inputTiposanguineo,
     idade: Number(inputIdade),
-    cpf: '89-000-222-11',
-    telefoneusuario: inputTelefone,
+    // cpf: '89-000-222-11',
+    telefone: inputTelefone,
     alergia: 'Rinite alérgica',
     alergia_especificacao: 'Nenhuma',
     comorbidade: 'Hipertensão arterial',
     comorbidade_especificacao: 'Nenhuma',
     logradouro: inputLogradouro,
-    numerocasa: Number(inputNumeroCasa),
-    ncep: Number(inputNCep),
-    contatoemergencia: inputContatoEmergencia,
-    emailemergencia: 'albert@gmail.com',
-    telefoneemergencia: inputNtelefoneEmergencia,
-    doadorsangue: inputSangue,
-    doadororgao: inputOrgao,
+    nCasa: Number(inputNumeroCasa),
+    cep: Number(inputNCep),
+    contatoEmergencia: inputContatoEmergencia,
+    emailEmergencia: 'albert@gmail.com',
+    telefoneEmergencia: inputNtelefoneEmergencia,
+    doadorSangue: inputSangue,
+    doadorOrgao: inputOrgao,
     medicamento: 'Nenhum',
   };
 
@@ -890,7 +899,7 @@ export function EditUser() {
               </View>
 
               <View style={editU.viewInput}>
-                <Text>telefone de Emergencia</Text>
+                <Text>Telefone de Emergencia</Text>
                 <TextInput
                   style={editU.input}
                   value={inputNtelefoneEmergencia}
@@ -988,7 +997,7 @@ export function EditUser() {
                 </Picker>
               </View>
               <View style={editU.radioButton}>
-                <Text>Vôce é doador de sangue</Text>
+                <Text>Vôce é doador de sangue?</Text>
                 <RadioButton.Android
                   value="option1"
                   status={inputSangue === 'option1' ? 'checked' : 'unchecked'}
@@ -1010,7 +1019,7 @@ export function EditUser() {
               <View style={editU.tiposSangue}>
                 <View style={editU.radioGroup}>
                   <View style={editU.radioButton}>
-                    <Text>Vôce é doador de orgãos</Text>
+                    <Text>Vôce é doador de orgãos?</Text>
                     <RadioButton.Android
                       value="option3"
                       status={
@@ -1044,7 +1053,7 @@ export function EditUser() {
                 console.log('Dados enviados ao backend', dados);
                 const idz = await AsyncStorage.getItem('id');
                 try {
-                  const response = api.put(`/users/edit/${idz}`, dados);
+                  const response = await api.put(`/users/update/${idz}`, dados);
                   console.log(response.data);
                   // Alert.alert('Dados editados');
                   navigation.navigate("Feed")
