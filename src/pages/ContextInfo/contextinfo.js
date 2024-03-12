@@ -14,9 +14,11 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputNome, setInputNome] = useState(undefined)
     const [inputIdade, setInputIdade] = useState(undefined)
     const [alergiaSelecionado, setAlergiaSelecionada] = useState(undefined)
+    const [comorbidadeSelecionada, setComorbidadeSelecionada] = useState(undefined)
     const [inputTelefone, setInputTelefone] = useState(undefined)
     const [inputContatoEmergencia, setInputContatoEmergencia] = useState(undefined)
     const [inputNtelefoneEmergencia, setNtelefoneEmergencia] = useState(undefined)
+    const [ inputEmailEmergencia, setEmailEmergencia] = useState(undefined)
     const [inputNCep, setInputNcep] = useState(undefined)
     const [inputLogradouro, setInputLogradouro] = useState(undefined)
     const [inputNumeroCasa, setNumeroCasa] = useState(undefined)
@@ -28,6 +30,7 @@ export const ContextInfoProvider = ({ children }) => {
     const [inputMedicamentoComor,  setInputMedicamentoComor] = useState(undefined)
 
     const [id, setId] = useState('')
+    
     let userDados = []
     let idGuardado = []
     let todosDados = []
@@ -225,12 +228,14 @@ export const ContextInfoProvider = ({ children }) => {
                 inputCpf, setInputCpf,
                 inputTelefone, setInputTelefone,
                 alergiaSelecionado, setAlergiaSelecionada,
+                comorbidadeSelecionada, setComorbidadeSelecionada,
                 inputLogradouro, setInputLogradouro,
                 inputNumeroCasa, setNumeroCasa,
                 inputNCep, setInputNcep,
                 //contatoEmergencia
                 inputContatoEmergencia, setInputContatoEmergencia,
                 inputNtelefoneEmergencia, setNtelefoneEmergencia,
+                inputEmailEmergencia, setEmailEmergencia,
                 //sequestro
                 inputTiposanguineo, setInputTiposanguineo,
                 inputSangue, setInputSangue,

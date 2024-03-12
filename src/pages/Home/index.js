@@ -8,16 +8,14 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import QRCode from 'react-native-qrcode-svg';
 import { ContextInfo } from '../ContextInfo/contextinfo';
-import { useState, useRef, useContext, useEffect, Suspense } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import ViewShot from 'react-native-view-shot';
 import * as MediaLibrary from 'expo-media-library';
@@ -29,10 +27,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+let userAllInfo = []
 
 export default function Home() {
   const navigation = useNavigation();
-  const { setId, id, userDados, idGuardado } = useContext(ContextInfo);
+  const { idGuardado } = useContext(ContextInfo);
+  useEffect(() => {
+    const pegandoId = async () => {
+      const idzinho = await AsyncStorage.getItem('id');
+      // console.log('Entrei aqui na home para pegar o id', idzinho);
+      idGuardado.push(idzinho);
+      try {
+        const response = await api.get(`/users/logged/${idzinho}`);
+        userAllInfo.push(response.data)
+        console.log('Dados do usuario na home', userAllInfo);
+      } catch (error) {
+        console.log(error.message);
+        // console.log(error.response.data)
+      }
+    };
+    pegandoId();
+  }, []);
+
 
   return (
     <Tab.Navigator
@@ -271,18 +287,16 @@ function Profile() {
     useContext(ContextInfo);
   const [modalVisible, setModalVisible] = useState(false); // MUDA VISIBILIDADE DO MODAL
   const userDadosRef = useRef(userDados);
-  const [userDados, setUserDados] = useState(null);
+  const [userDados, setUserDados] = useState();
+
 
   useEffect(() => {
     const pegandoId = async () => {
-      const idzinho = await AsyncStorage.getItem('id');
-      console.log('Entrei aqui na home para pegar o id', idzinho);
-      idGuardado.push(idzinho);
+
       try {
-        const response = await api.get(`/users/logged/${idzinho}`);
+        const response = await api.get(`/users/logged/${userAllInfo[0].cod_usuario}`);
         userDadosRef.current = response.data; // Utilizando o useRef
         setUserDados(response.data);
-        console.log('Dados do usuario na home', response.data);
       } catch (error) {
         console.log(error.message);
         // console.log(error.response.data)
@@ -302,6 +316,7 @@ function Profile() {
     limparStorage();
     setInputEmail('');
     setInputSenha('');
+    userAllInfo = []
     navigation.popToTop();
   };
 
@@ -369,7 +384,7 @@ function Profile() {
     <>
       {userDados && (
         <View style={profile.container}>
-          
+
           <View style={profile.cima}>
             <View style={{ width: '100%', height: '2%' }}></View>
 
@@ -400,7 +415,7 @@ function Profile() {
               onPress={() => {
                 setModalVisible(true);
               }}>
-              <Text style={{fontSize:13, color: 'white', fontWeight: 'bold' }}>Excluir conta</Text>
+              <Text style={{ fontSize: 13, color: 'white', fontWeight: 'bold' }}>Excluir conta</Text>
             </TouchableOpacity>
             <Modal
               animationType="slide"
@@ -466,7 +481,7 @@ function Profile() {
           </View>
           <View style={styles.sair}>
             <TouchableOpacity style={styles.button} onPress={sair}>
-              <Text style={{fontSize:22, fontWeight:'700', color:'gray'}}>sair</Text>
+              <Text style={{ fontSize: 22, fontWeight: '700', color: 'gray' }}>Sair</Text>
             </TouchableOpacity>
           </View>
 
@@ -674,35 +689,35 @@ const qrcode = StyleSheet.create({
 export function EditUser() {
   const navigation = useNavigation();
   const {
-    inputNome,
-    setInputNome,
-    inputEmail,
-    setInputEmail,
-    inputIdade,
-    setInputIdade,
-    inputAlergias,
-    setInputAlergias,
-    inputTelefone,
-    setInputTelefone,
-    inputContatoEmergencia,
-    setInputContatoEmergencia,
-    inputNtelefoneEmergencia,
-    setNtelefoneEmergencia,
-    inputNCep,
-    setInputNcep,
-    inputLogradouro,
-    setInputLogradouro,
-    inputNumeroCasa,
-    setNumeroCasa,
-    inputDoador,
-    setInputDoador,
+    inputNome, setInputNome,
+    inputEmail, setInputEmail,
+    inputIdade, setInputIdade,
+    inputAlergias, setInputAlergias,
+    inputTelefone, setInputTelefone,
+    inputContatoEmergencia, setInputContatoEmergencia,
+    inputNtelefoneEmergencia, setNtelefoneEmergencia,
+    inputEmailEmergencia, setEmailEmergencia,
+    inputNCep, setInputNcep,
+    inputLogradouro, setInputLogradouro,
+    inputNumeroCasa, setNumeroCasa,
+    inputDoador, setInputDoador,
+
   } = useContext(ContextInfo);
+
+  const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
+  const { comorbidadeSelecionada, setComorbidadeSelecionada } = useContext(ContextInfo);
+  const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo);
 
   const [expandirNome, setExpandirNome] = useState(false);
   const [expandirAlergia, setExpandirAlergia] = useState(false);
+  const [expandirComorbidade, setExpandirComorbidade] = useState(false);
   const [expandirContato, setExpandirContato] = useState(false);
   const [expandirEndereco, setExpandirEndereco] = useState(false);
   const [expandirSangue, setExpandirSangue] = useState(false);
+  
+  const [inputSangue, setInputSangue] = useState('');
+  const [inputOrgao, setInputOrgao] = useState('');
+
 
   const alergias = [
     'Nenhuma',
@@ -728,7 +743,31 @@ export function EditUser() {
     'Produtos de limpeza',
     'Outras',
   ];
-  const { alergiaSelecionado, setAlergiaSelecionada } = useContext(ContextInfo);
+
+  const comorbidades = [
+    "Nenhuma",
+    "Nenhuma",
+    "Diabetes",
+    "Hipertensão Arterial",
+    'Doença renal crônica',
+    "Imunocomprometidos",
+    "Obesidade mórbida",
+    "Síndrome de Down",
+    "Cirrose hepática",
+    'Insuficiência Cardíaca',
+    "Hipertensão pulmonar",
+    "Cardiopatia Hipertensiva",
+    'Síndromes Coronarianas',
+    'Valvopatias',
+    "Arritmias cardíacas",
+    "Ataque isquêmico transitório",
+    'Demência Vascular',
+    'Doença neurológica',
+    'Paralisia Cerebral',
+    'Esclerose Múltipla',
+    "Doença hereditárias",
+    "Outras"
+  ]
 
   const [sangue] = useState([
     '',
@@ -742,27 +781,25 @@ export function EditUser() {
     'O+',
     'O-',
   ]);
-  const { inputTiposanguineo, setInputTiposanguineo } = useContext(ContextInfo);
 
-  const [inputSangue, setInputSangue] = useState('option1');
-  const [inputOrgao, setInputOrgao] = useState('option3');
-  
+
+
+
   let EditarInformacoes = {
     nome: inputNome,
     email: inputEmail,
     tipoSanguineo: inputTiposanguineo,
     idade: Number(inputIdade),
-    // cpf: '89-000-222-11',
     telefone: inputTelefone,
-    alergia: 'Rinite alérgica',
-    alergia_especificacao: 'Nenhuma',
-    comorbidade: 'Hipertensão arterial',
-    comorbidade_especificacao: 'Nenhuma',
+    alergia: alergiaSelecionado || userAllInfo[0].alergia[0].alergias,
+    // alergia_especificacao: 'Nenhuma',
+    comorbidade: comorbidadeSelecionada || userAllInfo[0].comorbidade[0].comorbidade,
+    // comorbidade_especificacao: 'Nenhuma',
     logradouro: inputLogradouro,
     nCasa: Number(inputNumeroCasa),
     cep: Number(inputNCep),
     contatoEmergencia: inputContatoEmergencia,
-    emailEmergencia: 'albert@gmail.com',
+    emailEmergencia: inputEmailEmergencia,
     telefoneEmergencia: inputNtelefoneEmergencia,
     doadorSangue: inputSangue,
     doadorOrgao: inputOrgao,
@@ -861,6 +898,47 @@ export function EditUser() {
             </View>
           )}
 
+          <TouchableOpacity
+            onPress={() => {
+              setExpandirComorbidade(!expandirComorbidade);
+            }}
+            style={editU.btnExpandir}>
+            <View style={editU.btnDescription}>
+              <Text>Comorbidade </Text>
+              <Feather
+                name={expandirNome ? 'chevron-up' : 'chevron-down'}
+                size={25}
+                color="#bbb"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {expandirComorbidade && (
+            <View style={{ width: '100%', padding: 10 }}>
+              <View style={styles.inputAlergias}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={comorbidadeSelecionada}
+                  onValueChange={(itemValue) =>
+                    setComorbidadeSelecionada(itemValue)
+                  }>
+                  {comorbidades
+                    .filter((value, index) =>
+                      comorbidadeSelecionada === 0
+                        ? value
+                        : index === 0
+                          ? false
+                          : value
+                    )
+                    .map((value, index) => (
+                      <Picker.Item label={value} value={value} key={index} />
+                    ))}
+
+                </Picker>
+              </View>
+            </View>
+          )}
+
           {/* inputs de telefone/ contato emergencia / telefone emergencia */}
           <TouchableOpacity
             onPress={() => {
@@ -881,7 +959,7 @@ export function EditUser() {
           {expandirContato && (
             <View style={{ width: '100%', padding: 10 }}>
               <View style={editU.viewInput}>
-                <Text>Telefone</Text>
+                <Text>Meu Telefone</Text>
                 <TextInput
                   style={editU.input}
                   value={inputTelefone}
@@ -890,7 +968,7 @@ export function EditUser() {
               </View>
 
               <View style={editU.viewInput}>
-                <Text>Contato de Emergencia</Text>
+                <Text>Contato de Emergência</Text>
                 <TextInput
                   style={editU.input}
                   value={inputContatoEmergencia}
@@ -899,11 +977,19 @@ export function EditUser() {
               </View>
 
               <View style={editU.viewInput}>
-                <Text>Telefone de Emergencia</Text>
+                <Text>Telefone de Emergência</Text>
                 <TextInput
                   style={editU.input}
                   value={inputNtelefoneEmergencia}
                   onChangeText={setNtelefoneEmergencia}
+                />
+              </View>
+              <View style={editU.viewInput}>
+                <Text>Email de Emergência</Text>
+                <TextInput
+                  style={editU.input}
+                  value={inputEmailEmergencia}
+                  onChangeText={setEmailEmergencia}
                 />
               </View>
             </View>
@@ -999,18 +1085,18 @@ export function EditUser() {
               <View style={editU.radioButton}>
                 <Text>Vôce é doador de sangue?</Text>
                 <RadioButton.Android
-                  value="option1"
-                  status={inputSangue === 'option1' ? 'checked' : 'unchecked'}
-                  onPress={() => setInputSangue('option1')}
+                  value="Sim"
+                  status={inputSangue === 'Sim' ? 'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('Sim')}
                   color="#007BFF"
                 />
                 <Text style={editU.radioLabel}>Sim</Text>
               </View>
               <View style={editU.radioButton}>
                 <RadioButton.Android
-                  value="option2"
-                  status={inputSangue === 'option2' ? 'checked' : 'unchecked'}
-                  onPress={() => setInputSangue('option2')}
+                  value="Não"
+                  status={inputSangue === 'Não' ? 'checked' : 'unchecked'}
+                  onPress={() => setInputSangue('Não')}
                   color="#007BFF"
                 />
                 <Text style={editU.radioLabel}>Não</Text>
@@ -1021,22 +1107,22 @@ export function EditUser() {
                   <View style={editU.radioButton}>
                     <Text>Vôce é doador de orgãos?</Text>
                     <RadioButton.Android
-                      value="option3"
+                      value="Sim"
                       status={
-                        inputOrgao === 'option3' ? 'checked' : 'unchecked'
+                        inputOrgao === 'Sim' ? 'checked' : 'unchecked'
                       }
-                      onPress={() => setInputOrgao('option3')}
+                      onPress={() => setInputOrgao('Sim')}
                       color="#007BFF"
                     />
                     <Text style={editU.radioLabel}>Sim</Text>
                   </View>
                   <View style={editU.radioButton}>
                     <RadioButton.Android
-                      value="option4"
+                      value="Não"
                       status={
-                        inputOrgao === 'option4' ? 'checked' : 'unchecked'
+                        inputOrgao === 'Não' ? 'checked' : 'unchecked'
                       }
-                      onPress={() => setInputOrgao('option4')}
+                      onPress={() => setInputOrgao('Não')}
                       color="#007BFF"
                     />
                     <Text style={editU.radioLabel}>Não</Text>
@@ -1051,9 +1137,10 @@ export function EditUser() {
             onPress={() => {
               const editandoUsuario = async (dados) => {
                 console.log('Dados enviados ao backend', dados);
-                const idz = await AsyncStorage.getItem('id');
+
+                const id = await AsyncStorage.getItem('id');
                 try {
-                  const response = await api.put(`/users/update/${idz}`, dados);
+                  const response = await api.put(`/users/update/${id}`, dados);
                   console.log(response.data);
                   // Alert.alert('Dados editados');
                   navigation.navigate("Feed")

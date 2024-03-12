@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { NavigationContainer, TabRouter } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { View, Button, Text, StyleSheet, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { ContextInfo, ContextInfoProvider } from '../ContextInfo/contextinfo';
+import { ContextInfo } from '../ContextInfo/contextinfo';
 import { RadioButton } from 'react-native-paper';
 
 import { Picker } from '@react-native-picker/picker';
@@ -58,9 +55,7 @@ function renderSlides({ item }) {
 
 
 export default function Informacoes() {
-    const { inputNome, setInputNome } = useContext(ContextInfo)
-    const { inputIdade, setInputIdade } = useContext(ContextInfo)
-    const { inputCpf, setInputCpf, id } = useContext(ContextInfo)
+
     const navigation = useNavigation()
     const {renderBtn, setRenderBtn} = useContext(ContextInfo)
     
@@ -245,30 +240,30 @@ function Alergias() {
 function Comorbidade() {
 
     const comorbidades = [
-        'Nenhuma',
         "Nenhuma",
-        "Hipertensão arterial",
-        "Diabetes mellitus",
-        "Obesidade",
-        "Doença cardiovascular",
-        "Doença pulmonar obstrutiva crônica (DPOC)",
-        "Doença renal crônica",
-        "Câncer",
-        "Asma",
-        "Artrite reumatoide",
-        "Depressão",
-        "Doença de Alzheimer",
-        "Doença de Parkinson",
-        "HIV/AIDS",
-        "Doenças autoimunes",
-        "Insuficiência cardíaca",
-        "Doenças hepáticas",
-        "Epilepsia",
-        "Doenças neurológicas",
-        "Doenças gastrointestinais",
-        "Transtornos psiquiátricos",
-        "Outras",
-    ]
+        "Nenhuma",
+        "Diabetes",
+        "Hipertensão Arterial",
+        'Doença renal crônica',
+        "Imunocomprometidos",
+        "Obesidade mórbida",
+        "Síndrome de Down",
+        "Cirrose hepática",
+        'Insuficiência Cardíaca',
+        "Hipertensão pulmonar",
+        "Cardiopatia Hipertensiva",
+        'Síndromes Coronarianas',
+        'Valvopatias',
+        "Arritmias cardíacas",
+        "Ataque isquêmico transitório",
+        'Demência Vascular',
+        'Doença neurológica',
+        'Paralisia Cerebral',
+        'Esclerose Múltipla',
+        "Doença hereditárias",
+        "Outras"
+      ]
+    
 
     const { inputComor, setInputComor } = useContext(ContextInfo)
     const { inputMedicamentoComor, setInputMedicamentoComor } = useContext(ContextInfo)
@@ -365,10 +360,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="sim"
-                                    status={inputSangue === "sim" ?
+                                    value="Sim"
+                                    status={inputSangue === "Sim" ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue("sim")}
+                                    onPress={() => setInputSangue("Sim")}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -379,10 +374,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="nao"
-                                    status={inputSangue === "nao" ?
+                                    value="Não"
+                                    status={inputSangue === "Não" ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputSangue("nao")}
+                                    onPress={() => setInputSangue("Não")}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText} >
@@ -403,10 +398,10 @@ function Doador() {
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="sim"
-                                    status={inputOrgao === 'sim' ?
+                                    value="Sim"
+                                    status={inputOrgao === 'Sim' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputOrgao('sim')}
+                                    onPress={() => setInputOrgao('Sim')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText}>
@@ -418,10 +413,10 @@ function Doador() {
 
                             <View style={styles.radioLabel}>
                                 <RadioButton.Android
-                                    value="nao"
-                                    status={inputOrgao === 'nao' ?
+                                    value="Não"
+                                    status={inputOrgao === 'Não' ?
                                         'checked' : 'unchecked'}
-                                    onPress={() => setInputOrgao('nao')}
+                                    onPress={() => setInputOrgao('Não')}
                                     color="#007BFF"
                                 />
                                 <Text style={styles.radioText}>
