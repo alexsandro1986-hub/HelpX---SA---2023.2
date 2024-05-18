@@ -23,7 +23,7 @@ O HelpX é um aplicativo desenvolvido como parte de um projeto acadêmico, com o
 ## Tecnologias Utilizadas
 - Front-end: React Native, HTML, CSS, JavaScript.
 - Back-end:  Express, Firebase, PostgreSQL, Prisma ORM.
-- Link do Back-end: https://github.com/Gisele-Mara/Helpx---Server
+- Link do Back-end: https://github.com/Gisele-Mara/Helpx-Backend
 
 ## Observações
 
