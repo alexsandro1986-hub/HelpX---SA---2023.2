@@ -27,7 +27,7 @@ O HelpX é um aplicativo desenvolvido como parte de um projeto acadêmico, com o
 
 ## Observações
 
-- Este projeto foi desenvolvido como parte de um trabalho acadêmico e pode não estar em desenvolvimento ativo ou receber atualizações regulares.
+- Este projeto foi desenvolvido como parte de um trabalho acadêmico e pode não estar ativamente mantido. Algumas funcionalidades podem estar obsoletas ou não funcionar corretamente.
 
 
 ## Equipe
