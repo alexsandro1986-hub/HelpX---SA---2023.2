@@ -53,7 +53,7 @@ O HelpX é um aplicativo desenvolvido como parte de um projeto acadêmico, com o
   <img src="src/pages/img/helpx10.png" alt="Página de cadastro informações">
   <img src="src/pages/img/helpx11.png" alt="Página de cadastro informações">
   <img src="src/pages/img/helpx12.png" alt="Home">
-  <img src="src/pages/img/helpx13.png" alt="Página html">
+  <img src="src/pages/img/HELPX 13.png" alt="Página html">
 </details>
 
 
