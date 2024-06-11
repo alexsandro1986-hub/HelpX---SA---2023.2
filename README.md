@@ -41,20 +41,22 @@ O HelpX é um aplicativo desenvolvido como parte de um projeto acadêmico, com o
 
 <details>
   <summary>HelpX - App </summary>
-<!--   <img src="src/assets/imagens/front/Ilha-Nautica- pagina-inicial.png" alt="Página Inicial - Home">
-  <img src="src/assets/imagens/front/Ilha-Nautica-aluguel-veleiros.png" alt="Página de aluguel de veleiros">
-  <img src="src/assets/imagens/front/Ilha-Nautica-cadastro.png" alt="Cadastro do usuário">
-  <img src="src/assets/imagens/front/Ilha-Nautica-Techenema-65.png" alt="Página para alugar velereiro">
-  <img src="src/assets/imagens/front/Ilha-Nautica-cadastro-barco.png" alt="Página de cadastro de embarcação"> -->
+ <img src="src/pages/img/helpx1.png" alt="Página Inicial - Pagina Inicial">
+  <img src="src/pages/img/helpx2.png" alt="Página Inicial - Pagina Inicial">
+  <img src="src/pages/img/helpx3.png" alt="Página Inicial - Pagina Inicial">
+  <img src="src/pages/img/helpx4.png" alt="Pagina de Login">
+  <img src="src/pages/img/helpx5.png" alt="Pagina de Cadastro">
+  <img src="src/pages/img/helpx6.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx7.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx8.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx9.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx10.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx11.png" alt="Página de cadastro informações">
+  <img src="src/pages/img/helpx12.png" alt="Home">
+  <img src="src/pages/img/helpx13.png" alt="Página html">
 </details>
-<details>
-  <summary>HelpX - Página de Informações </summary>
-<!--   <img src="src/assets/imagens/front/Ilha-Nautica- pagina-inicial.png" alt="Página Inicial - Home">
-  <img src="src/assets/imagens/front/Ilha-Nautica-aluguel-veleiros.png" alt="Página de aluguel de veleiros">
-  <img src="src/assets/imagens/front/Ilha-Nautica-cadastro.png" alt="Cadastro do usuário">
-  <img src="src/assets/imagens/front/Ilha-Nautica-Techenema-65.png" alt="Página para alugar velereiro">
-  <img src="src/assets/imagens/front/Ilha-Nautica-cadastro-barco.png" alt="Página de cadastro de embarcação"> -->
-</details>
+
+
 
 
 
